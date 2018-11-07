@@ -16,14 +16,13 @@
     </div>
     <router-view></router-view>
   </div>
-
 </template>
 <script>
 export default{
   name: 'TopTabs',
-  props: {
-    ischeck: Number
-  },
+  // props: {
+  //   ischeck: Number
+  // },
   data () {
     return {
       actived: 0,
@@ -66,12 +65,12 @@ export default{
     outHide (index) {
       this.hover = this.actived
     }
-  },
-  watch: {
-    ischeck () {
-      console.log(ischeck)
-    }
   }
+  // watch: {
+  //   ischeck () {
+  //     console.log(ischeck)
+  //   }
+  // }
 }
 </script>
 <style lang="stylus" scoped>
