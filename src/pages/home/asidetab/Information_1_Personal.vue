@@ -23,7 +23,7 @@
         <p class="score-split"></p>
         <!-- 出生日期 -->
         <el-form-item label="出生日期/Date of Birth" prop="Birthdate">
-          <el-date-picker type="date" placeholder="选择日期 Select Date" v-model="PersonalForm.Birthdate" style="width: 400px"></el-date-picker>
+          <el-date-picker value-format="yyyyMMdd" type="date" placeholder="选择日期 Select Date" v-model="PersonalForm.Birthdate" style="width: 400px"></el-date-picker>
         </el-form-item>
         <!-- 出生地点 -->
         <p>出生地点/Place of Birth</p>

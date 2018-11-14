@@ -26,8 +26,8 @@ export default{
   },
   methods: {
     getHomeInfo () {
-      axios.get('/static/mock/index.json')
-        .then(this.getHomeInfoSucc)
+      // axios.get('/static/mock/index.json')
+      //   .then(this.getHomeInfoSucc)
     },
     getHomeInfoSucc (res) {
       if (res.ret && res.data) {

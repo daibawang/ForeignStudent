@@ -5,37 +5,38 @@
       <el-form :model="StudyForm" :rules="rules" ref="StudyForm" label-width="200px" class="demo-StudyForm" label-position="top">
       <p>来华学习计划/Proposed Study in BCU:</p>
         <!-- 姓名 -->
-        <el-form-item label="学位/Study in BCU:" prop="Candidate" class="el_left">
-            <el-radio-group v-model="StudyForm.Candidate" style="line-height:35px;">
-              <el-radio label="本科生/Bachelor’s Degree Candidate"></el-radio>
-              <el-radio label="硕士研究生/Master’s Degree Candidate"></el-radio>
-              <el-radio label="博士研究生/Doctor’s Degree Candidate"></el-radio>
-              <el-radio label="研究学者/Research Scholar"></el-radio>
-              <el-radio label="高级进修生/Senior Scholar"></el-radio>
+        <el-form-item label="学位/Study in BCU:" prop="degree" class="el_left">
+            <el-radio-group v-model="StudyForm.degree" style="line-height:35px;">
+              <el-radio label="1" value="1" >本科生/Bachelor’s Degree degree</el-radio>
+              <el-radio label="2" value="2" >硕士研究生/Master’s Degree degree</el-radio>
+              <el-radio label="3" value="3">博士研究生/Doctor’s Degree degree</el-radio>
+              <el-radio label="4" value="4">研究学者/Research Scholar</el-radio>
+              <el-radio label="5" value="5">高级进修生/Senior Scholar</el-radio>
             </el-radio-group>
         </el-form-item>
-        <el-form-item label="申请来华学习专业或研究专题/Intended Subject or Field of Study in China" prop="Intended" class="el_left">
-          <el-input v-model="StudyForm.Intended" clearable style="width:500px;" class="el-in-left el_left"></el-input>
+        <el-form-item label="申请来华学习专业或研究专题/subject Subject or Field of Study in China" prop="subject" class="el_left">
+          <el-select v-model="StudyForm.subject" style="width:300px;" class="el-in-left el_left">
+            <el-option label="中医药专业medicine" value="medicine">中医药专业medicine</el-option>
+          </el-select>
         </el-form-item>
-        <el-form-item label="申请专业学习时间/Duration of the Intended Study:" class="el_left" required >
+        <el-form-item label="申请专业学习时间/Duration of the subject Study:" class="el_left" required >
           <el-col :span="5">
-            <el-form-item prop="fromtime">
-                <el-date-picker  type="month" placeholder="From" v-model="StudyForm.fromdate" style="width: 150px;"></el-date-picker>
-            </el-form-item>
+            <el-select v-model="StudyForm.ym_f" style="width:150px;" class="el-in-left el_left">
+              <el-option label="2018" value="2018">2018</el-option>
+            </el-select>
           </el-col>
           <el-col :span="5" >
-            <el-form-item prop="totime">
-              <el-date-picker type="month" placeholder="To" v-model="StudyForm.todate" style="width: 150px;"></el-date-picker>
-            </el-form-item>
+            <el-select v-model="StudyForm.ym_l" style="width:150px; margin-left:10px" class="el-in-left el_left">
+              <el-option label="2019" value="2018">2019</el-option>
+            </el-select>
           </el-col>
         </el-form-item>
-
-        <p>拟在华学习或研究的详细内容（学习计划不少于400字，研究计划不少于800字，可另附纸）/ Please Describe the Details of your Study or Research Plan in China  (can be attached if this space is not enough)</p>
-        <el-form-item label="详细内容/Study Details" prop="Details" class="el_left">
+        <p>拟在华学习或研究的详细内容（可另附纸）/ Please Describe the details of your Study or Research Plan in China  (can be attached if this space is not enough)</p>
+        <el-form-item label="详细内容/Study details" prop="details" class="el_left">
           <el-input style="width:650px"
-          maxlength=800
+          maxlength=2000
           type="textarea" :autosize="{ minRows: 8}"placeholder="请输入内容/Please fill details"
-          v-model="StudyForm.Details">
+          v-model="StudyForm.details">
           </el-input>
         </el-form-item>
 
@@ -54,27 +55,29 @@ export default{
   data () {
     return {
       StudyForm: {
-        Candidate: '',
-        Intended: '',
-        fromtime: '',
-        totime: '',
-        Details: ''
+        username: 'zmz',
+        degree: '',
+        subject: '',
+        ym_f: '',
+        ym_l: '',
+        details: '',
+        type: 1
       },
       rules: {
-        Candidate: [
+        degree: [
           { required: true, message: '必填项 This field is required.', trigger: 'blur' }
           // { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
         ],
-        Intended: [
+        subject: [
           { required: true, message: '必填项 This field is required.', trigger: 'blur' }
         ],
-        fromtime: [
+        ym_f: [
           { required: true, message: '必填项 This field is required.', trigger: 'blur' }
         ],
-        totime: [
+        ym_l: [
           { required: true, message: '必填项 This field is required.', trigger: 'blur' }
         ],
-        Details: [
+        details: [
           { required: true, message: '必填项 This field is required.', trigger: 'blur' }
         ],
         Scores2: [
@@ -88,10 +91,32 @@ export default{
     handleChange (value) {
       console.log(this.StudyForm.Type)
     },
+    // "domain.testUrl"
     submitForm (formName) {
+      // let ym_f = this.moment(his.StudyForm.ym_f).format('YYYYMMDD')
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          alert('submit!')
+          alert('submit!' + this.StudyForm.degree + this.StudyForm.Birthdate)
+          var studyJsonForm = JSON.stringify(this.StudyForm)
+          this.$axios({
+            method: 'get',
+            url: '/apis/ProposedServlet',
+            params: {
+              StudyForm: studyJsonForm
+              // username: this.StudyForm.username,
+              // degree: this.StudyForm.degree,
+              // subject: this.StudyForm.subject,
+              // ym_f: this.StudyForm.ym_f,
+              // ym_l: this.StudyForm.ym_l,
+              // details: this.StudyForm.details,
+              // type: this.StudyForm.type
+            }
+          }).then((response) => {
+            console.log(response)
+            console.log(response.data)
+          }).catch((error) => {
+            console.log(error)
+          })
         } else {
           console.log('error submit!!')
           return false

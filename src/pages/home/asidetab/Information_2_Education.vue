@@ -11,7 +11,7 @@
             :rules="{
               required: true, message: 'This field is required', trigger: 'blur'
             }">
-                <el-date-picker type="month" placeholder="from" v-model="item.fromdate" style="width: 115px;"></el-date-picker>
+                <el-date-picker value-format="yyyyMM" type="month" placeholder="from" v-model="item.fromdate" style="width: 115px;"></el-date-picker>
             </el-form-item>
           </el-col>
           <el-col :span="11" style="margin-left:5px;">
@@ -19,7 +19,7 @@
             :rules="{
               required: true, message: 'This field is required', trigger: 'blur'
             }">
-              <el-date-picker type="month" placeholder="to" v-model="item.todate" style="width: 115px;"></el-date-picker>
+              <el-date-picker value-format="yyyyMM" type="month" placeholder="to" v-model="item.todate" style="width: 115px;"></el-date-picker>
             </el-form-item>
           </el-col>
         </el-form-item>
@@ -70,7 +70,21 @@ export default{
     submitForm (formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          alert('submit!' + this.EducationForm.domains[1].Previous)
+          var domainsJson = encodeURI(JSON.stringify(this.EducationForm.domains))
+          console.log(domainsJson)
+          this.$axios({
+            method: 'get',
+            url: '/apis/StudyServlet',
+            params: {
+              domains: domainsJson
+            }
+          }).then((response) => {
+            console.log(response)
+            console.log(response.data)
+          }).catch((error) => {
+            console.log(error)
+          })
+          // alert('submit!' + this.EducationForm.domains[1].Previous)
         } else {
           console.log('error submit!!')
           return false
@@ -82,7 +96,7 @@ export default{
     },
     addDomain () {
       var index = this.EducationForm.domains.length
-      if (index < 3) {
+      if (index < 5) {
         this.EducationForm.domains.push({
           value: '',
           key: Date.now()

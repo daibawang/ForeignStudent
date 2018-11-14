@@ -82,7 +82,7 @@ export default{
     },
     addDomain () {
       var index = this.EducationForm.domains.length
-      if (index < 3) {
+      if (index < 5) {
         this.EducationForm.domains.push({
           value: '',
           key: Date.now()

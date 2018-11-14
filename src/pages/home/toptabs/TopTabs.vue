@@ -79,7 +79,7 @@ export default{
 
 .tabs_icons{
   overflow hidden
-  margin 50px auto 0 auto;
+  margin 70px auto 0 auto;
   width 100%;
   .tabs_view{
     margin 0px auto 50px auto;

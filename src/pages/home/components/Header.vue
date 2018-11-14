@@ -1,10 +1,12 @@
 <template>
   <div>
-      <el-header style="">
+      <el-header>
         <img src="~images/shool_logo_blue1.png" class="img_logo">
-        <span v-if="showcity">留学生申请系统 {{this.city}} </span>
-        <span class="english_text">Application For Student Admission</span>
-        <span class="iconfont exit">&#xe635;</span>
+        <div class="header_title">
+          <span v-if="showcity">北京城市学院留学生申请系统 {{this.city}} </span>
+          <span class="english_text">Application For International Student Admission</span>
+        </div>
+        <!-- <span class="iconfont exit">&#xe635;</span> -->
       </el-header>
   </div>
 </template>
@@ -27,28 +29,42 @@ export default{
   }
 }
 </script>
+<style>
+{
+
+}
+</style>
 <style lang="stylus" scoped>
 @import '~styles/varibles.styl'
 .el-header{
-    margin 20px auto 0 auto;
+    margin 20px auto 70px auto;
     background-color: #bgColor;
-    color: #333;
-    line-height: 60px;
+    /* color: #333; */
+    /* line-height: 60px; */
     width: 90%;
+    display: flex;
+    flex-direction: row;
     .img_logo{
-      margin: 0px 50px 0px 0px;
-      width 251px
-      height 60px
+      margin: 10px 50px 0px 0px;
+      width 280px
+      height 70px
       /* float left */
     }
-    span{
-      font-size 28px
-      color #2F88EE
-      letter-spacing 5px
+    .header_title{
+      display: flex;
+      flex-direction: column;
+      span{
+        margin-top:10px;
+        font-size 28px
+        color #2F88EE
+        letter-spacing 5px
+      }
+      .english_text{
+        letter-spacing 2px
+      }
+
     }
-    .english_text{
-      letter-spacing 2px
-    }
+
     .exit{
       float:right
     }
