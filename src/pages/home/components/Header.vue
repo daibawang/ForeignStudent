@@ -54,6 +54,7 @@ export default{
       display: flex;
       flex-direction: column;
       span{
+        font-family:'Microsoft Yahei';
         margin-top:10px;
         font-size 28px
         color #2F88EE

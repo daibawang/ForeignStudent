@@ -4,44 +4,44 @@
     <div class="Info_1_form">
       <el-form :model="LanguageForm" :rules="rules" ref="LanguageForm" label-width="200px" class="demo-LanguageForm" label-position="top">
         <!-- 姓名 -->
-        <el-form-item label="汉语能力/Chinese Proficiency:" prop="Chinese">
-            <el-radio-group v-model="LanguageForm.Chinese">
-              <el-radio label="很好/Excellent"></el-radio>
-              <el-radio label="好/Good"></el-radio>
-              <el-radio label="较好/Fair"></el-radio>
-              <el-radio label="差/Poor"></el-radio>
-              <el-radio label="不会/None"></el-radio>
+        <el-form-item label="汉语能力/Chinese Proficiency:" prop="proficiency_c">
+            <el-radio-group v-model="LanguageForm.proficiency_c">
+              <el-radio label="1" value='1'>很好/Excellent</el-radio>
+              <el-radio label="2" value='2'>好/Good</el-radio>
+              <el-radio label="3" value='3'>较好/Fair</el-radio>
+              <el-radio label="4" value-'4'>差/Poor</el-radio>
+              <el-radio label="5" value='5'>不会/None</el-radio>
             </el-radio-group>
         </el-form-item>
         <p> HSK 考试等级或其他类型汉语考试成绩/ Level of HSK test or other certificates that can testify your</p>
-        <el-form-item label="考试类型/Type" prop="Type" class="el_left">
-            <el-cascader separator='' expand-trigger="hover" :options="options" v-model="LanguageForm.Type"@change="handleChange">
+        <el-form-item label="考试类型/Type" prop="level_c" class="el_left">
+            <el-cascader separator='' expand-trigger="hover" :options="options" v-model="LanguageForm.level_c"@change="handleChange">
             <el-cascader>
         </el-form-item>
-        <el-form-item label="考试成绩/Test Scores" prop="Scores" class="el_left">
-          <el-input v-model="LanguageForm.Scores" clearable style="width:200px;" class="el-in-left el_left"></el-input>
+        <el-form-item label="考试成绩/Test Scores" prop="level_c_Scores" class="el_left">
+          <el-input v-model="LanguageForm.level_c_Scores" clearable style="width:200px;" class="el-in-left el_left"></el-input>
         </el-form-item>
 
         <p class="score-split"></p>
 
-        <el-form-item label="英语能力/English Proficiency:" prop="English">
-            <el-radio-group v-model="LanguageForm.English">
-              <el-radio label="很好/Excellent"></el-radio>
-              <el-radio label="好/Good"></el-radio>
-              <el-radio label="较好/Fair"></el-radio>
-              <el-radio label="差/Poor"></el-radio>
-              <el-radio label="不会/None"></el-radio>
+        <el-form-item label="英语能力/English Proficiency:" prop="proficiency_e">
+            <el-radio-group v-model="LanguageForm.proficiency_e">
+            <el-radio label="1" value='1'>很好/Excellent</el-radio>
+            <el-radio label="2" value='2'>好/Good</el-radio>
+            <el-radio label="3" value='3'>较好/Fair</el-radio>
+            <el-radio label="4" value-'4'>差/Poor</el-radio>
+            <el-radio label="5" value='5'>不会/None</el-radio>
             </el-radio-group>
         </el-form-item>
         <p>TOEFL或ILETS 考试成绩/ TOEFL or ILETS test score</p>
-        <el-form-item label="考试类型/Type" prop="Type2" class="el_left">
-          <el-select v-model="LanguageForm.Type2" style="width:200px">
+        <el-form-item label="考试类型/Type" prop="level_e" class="el_left">
+          <el-select v-model="LanguageForm.level_e" style="width:200px">
             <el-option label="TOEFL" value="TOEFL"></el-option>
             <el-option label="ILETS" value="ILETS"></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="考试成绩/Test Scores" prop="Scores2" class="el_left">
-          <el-input v-model="LanguageForm.Scores2" clearable style="width:200px;" class="el-in-left el_left"></el-input>
+        <el-form-item label="考试成绩/Test Scores" prop="level_e_score" class="el_left">
+          <el-input v-model="LanguageForm.level_e_score" clearable style="width:200px;" class="el-in-left el_left"></el-input>
         </el-form-item>
 
         <div class="bottom_button">
@@ -82,41 +82,32 @@ export default{
             label: '6'
           }]
         }, {
-          value: 'other',
-          label: '其他Other'
-        }, {
           value: 'none',
           label: '无/None'
         }
       ],
       LanguageForm: {
-        Chinese: '', // 汉语能力
-        Type: [], // 汉语考试
-        Scores: null, // 汉语考试成绩
-        English: '', // 英语能力
-        Type2: '', // 英语考试
-        Scores2: null
+        username: '',
+        proficiency_c: '', // 汉语能力
+        level_c: [], // 汉语考试
+        level_c_Scores: '', // 汉语考试成绩
+        proficiency_e: '', // 英语能力
+        level_e: '', // 英语考试
+        level_e_score: '',
+        type: 1
       },
       rules: {
-        Chinese: [
-          { required: false, message: '', trigger: 'blur' }
-          // { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
-        ],
-        Scores: [
-          { required: false, message: '必填项 This field is required.', trigger: 'blur' }
-        ],
         Passport: [
           { required: true, message: '必填项 This field is required.', trigger: 'blur' }
         ],
-        English: [
+        proficiency_e: [
           { required: true, message: '必填项 This field is required.', trigger: 'blur' }
         ],
-        Type2: [
+        level_e: [
           { required: true, message: '必填项 This field is required.', trigger: 'blur' }
         ],
-        Scores2: [
-          { required: true, message: '请选择性别 Please Choose your Gender', trigger: 'blur' },
-          { type: 'number', message: 'Must fill number'}
+        level_e_score: [
+          { required: true, message: '必填项 This field is required.', trigger: 'blur' }
         ]
       }
     }
@@ -128,6 +119,25 @@ export default{
     submitForm (formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
+          console.log(this.LanguageForm)
+          this.$axios({
+            method: 'get',
+            url: '/apis/ProficiencyServlet',
+            params: {
+              // LanguageForm: studyJsonForm
+              username: this.LanguageForm.username,
+              proficiency_c: this.LanguageForm.proficiency_c,
+              level_c: this.LanguageForm.level_c + '级' + this.LanguageForm.level_c_Scores + '分',
+              proficiency_e: this.LanguageForm.proficiency_e,
+              level_e: this.LanguageForm.level_e + this.LanguageForm.level_e_score,
+              type: this.LanguageForm.type
+            }
+          }).then((response) => {
+            console.log(response)
+            console.log(response.data)
+          }).catch((error) => {
+            console.log(error)
+          })
           alert('submit!')
         } else {
           console.log('error submit!!')

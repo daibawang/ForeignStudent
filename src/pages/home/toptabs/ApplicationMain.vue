@@ -114,8 +114,10 @@ export default{
   }
   .ALM_content{
     margin-top:30px;
+    display:flex;
+    flex-direction:row;
     .ALM_content_aside{
-      float:left;
+      /* float:left; */
       width:18%;
       background-color: #F7F8F8;
       display: flex;
@@ -155,7 +157,7 @@ export default{
 
     }
     .ALM_content_right{
-      float:left;
+      /* float:left; */
       border-radius:5px;
       margin-left:30px;
       margin-bottom:50px;

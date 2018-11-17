@@ -16,7 +16,7 @@
         </el-form-item>
         <el-form-item label="申请来华学习专业或研究专题/subject Subject or Field of Study in China" prop="subject" class="el_left">
           <el-select v-model="StudyForm.subject" style="width:300px;" class="el-in-left el_left">
-            <el-option label="中医药专业medicine" value="medicine">中医药专业medicine</el-option>
+            <el-option label="中医药专业Traditional Chinese Medicine" value="medicine">中医药专业 Traditional Chinese Medicine</el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="申请专业学习时间/Duration of the subject Study:" class="el_left" required >
@@ -102,14 +102,14 @@ export default{
             method: 'get',
             url: '/apis/ProposedServlet',
             params: {
-              StudyForm: studyJsonForm
-              // username: this.StudyForm.username,
-              // degree: this.StudyForm.degree,
-              // subject: this.StudyForm.subject,
-              // ym_f: this.StudyForm.ym_f,
-              // ym_l: this.StudyForm.ym_l,
-              // details: this.StudyForm.details,
-              // type: this.StudyForm.type
+              // StudyForm: studyJsonForm
+              username: this.StudyForm.username,
+              degree: this.StudyForm.degree,
+              subject: this.StudyForm.subject,
+              ym_f: this.StudyForm.ym_f,
+              ym_l: this.StudyForm.ym_l,
+              details: this.StudyForm.details,
+              type: this.StudyForm.type
             }
           }).then((response) => {
             console.log(response)

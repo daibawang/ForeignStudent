@@ -6,16 +6,16 @@
 
       <div class="Achievements_border" v-for='(item, index) in Achievements.domains' :key="item.key">
         <el-form-item label="论文题目/Topic"
-        :prop="'domains.'+index+'.Topic'" class="el_left"
+        :prop="'domains.'+index+'.popers'" class="el_left"
         :rules="{
           required: false, message: 'This field is required', trigger: 'blur'
         }">
-          <el-input v-model="item.Topic" clearable style="width:320px;" class="el-in-left"></el-input>
+          <el-input v-model="item.popers" clearable style="width:320px;" class="el-in-left"></el-input>
         </el-form-item>
 
         <el-form-item label="发表时间/Published Date" >
-            <el-form-item :prop="'domains.'+index+'.PublishedDate'">
-                <el-date-picker  type="month" placeholder="from" v-model="item.PublishedDate" style="width: 275px;"></el-date-picker>
+            <el-form-item :prop="'domains.'+index+'.time'">
+                <el-date-picker  type="month" placeholder="from" v-model="item.time" style="width: 275px;"></el-date-picker>
             </el-form-item>
         </el-form-item>
         <el-button style="margin-top:50px" type="danger" icon="el-icon-delete" circle @click="deleteRules(item, index)" :disabled="isReadonly"></el-button>
@@ -39,9 +39,11 @@ export default{
     return {
       Achievements: {
         domains: [{
+          username: 'dog',
           key: 0,
-          Topic: '',
-          PublishedDate: ''
+          popers: '',
+          time: '',
+          periodical: '1'
         }]
       }
     }
@@ -50,7 +52,19 @@ export default{
     submitForm (formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          alert('submit!' + this.Achievements.domains[1].Previous)
+          var domainsJson = encodeURI(JSON.stringify(this.Achievements.domains))
+          this.$axios({
+            method: 'get',
+            url: '/apis/XsServlet',
+            params: {
+              domains: domainsJson
+            }
+          }).then((response) => {
+            console.log(response)
+            console.log(response.data)
+          }).catch((error) => {
+            console.log(error)
+          })
         } else {
           console.log('error submit!!')
           return false

@@ -5,124 +5,121 @@
       <el-form :show-message="false" :model="OtherInformation" :rules="rules" ref="OtherInformation" label-width="170px" class="demo-OtherInformation" label-position="top">
         <p>申请人在华事务担保人或机构/The Emergency Contact (Chinese or Foreigner) During Your Study in China:</p>
         <!-- <p class="score-split"></p> -->
-        <el-form-item label="名称/Name" prop="Name" class="el_left">
-          <el-input v-model="OtherInformation.Name" clearable style="width:400px" class="el_left"></el-input>
+         <el-form-item label="名称/Name" prop="name" class="el_left" required>
+          <el-input v-model="OtherInformation.name" clearable style="width:400px" class="el_left"></el-input>
         </el-form-item>
-        <el-form-item label="电话/Tel" prop="Tel" class="el_left">
-          <el-input v-model.number="OtherInformation.Tel" clearable style="width:400px" class="el_left"></el-input>
+        <el-form-item label="电话/Tel" prop="tel" class="el_left">
+          <el-input v-model.number="OtherInformation.tel" clearable style="width:400px" class="el_left"></el-input>
         </el-form-item>
-        <el-form-item label="邮箱/E-mail" prop="omail" class="el_left">
-          <el-input v-model="OtherInformation.omail" clearable style="width:400px" class="el_left"></el-input>
+        <el-form-item label="邮箱/E-mail" prop="fax" class="el_left">
+          <el-input v-model="OtherInformation.fax" clearable style="width:400px" class="el_left"></el-input>
         </el-form-item>
-        <el-form-item label="地址/Address" prop="Address" class="el_left" >
-          <el-input v-model="OtherInformation.Address" clearable style="width:400px" class="el_left"></el-input>
+        <el-form-item label="地址/Address" prop="address" class="el_left" >
+          <el-input v-model="OtherInformation.address" clearable style="width:400px" class="el_left"></el-input>
         </el-form-item>
         <p class="score-split"></p>
-
         <p>申请人亲属情况/Family Members of the Applicants:</p>
         <!-- <p>父亲/Father</p> -->
         <el-form-item label="父亲/Father:" class="el_left"  required>
           <el-col :span="4">
-            <el-form-item label="姓名/Name" prop="FatherName" class="el_left" required>
-              <el-input v-model="OtherInformation.FatherName" clearable  class="el-in-left"></el-input>
+            <el-form-item label="姓名/Name" prop="Family[0].FatherName" class="el_left" required>
+              <el-input v-model="OtherInformation.Family[0].FatherName" clearable  class="el-in-left"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="5" >
-            <el-form-item label="职业/Employment" prop="FatherEmployment" class="el_left" required>
-              <el-input v-model="OtherInformation.FatherEmployment" clearable  class="el-in-left"></el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="6.5" >
-            <el-form-item label="邮箱/E-mail" prop="Fathermail" class="el_left" required
-            :rules="{ type: 'email', message: '请输入正确的邮箱地址', trigger: ['blur', 'change'] }">
-              <el-input v-model="OtherInformation.Fathermail" clearable class="el-in-left"></el-input>
+            <el-form-item label="职业/Employment" prop="Family[0].FatherEmployment" class="el_left" required>
+              <el-input v-model="OtherInformation.Family[0].FatherEmployment" clearable  class="el-in-left"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="6" >
-            <el-form-item label="电话/Telephone Number" prop="FatherNumber" class="el_left" required>
-              <el-input v-model="OtherInformation.FatherNumber" clearable  class="el-in-left"></el-input>
+            <el-form-item label="电话/Telephone Number" prop="Family[0].FatherNumber" class="el_left" required>
+              <el-input v-model="OtherInformation.Family[0].FatherNumber" clearable  class="el-in-left"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="6.5" >
+            <el-form-item label="邮箱/E-mail" prop="Family[0].Fathermail" class="el_left" required
+            :rules="{ type: 'email', message: '请输入正确的邮箱地址', trigger: ['blur', 'change'] }">
+              <el-input v-model="OtherInformation.Family[0].Fathermail" clearable class="el-in-left"></el-input>
             </el-form-item>
           </el-col>
         </el-form-item>
         <!-- <p>母亲/Mother</p> -->
         <el-form-item label="母亲/Mother:" class="el_left"  required>
           <el-col :span="4">
-            <el-form-item label="姓名/Name" prop="MotherName" class="el_left" required>
-              <el-input v-model="OtherInformation.MotherName" clearable  class="el-in-left"></el-input>
+            <el-form-item label="姓名/Name" prop="Family[1].MotherName" class="el_left" required>
+              <el-input v-model="OtherInformation.Family[1].MotherName" clearable  class="el-in-left"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="5" >
-            <el-form-item label="职业/Employment" prop="MotherEmployment" class="el_left" required>
-              <el-input v-model="OtherInformation.MotherEmployment" clearable  class="el-in-left"></el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="6.5" >
-            <el-form-item label="邮箱/E-mail" prop="Mothermail"
-            class="el_left" required
-            :rules="{ type: 'email', message: '请输入正确的邮箱地址', trigger: ['blur', 'change'] }">
-              <el-input v-model="OtherInformation.Mothermail" clearable class="el-in-left"></el-input>
+            <el-form-item label="职业/Employment" prop="Family[1].MotherEmployment" class="el_left" required>
+              <el-input v-model="OtherInformation.Family[1].MotherEmployment" clearable  class="el-in-left"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="6" >
-            <el-form-item label="联系方式/Telephone Number" prop="MotherNumber" class="el_left" required>
-              <el-input v-model="OtherInformation.MotherNumber" clearable  class="el-in-left"></el-input>
+            <el-form-item label="电话/Telephone Number" prop="Family[1].MotherNumber" class="el_left" required>
+              <el-input v-model="OtherInformation.Family[1].MotherNumber" clearable  class="el-in-left"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="6.5" >
+            <el-form-item label="邮箱/E-mail" prop="Family[1].Mothermail"
+            class="el_left" required
+            :rules="{ type: 'email', message: '请输入正确的邮箱地址', trigger: ['blur', 'change'] }">
+              <el-input v-model="OtherInformation.Family[1].Mothermail" clearable class="el-in-left"></el-input>
             </el-form-item>
           </el-col>
         </el-form-item>
-        <el-form-item label="配偶/Spouse:" class="el_left"  >
+        <el-form-item label="配偶/Spouse:" class="el_left"  required>
           <el-col :span="4">
-            <el-form-item label="姓名/Name" prop="SpouseName" class="el_left" >
-              <el-input v-model="OtherInformation.SpouseName" clearable  class="el-in-left"></el-input>
+            <el-form-item label="姓名/Name" prop="Family[2].SpouseName" class="el_left" required>
+              <el-input v-model="OtherInformation.Family[2].SpouseName" clearable  class="el-in-left"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="5" >
-            <el-form-item label="职业/Employment" prop="SpouseEmployment" class="el_left" >
-              <el-input v-model="OtherInformation.SpouseEmployment" clearable  class="el-in-left"></el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="6.5" >
-            <el-form-item label="邮箱/E-mail" prop="Spousemail"
-            :rules="{ type: 'email', message: '请输入正确的邮箱地址', trigger: ['blur', 'change'] }"
-            class="el_left" required>
-              <el-input v-model="OtherInformation.Spousemail" clearable class="el-in-left"></el-input>
+            <el-form-item label="职业/Employment" prop="Family[2].SpouseEmployment" class="el_left" required>
+              <el-input v-model="OtherInformation.Family[2].SpouseEmployment" clearable  class="el-in-left"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="6" >
-            <el-form-item label="联系方式/Telephone Number" prop="SpouseNumber" class="el_left" >
-              <el-input v-model="OtherInformation.SpouseNumber" clearable  class="el-in-left"></el-input>
+            <el-form-item label="电话/Telephone Number" prop="Family[2].SpouseNumber" class="el_left" required>
+              <el-input v-model="OtherInformation.Family[2].SpouseNumber" clearable  class="el-in-left"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="6.5" >
+            <el-form-item label="邮箱/E-mail" prop="Family[2].Spousemail"
+            class="el_left" required>
+              <el-input v-model="OtherInformation.Family[2].Spousemail" clearable class="el-in-left"></el-input>
             </el-form-item>
           </el-col>
         </el-form-item>
         <!-- <p>子女/Daughter</p> -->
-        <el-form-item label="子女/Daughter:" class="el_left"  >
+        <el-form-item label="子女/Daughter:" class="el_left"  required>
           <el-col :span="4">
-            <el-form-item label="姓名/Name" prop="DaughterName" class="el_left" >
-              <el-input v-model="OtherInformation.DaughterName" clearable  class="el-in-left"></el-input>
+            <el-form-item label="姓名/Name" prop="Family[3].DaughterName" class="el_left" required>
+              <el-input v-model="OtherInformation.Family[3].DaughterName" clearable  class="el-in-left"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="5" >
-            <el-form-item label="职业/Employment" prop="DaughterEmployment" class="el_left" >
-              <el-input v-model="OtherInformation.DaughterEmployment" clearable  class="el-in-left"></el-input>
-            </el-form-item>
-          </el-col>
-          <el-col :span="6.5" >
-            <el-form-item label="邮箱/E-mail" prop="Daughtermail"
-            class="el_left" required
-            :rules="{ type: 'email', message: '请输入正确的邮箱地址', trigger: ['blur', 'change'] }">
-              <el-input v-model="OtherInformation.Daughtermail" clearable class="el-in-left"></el-input>
+            <el-form-item label="职业/Employment" prop="Family[3].DaughterEmployment" class="el_left" required>
+              <el-input v-model="OtherInformation.Family[3].DaughterEmployment" clearable  class="el-in-left"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="6" >
-            <el-form-item label="联系方式/Telephone Number" prop="DaughterNumber" class="el_left" >
-              <el-input v-model="OtherInformation.DaughterNumber" clearable  class="el-in-left"></el-input>
+            <el-form-item label="电话/Telephone Number" prop="Family[3].DaughterNumber" class="el_left" required>
+              <el-input v-model="OtherInformation.Family[3].DaughterNumber" clearable  class="el-in-left"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="6.5" >
+            <el-form-item label="邮箱/E-mail" prop="Family[3].Daughtermail"
+            class="el_left" required>
+              <el-input v-model="OtherInformation.Family[3].Daughtermail" clearable class="el-in-left"></el-input>
             </el-form-item>
           </el-col>
         </el-form-item>
-
+        </el-form>
         <div class="bottom_button">
           <el-button @click="resetForm('OtherInformation')">重置 Reset</el-button>
-          <el-button type="primary" @click="submitForm('OtherInformation')" style="margin-left:50px;">保存 Save</el-button>
-          <el-button type="primary" @click="submitForm('OtherInformation')" style="margin-left:50px;">保存并继续 Save &Continue</el-button>
+          <el-button type="primary" @click="submitForm('OtherInformation','Family')" style="margin-left:50px;">保存 Save</el-button>
+          <el-button type="primary" @click="submitForm('OtherInformation','Family')" style="margin-left:50px;">保存并继续 Save &Continue</el-button>
         </div>
       </el-form>
     </div>
@@ -134,40 +131,35 @@ export default{
   data () {
     return {
       OtherInformation: {
-        Name: '', // 姓
-        Tel: '',
-        omail: '',
-        Address: '',
-        FatherName: '',
-        FatherNumber: '',
-        FatherEmployment: '',
-        Fathermail: '',
-        MotherName: '',
-        MotherNumber: '',
-        MotherEmployment: '',
-        Mothermail: '',
-        DaughterNumber: '',
-        DaughterEmployment: '',
-        Daughtermail: '',
-        DaughterName: '',
-        SpouseName: '',
-        SpouseNumber: '',
-        Spousemail: '',
-        SpouseEmployment: ''
+        username: 'zmj',
+        name: '',
+        tel: '',
+        fax: '',
+        address: '',
+        type: 1,
+        Family: [{
+          'FatherName': '', 'FatherNumber': '', 'FatherEmployment': '', 'Fathermail': ''
+        }, {
+          'MotherName': '', 'MotherNumber': '', 'MotherEmployment': '', 'Mothermail': ''
+        }, {
+          'SpouseName': '', 'SpouseNumber': 'xx', 'SpouseEmployment': 'xx', 'Spousemail': ''
+        }, {
+          'DaughterName': '', 'DaughterNumber': '', 'DaughterEmployment': '', 'Daughtermail': ''
+        }]
       },
       rules: {
-        Name: [
+        name: [
           { required: true, message: '必填项 This field is required.', trigger: 'blur' }
           // { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
         ],
-        Address: [
+        address: [
           { required: true, message: '必填项 This field is required.', trigger: 'blur' }
         ],
-        Tel: [
+        tel: [
           { required: true, message: '必填项 This field is required.', trigger: 'blur' },
           { type: 'number', message: 'Must fill number'}
         ],
-        omail: [
+        fax: [
           { required: true, message: '必填项 This field is required.', trigger: 'blur' },
           { type: 'email', message: '请输入正确的邮箱地址', trigger: ['blur', 'change'] }
         ]
@@ -178,7 +170,40 @@ export default{
     submitForm (formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          alert('submit!')
+          this.$axios({
+            method: 'get',
+            url: '/apis/ContactServlet',
+            params: {
+              username: this.OtherInformation.username,
+              name: this.OtherInformation.name,
+              tel: this.OtherInformation.tel,
+              fax: this.OtherInformation.fax,
+              address: this.OtherInformation.address,
+              type: this.OtherInformation.type
+            }
+          }).then((response) => {
+            console.log(response)
+            console.log(response.data)
+          }).catch((error) => {
+            console.log(error)
+          })
+          this.$axios({
+            method: 'get',
+            url: '/apis/FamilyServlet',
+            params: {
+              username: this.OtherInformation.username,
+              Father: this.OtherInformation.Family[0],
+              Mother: this.OtherInformation.Family[1],
+              Daughter: this.OtherInformation.Family[2],
+              Spouse: this.OtherInformation.Family[3],
+              type: this.OtherInformation.type
+            }
+          }).then((response) => {
+            console.log(response)
+            console.log(response.data)
+          }).catch((error) => {
+            console.log(error)
+          })
         } else {
           console.log('error submit!!')
           return false

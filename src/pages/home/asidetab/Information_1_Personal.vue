@@ -5,98 +5,83 @@
       <el-form :model="PersonalForm" :rules="rules" ref="PersonalForm" label-width="170px" class="demo-PersonalForm" label-position="left">
         <!-- 姓名 -->
         <p>护照用名/Passport Name:</p>
-        <el-form-item label="姓/Family Name" prop="Familyname" class="el_left">
-          <el-input v-model="PersonalForm.Familyname" clearable style="width:400px;" class="el-in-left"></el-input>
+        <el-form-item label="姓/Family Name" prop="family_name" class="el_left">
+          <el-input v-model="PersonalForm.family_name" clearable class="el-in-left"></el-input>
         </el-form-item>
-        <el-form-item label="名/Given Name" prop="Givenname" class="el_left">
-          <el-input v-model="PersonalForm.Givenname" clearable style="width:400px" class="el-in-left"></el-input>
+        <el-form-item label="名/Given Name" prop="given_name" class="el_left">
+          <el-input v-model="PersonalForm.given_name" clearable  class="el-in-left"></el-input>
         </el-form-item>
         <p class="score-split"></p>
         <!-- 国家 -->
-        <el-form-item label="国籍/Nationality" prop="Nationality" >
-          <el-input v-model="PersonalForm.Nationality" clearable style="width:400px"></el-input>
+        <el-form-item label="国籍/Nationality" prop="nationality" >
+          <el-autocomplete :fetch-suggestions="countrySearch" v-model="PersonalForm.nationality" placeholder="请选择或填写国籍/Please Choose or Input your Nationality" clearable class="el-in-nomal">
+          </el-autocomplete>
         </el-form-item>
         <!-- 护照号码-->
-        <el-form-item label="护照号码/Passport No" prop="Passport" >
-          <el-input v-model="PersonalForm.Passport" clearable style="width:400px"></el-input>
+        <el-form-item label="护照号码/Passport No" prop="passport_no" >
+          <el-input v-model="PersonalForm.passport_no" clearable class="el-in-nomal"></el-input>
         </el-form-item>
         <p class="score-split"></p>
         <!-- 出生日期 -->
-        <el-form-item label="出生日期/Date of Birth" prop="Birthdate">
-          <el-date-picker value-format="yyyyMMdd" type="date" placeholder="选择日期 Select Date" v-model="PersonalForm.Birthdate" style="width: 400px"></el-date-picker>
+        <el-form-item label="出生日期/Date of Birth" prop="date_birth">
+          <el-date-picker value-format="yyyyMMdd" type="date" placeholder="选择日期 Select Date" v-model="PersonalForm.date_birth" class="el-in-nomal"></el-date-picker>
         </el-form-item>
         <!-- 出生地点 -->
         <p>出生地点/Place of Birth</p>
         <el-form-item label="国家/Country" prop="Country" class="el_left">
-          <el-input v-model="PersonalForm.Country" clearable style="width:400px"class="el-in-left"></el-input>
+          <el-autocomplete :fetch-suggestions="countrySearch" v-model="PersonalForm.Country" placeholder="请选择或填写国家/Please Choose or Input your Country" clearable class="el-in-left">
+          </el-autocomplete>
         </el-form-item>
         <el-form-item label="城市/City" prop="City" class="el_left">
-          <el-input v-model="PersonalForm.City" clearable style="width:400px"class="el-in-left"></el-input>
+          <el-input v-model="PersonalForm.City" clearable class="el-in-left"></el-input>
         </el-form-item>
         <p class="score-split"></p>
         <!-- 性别 -->
-        <el-form-item label="性别/Gender " prop="Sex">
-          <el-radio-group v-model="PersonalForm.Sex">
-            <el-radio label="男/Male"></el-radio>
-            <el-radio label="女/Female"></el-radio>
+        <el-form-item label="性别/Gender " prop="sex">
+          <el-radio-group v-model="PersonalForm.sex">
+            <el-radio label="0" value='0'>男/Male</el-radio>
+            <el-radio label="1" value='1'>女/Female</el-radio>
           </el-radio-group>
         </el-form-item>
         <!-- 婚姻状况Marital Status -->
-        <el-form-item label="婚姻状况/Marital Status" prop="Marital">
-          <el-radio-group v-model="PersonalForm.Marital">
-            <el-radio label="已婚/Married"></el-radio>
-            <el-radio label="未婚/Single"></el-radio>
-            <el-radio label="其它/Other"></el-radio>
+        <el-form-item label="婚姻状况/Marital Status" prop="marri">
+          <el-radio-group v-model="PersonalForm.marri">
+            <el-radio label="0" value="0">已婚/Married</el-radio>
+            <el-radio label="1" value="1">未婚/Single</el-radio>
+            <el-radio label="2" value="2">其它/Other</el-radio>
           </el-radio-group>
         </el-form-item>
-        <el-form-item label="宗教信仰/Religion" prop="Religion">
-          <el-select v-model="PersonalForm.Religion" placeholder="请选择宗教信仰/Please Choose your religion" style="width:400px">
-            <el-option label="圣公会 Anglican" value="Anglican"></el-option>
-            <el-option label="无神论 Atheism" value="Atheism"></el-option>
-            <el-option label="佛教 Buddhism" value="Buddhism"></el-option>
-            <el-option label="天主教 Catholicism" value="Catholicism"></el-option>
-            <el-option label="儒教 Confucianist" value="Confucianist"></el-option>
-            <el-option label="基督教 Christianity" value="Christianity"></el-option>
-            <el-option label="东正教 Eastern Orhodoxy " value="Eastern Orhodoxy"></el-option>
-            <el-option label="印度教 Hinduism" value="Hinduism"></el-option>
-            <el-option label="伊斯兰教 Islam" value="Islam"></el-option>
-            <el-option label="犹太教 Judaism " value="Judaism"></el-option>
-            <el-option label="摩门教 Mormon" value="Mormon"></el-option>
-            <el-option label="新教 Protestantism" value="Protestantism"></el-option>
-            <el-option label="神道 Shintoism" value="Protestantism"></el-option>
-            <el-option label="锡克教 Sikh" value="Sikh"></el-option>
-            <el-option label="道教 Taoism" value="Taoism"></el-option>
-            <el-option label="无信仰 None" value="None"></el-option>
-            <el-option label="其他 Others" value="Others"></el-option>
-          </el-select>
+        <el-form-item label="宗教信仰/Religion" prop="religion">
+          <el-autocomplete :fetch-suggestions="querySearch" v-model="PersonalForm.religion" placeholder="请选择或填写宗教信仰/Please Choose or Input your religion" class="el-in-nomal">
+          </el-autocomplete>
         </el-form-item>
         <p class="score-split"></p>
         <p>录取通知书邮寄地址/Address for correspondence (Please inform  BCU for any change of this address)</p>
-        <el-form-item label="地址/Address" prop="Address" class="el_left" >
-          <el-input v-model="PersonalForm.Address" clearable style="width:400px" class="el-in-left"></el-input>
+        <el-form-item label="地址/Address" prop="address_c" class="el_left" >
+          <el-input v-model="PersonalForm.address_c" clearable class="el-in-left"></el-input>
         </el-form-item>
-        <el-form-item label="电话/Tel" prop="Tel" class="el_left">
-          <el-input v-model.number="PersonalForm.Tel" clearable style="width:400px" class="el-in-left"></el-input>
+        <el-form-item label="电话/Tel" prop="ctel" class="el_left">
+          <el-input v-model.number="PersonalForm.ctel" clearable  class="el-in-left"></el-input>
         </el-form-item>
-        <el-form-item label="传真/Fax" prop="Fax" class="el_left">
-          <el-input v-model="PersonalForm.Fax" clearable style="width:400px" class="el-in-left"></el-input>
+        <el-form-item label="传真/Fax" prop="cfax" class="el_left">
+          <el-input v-model="PersonalForm.cfax" clearable class="el-in-left"></el-input>
         </el-form-item>
-        <el-form-item label="E-mail" prop="mail" class="el_left">
-          <el-input v-model="PersonalForm.mail" clearable style="width:400px" class="el-in-left"></el-input>
+        <el-form-item label="E-mail" prop="cmail" class="el_left">
+          <el-input v-model="PersonalForm.cmail" clearable class="el-in-left"></el-input>
         </el-form-item>
         <p class="score-split"></p>
         <p>家庭地址/Home Address</p>
-        <el-form-item label="地址/Home Address" prop="Home" class="el_left">
-          <el-input v-model="PersonalForm.Home" clearable style="width:400px" class="el-in-left"></el-input>
+        <el-form-item label="地址/Home Address" prop="address_h" class="el_left">
+          <el-input v-model="PersonalForm.address_h" clearable class="el-in-left"></el-input>
         </el-form-item>
-        <el-form-item label="电话/Tel" prop="HTel" class="el_left">
-          <el-input v-model.number="PersonalForm.HTel" clearable style="width:400px" class="el-in-left"></el-input>
+        <el-form-item label="电话/Tel" prop="htel" class="el_left">
+          <el-input v-model.number="PersonalForm.htel" clearable class="el-in-left"></el-input>
         </el-form-item>
-        <el-form-item label="传真/Fax" prop="HFax" class="el_left">
-          <el-input v-model="PersonalForm.HFax" clearable style="width:400px" class="el-in-left"></el-input>
+        <el-form-item label="传真/Fax" prop="hfax" class="el_left">
+          <el-input v-model="PersonalForm.hfax" clearable  class="el-in-left"></el-input>
         </el-form-item>
-        <el-form-item label="E-mail" prop="Hmail" class="el_left">
-          <el-input v-model="PersonalForm.Hmail" clearable style="width:400px" class="el-in-left"></el-input>
+        <el-form-item label="E-mail" prop="hmail" class="el_left">
+          <el-input v-model="PersonalForm.hmail" clearable class="el-in-left"></el-input>
         </el-form-item>
         <div class="bottom_button">
           <el-button @click="resetForm('PersonalForm')">重置 Reset</el-button>
@@ -113,35 +98,42 @@ export default{
   data () {
     return {
       PersonalForm: {
-        Familyname: '', // 姓
-        Givenname: '', // 名
-        Nationality: '', // 国籍
-        Passport: '',
+        username: 'zzz',
+        pic: '',
+        passport_name: '',
+        family_name: '', // 姓
+        given_name: '', // 名
+        nationality: '', // 国籍
+        date_birth: '',
+        passport_no: '',
         Country: '',
         City: '',
-        Sex: '',
-        Religion: '',
-        Address: '',
-        Tel: '',
-        Fax: '',
-        mail: '',
-        Home: '',
-        HTel: '',
-        HFax: '',
-        Hmail: ''
+        sex: '',
+        marri: '',
+        religion: '',
+        address_c: '',
+        ctel: '',
+        cfax: '',
+        cmail: '',
+        address_h: '',
+        htel: '',
+        hfax: '',
+        hmail: '',
+        religions: [],
+        countries: []
       },
       rules: {
-        Familyname: [
+        family_name: [
           { required: true, message: '必填项 This field is required.', trigger: 'blur' }
           // { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
         ],
-        Givenname: [
+        given_name: [
           { required: true, message: '必填项 This field is required.', trigger: 'blur' }
         ],
-        Nationality: [
+        nationality: [
           { required: true, message: '必填项 This field is required.', trigger: 'blur' }
         ],
-        Passport: [
+        passport_no: [
           { required: true, message: '必填项 This field is required.', trigger: 'blur' }
         ],
         Country: [
@@ -150,54 +142,150 @@ export default{
         City: [
           { required: true, message: '必填项 This field is required.', trigger: 'blur' }
         ],
-        Sex: [
+        sex: [
           { required: true, message: '请选择性别 Please Choose your Gender', trigger: 'change' }
         ],
         Marital: [
           { required: true, message: '请选择婚姻状况 Please Choose your Marital Status', trigger: 'change' }
         ],
-        Religion: [
+        religion: [
           { required: true, message: '请选择宗教信仰 Please Choose your religion', trigger: 'change' }
         ],
         Birthdate: [
           { type: 'date', required: true, message: '请选择日期', trigger: 'change' }
         ],
-        Address: [
+        address_c: [
           { required: true, message: '必填项 This field is required.', trigger: 'blur' }
         ],
-        Tel: [
+        ctel: [
           { required: true, message: '必填项 This field is required.', trigger: 'blur' },
           { type: 'number', message: 'Must fill number'}
         ],
-        Fax: [
+        cfax: [
           { required: false, message: '', trigger: 'blur' }
         ],
-        Home: [
+        address_h: [
           { required: true, message: '必填项 This field is required.', trigger: 'blur' }
         ],
-        mail: [
+        cmail: [
           { required: true, message: '必填项 This field is required.', trigger: 'blur' },
-          { type: 'email', message: '请输入正确的邮箱地址', trigger: ['blur', 'change'] }
+          { type: 'ecmail', message: '请输入正确的邮箱地址', trigger: ['blur', 'change'] }
         ],
-        HTel: [
+        htel: [
           { required: true, message: '必填项 This field is required.', trigger: 'blur' },
           { type: 'number', message: 'Must fill number'}
         ],
-        HFax: [
+        hfax: [
           { required: false, message: '', trigger: 'blur' }
         ],
-        Hmail: [
+        hmail: [
           { required: true, message: '必填项 This field is required.', trigger: 'blur' },
-          { type: 'email', message: '请输入正确的邮箱地址', trigger: ['blur', 'change'] }
+          { type: 'ecmail', message: '请输入正确的邮箱地址', trigger: ['blur', 'change'] }
         ]
       }
     }
   },
   methods: {
+    // 默认选中方法
+    querySearch (queryString, cb) {
+      var religions = this.religions
+      var results = queryString ? religions.filter(this.createFilter(queryString)) : religions
+      // 调用 callback 返回建议列表的数据
+      cb(results)
+    },
+    countrySearch (queryString, cb) {
+      var countries = this.countries
+      var results = queryString ? countries.filter(this.createFilter(queryString)) : countries
+      cb(results)
+    },
+    createFilter (queryString) {
+      return (listdata) => {
+        return (listdata.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0)
+      }
+    },
+    loadAll () {
+      return [
+        {'value': '圣公会 Anglican'}, {'value': '无神论 Atheism'},
+        {'value': '佛教 Buddhism'}, {'value': '天主教 Catholicism'}, {'value': '儒教 Confucianist'}, {'value': '基督教 Christianity'},
+        {'value': '东正教 Eastern Orhodoxy'}, {'value': '印度教 Hinduism'}, {'value': '伊斯兰教 Islam'}, {'value': '犹太教 Judaism'},
+        {'value': '摩门教 Mormon'}, {'value': '新教 Protestantism' }, {'value': '神道 Shintoism'}, {'value': '锡克教 Sikh'},
+        {'value': '道教 Taoism'}, {'value': '无信仰 None'}]
+    },
+    loadCountries () {
+      return [
+        {'value': '蒙古 Mongolia'}, {'value': '新加坡 Singapore'},
+        {'value': '马来西亚 Malaysia'}, {'value': '印度尼西亚 Indonesia'},
+        {'value': '缅甸 Myanmar'}, {'value': '泰国 Thailand'},
+        {'value': '老挝 Laos'}, {'value': '柬埔寨 Cambodia'},
+        {'value': '越南 Vietnam'}, {'value': '文莱 Brunei'},
+        {'value': '菲律宾 Philippines'}, {'value': '伊朗 Iran' },
+        {'value': '伊拉克 Iraq'}, {'value': '土耳其 Turkey'},
+        {'value': '叙利亚 Syria'}, {'value': '约旦 Jordan'},
+        {'value': '黎巴嫩 Lebanon'}, {'value': '以色列 Israel'},
+        {'value': '巴勒斯坦 Palestine'}, {'value': '沙特阿拉伯 Saudi Arabia'},
+        {'value': '也门 Yemen'}, {'value': '阿曼 Oman'},
+        {'value': '阿联酋 United Arab Emirates'}, {'value': '卡塔尔 Qatar'},
+        {'value': '科威特 Kuwait'}, {'value': '巴林 Bahrain'},
+        {'value': '希腊 Greece'}, {'value': '塞浦路斯 Cyprus' },
+        {'value': '埃及的西奈半岛 Sinai Peninsula of Egypt'}, {'value': '印度 India'},
+        {'value': '巴基斯坦 Pakistan'}, {'value': '孟加拉 Bangladesh'},
+        {'value': '阿富汗 Afghanistan'}, {'value': '斯里兰卡 Sri Lanka'},
+        {'value': '马尔代夫 Maldives'}, {'value': '尼泊尔 Nepal'},
+        {'value': '不丹 Bhutan'}, {'value': '哈萨克斯坦 Kazakhstan'},
+        {'value': '乌兹别克斯坦 Uzbekistan'}, {'value': '土库曼斯坦 Turkmenistan'},
+        {'value': '塔吉克斯坦 Tajikistan'}, {'value': '吉尔吉斯斯坦 Kyrgyzstan'},
+        {'value': '俄罗斯 Russia'}, {'value': '乌克兰 Ukraine' },
+        {'value': '白俄罗斯 Belarus'}, {'value': '格鲁吉亚 Georgia'},
+        {'value': '阿塞拜疆 Azerbaijan'}, {'value': '亚美尼亚 Armenia'},
+        {'value': '摩尔多瓦 Moldova'}, {'value': '波兰 Poland'},
+        {'value': '立陶宛 Lithuania'}, {'value': '爱沙尼亚 Estonia'},
+        {'value': '拉脱维亚 Latvia'}, {'value': '捷克 Czech Republic'},
+        {'value': '斯洛伐克 Slovakia'}, {'value': '匈牙利 Hungary'},
+        {'value': '斯洛文尼亚 Slovenia'}, {'value': '克罗地亚 Croatia'},
+        {'value': '波黑 Bosnia and Herzegovina'}, {'value': '黑山 Montenegro' },
+        {'value': '塞尔维亚 Serbia'}, {'value': '阿尔巴尼亚 Albania'},
+        {'value': '罗马尼亚 Romania'}, {'value': '保加利亚 Bulgaria'},
+        {'value': '马其顿 Macedonia' }
+      ]
+    },
     submitForm (formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          alert('submit!')
+          let PersonalJson = JSON.stringify(this.PersonalForm)
+          alert('submit!' + PersonalJson)
+          this.$axios({
+            method: 'get',
+            url: '/apis/PinfServlet',
+            params: {
+              PersonalJson: PersonalJson,
+              username: this.PersonalForm.username,
+              pic: this.PersonalForm.pic,
+              passport_name: this.PersonalForm.passport_name,
+              family_name: this.PersonalForm.family_name,
+              given_name: this.PersonalForm.given_name,
+              nationality: this.PersonalForm.nationality,
+              date_birth: this.PersonalForm.date_birth,
+              passport_no: this.PersonalForm.passport_no, // 空
+              place_birth: this.PersonalForm.Country + '/' + this.PersonalForm.City,
+              sex: this.PersonalForm.sex,
+              marri: this.PersonalForm.marri,
+              religion: this.PersonalForm.religion,
+              address_c: this.PersonalForm.address_c,
+              ctel: this.PersonalForm.ctel,
+              cfax: this.PersonalForm.cfax,
+              cmail: this.PersonalForm.cmail,
+              address_h: this.PersonalForm.address_h,
+              htel: this.PersonalForm.htel,
+              hfax: this.PersonalForm.hfax,
+              hmail: this.PersonalForm.hmail,
+              type: 1
+            }
+          }).then((response) => {
+            console.log(response)
+            console.log(response.PersonalForm)
+          }).catch((error) => {
+            console.log(error)
+          })
         } else {
           console.log('error submit!!')
           return false
@@ -207,6 +295,10 @@ export default{
     resetForm (formName) {
       this.$refs[formName].resetFields()
     }
+  },
+  mounted () {
+    this.religions = this.loadAll()
+    this.countries = this.loadCountries()
   }
 }
 </script>
@@ -241,8 +333,12 @@ export default{
     .el_left{
       padding-left:20px;
       .el-in-left{
+        width:75%;
         margin-left:-20px;
       }
+    }
+    .el-in-nomal{
+      width:73%;
     }
     .bottom_button{
       margin-bottom:40px;
