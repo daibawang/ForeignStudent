@@ -88,6 +88,24 @@ export default{
       }]
     }
   },
+  computed () {
+    /* 页面挂载获取保存的cookie值，渲染到页面上 */
+    let uname = getCookie('username')
+    this.name = uname
+    if (uname == '') {
+      this.$router.push('/')
+    }
+  },
+  created: function () {
+    console.log(this.$route.name)
+    let thisactived = this.$route.name.split('_')
+    this.actived = parseInt(thisactived[1]) - 1
+    this.hover = parseInt(thisactived[1]) - 1
+    console.log(this.actived)
+  },
+  mounted () {
+    // console.log(this.$route)
+  },
   methods: {
     toggle (index) {
       this.actived = index
@@ -105,7 +123,7 @@ export default{
 .my{
 }
 </style>
-<style lang="stylus" scoped>
+<style lang="stylus">
 @import '~styles/varibles.styl'
 .container{
   width: 82%;

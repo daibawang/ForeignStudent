@@ -5,7 +5,14 @@
 </template>
 <script>
 export default{
-  name: 'Payment'
+  props: ['username'],
+  name: 'Payment',
+  // data () {
+  //
+  // },
+  mounted () {
+    console.log(this.username)
+  }
 }
 </script>
 <style>

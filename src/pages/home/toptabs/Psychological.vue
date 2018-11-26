@@ -5,7 +5,10 @@
 </template>
 <script>
 export default{
-  name: 'Psychological'
+  name: 'Psychological',
+  mounted () {
+    console.log(this.$route)
+  }
 }
 </script>
 <style>

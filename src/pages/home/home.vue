@@ -11,6 +11,7 @@
 import HomeHeader from './components/Header.vue'
 import TopTabs from './toptabs/TopTabs.vue'
 import axios from 'axios'
+import {setCookie, getCookie} from '../../assets/js/cookie.js'
 export default{
   name: 'Home',
   components: {
@@ -19,10 +20,13 @@ export default{
   },
   data () {
     return {
+      name: '',
       city: '',
       ischeck: 2,
       swiperList: []
     }
+  },
+  computed () {
   },
   methods: {
     getHomeInfo () {
@@ -39,6 +43,13 @@ export default{
   },
   // 生命周期函数
   mounted () {
+    /* 页面挂载获取保存的cookie值，渲染到页面上 */
+    let uname = getCookie('username')
+    this.name = uname,
+    console.log(this.name)
+    if (uname == '') {
+      this.$router.push('/')
+    }
     this.getHomeInfo()
   }
 }

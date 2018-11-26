@@ -43,7 +43,7 @@
           <el-button @click="resetForm('EducationForm')">重置</el-button>
           <div class="EducationForm_submit">
             <el-button type="primary" @click="submitForm('EducationForm')">保存 Save</el-button>
-            <el-button type="primary" @click="submitForm('EducationForm')">保存并继续 Save &Continue Save</el-button>
+            <el-button type="primary" @click="PersonalFormNavicat('EducationForm')">保存并继续 Save &Continue Save</el-button>
           </div>
         </el-form-item>
       </el-form>
@@ -51,10 +51,14 @@
   </div>
 </template>
 <script>
+import {setCookie, getCookie} from '../../../assets/js/cookie.js'
 export default{
   name: 'Information_2_Education',
   data () {
     return {
+      username: '',
+      isSave: false,
+      geturl: '',
       EducationForm: {
         domains: [{
           key: 0,
@@ -66,19 +70,66 @@ export default{
       }
     }
   },
+  created: function () {
+    let uname = getCookie('username')
+    if (uname == '') {
+      this.$router.push('/')
+    }
+    this.username = uname,
+    console.log(this.username)
+    this.$axios({
+      method: 'get',
+      url: '/apis/GetStudyByNameServlet',
+      params: {
+        username: this.username
+      }
+    }).then((response) => {
+      // 判断有没有值
+      if (response.data == '') {
+        console.log('zzzzzzzz')
+      } else {
+        this.isSave = true
+        this.EducationForm.domains = response.data
+        for (let i = 0; i < this.EducationForm.domains.length; i++) {
+          this.EducationForm.domains[i].fromdate = this.EducationForm.domains[i].btime
+          this.EducationForm.domains[i].todate = this.EducationForm.domains[i].ltime
+          this.EducationForm.domains[i].Previous = this.EducationForm.domains[i].unit
+          this.EducationForm.domains[i].Fields = this.EducationForm.domains[i].obj
+        }
+      }
+      console.log(this.EducationForm.domains)
+    }).catch((error) => {
+      console.log(error)
+    })
+  },
   methods: {
+    PersonalFormNavicat (formName) {
+      if (this.isClickSave == true) {
+        this.$router.push('/asidetab/Information_3_Working')
+      } else {
+        this.submitForm(formName)
+        this.$router.push('/asidetab/Information_3_Working')
+      }
+    },
     submitForm (formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
+          if (this.isSave == false) {
+            this.geturl = '/apis/AddStudyServlet'
+          } else {
+            this.geturl = '/apis/ChangeStudyServlet'
+          }
           var domainsJson = encodeURI(JSON.stringify(this.EducationForm.domains))
           console.log(domainsJson)
           this.$axios({
             method: 'get',
-            url: '/apis/StudyServlet',
+            url: this.geturl,
             params: {
+              username: this.username,
               domains: domainsJson
             }
           }).then((response) => {
+            this.isSave = true
             console.log(response)
             console.log(response.data)
           }).catch((error) => {
@@ -112,10 +163,6 @@ export default{
   }
 }
 </script>
-<style>
-.Info_1_border{
-}
-</style>
 <style lang="stylus">
 .Info_1_border{
   padding-top:20px;

@@ -1,5 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import Login from '@/pages/login/login.vue'
+import Main from '@/pages/Main/main.vue'
 import Home from '@/pages/home/home.vue'
 import ApplicationMain from '@/pages/home/toptabs/ApplicationMain'
 import Psychological from '@/pages/home/toptabs/Psychological'
@@ -22,14 +24,29 @@ export default new Router({
   routes: [
     {
       path: '/',
+      name: 'Login',
+      component: Login,
+      meta:{
+        title:'this is login',
+      }
+    },
+    {
+      path: '/main',
+      props:true,
+      name: 'Main',
+      component: Main,
+    },
+    {
+      path: '/home',
       name: 'Home',
       component: Home,
-      redirect:'/ApplicationMain',
+      redirect:{ name: 'ApplicationMain' },
       children:[
         {
           name:'ApplicationMain',
           path:'/ApplicationMain',
           mode:'Student',
+          props:true,
           component:ApplicationMain,
           redirect:'/asidetab/Information_1_Personal',
           children:[
@@ -45,9 +62,9 @@ export default new Router({
             {name:'Information_10_Submission',path:'/asidetab/Information_10_Submission',component:Information_10_Submission},
           ]
         },
-        {name:'Psychological',path:'/Psychological',component:Psychological},
-        {name:'Status',path:'/Status',component:Status},
-        {name:'Payment',path:'/Payment',component:Payment}
+        {name:'Psychological',path:'/Psychological',props:true,component:Psychological},
+        {name:'Status',path:'/Status',props:true,component:Status},
+        {name:'Payment',path:'/Payment',props:true,component:Payment}
       ]
     }
   ]

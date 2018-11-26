@@ -22,12 +22,12 @@
         <el-form-item label="申请专业学习时间/Duration of the subject Study:" class="el_left" required >
           <el-col :span="5">
             <el-select v-model="StudyForm.ym_f" style="width:150px;" class="el-in-left el_left">
-              <el-option label="2018" value="2018">2018</el-option>
+              <el-option label="2018-09" value="201809">2018-07</el-option>
             </el-select>
           </el-col>
           <el-col :span="5" >
             <el-select v-model="StudyForm.ym_l" style="width:150px; margin-left:10px" class="el-in-left el_left">
-              <el-option label="2019" value="2018">2019</el-option>
+              <el-option label="2019-07" value="201907">2019-07</el-option>
             </el-select>
           </el-col>
         </el-form-item>
@@ -43,19 +43,22 @@
         <div class="bottom_button">
           <el-button @click="resetForm('StudyForm')">重置 Reset</el-button>
           <el-button type="primary" @click="submitForm('StudyForm')" style="margin-left:50px;">保存 Save</el-button>
-          <el-button type="primary" @click="submitForm('StudyForm')" style="margin-left:50px;">保存并继续 Save &Continue</el-button>
+          <el-button type="primary" @click="PersonalFormNavicat('StudyForm')" style="margin-left:50px;">保存并继续 Save &Continue</el-button>
         </div>
       </el-form>
     </div>
   </div>
 </template>
 <script>
+import {setCookie, getCookie} from '../../../assets/js/cookie.js'
 export default{
   name: 'Information_5_Plan',
   data () {
     return {
+      username: '',
+      isSave: false,
+      geturl: '',
       StudyForm: {
-        username: 'zmz',
         degree: '',
         subject: '',
         ym_f: '',
@@ -87,31 +90,74 @@ export default{
       }
     }
   },
+  created: function () {
+    let uname = getCookie('username')
+    if (uname == '') {
+      this.$router.push('/')
+    }
+    this.username = uname,
+    console.log(this.username)
+    this.$axios({
+      method: 'get',
+      url: '/apis/GetProposedByNameServlet',
+      params: {
+        username: this.username
+      }
+    }).then((response) => {
+      if (response.data[0].username == '') {
+        console.log('zzzzzzzz')
+      } else {
+        this.isSave = true
+        this.StudyForm.degree = response.data[0].degree
+        this.StudyForm.details = response.data[0].details
+        this.StudyForm.subject = '中医药专业Traditional Chinese Medicine'
+        this.StudyForm.ym_f = response.data[0].ym_f
+        this.StudyForm.ym_l = response.data[0].ym_l
+      }
+      console.log(response.data)
+    }).catch((error) => {
+      console.log(error)
+    })
+  },
   methods: {
     handleChange (value) {
       console.log(this.StudyForm.Type)
     },
-    // "domain.testUrl"
+    PersonalFormNavicat (formName) {
+      if (this.isClickSave == true) {
+        console.log('保存后跳转的')
+        this.$router.push('/asidetab/Information_6_Achievements')
+      } else {
+        console.log('保存并跳转')
+        this.submitForm(formName)
+        this.$router.push('/asidetab/Information_6_Achievements')
+      }
+    },
     submitForm (formName) {
+      this.isClickSave = true
       // let ym_f = this.moment(his.StudyForm.ym_f).format('YYYYMMDD')
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          alert('submit!' + this.StudyForm.degree + this.StudyForm.Birthdate)
+          if (this.isSave == false) {
+            this.geturl = '/apis/AddProposedServlet'
+          } else {
+            this.geturl = '/apis/GetXsByNameServlet'
+          }
           var studyJsonForm = JSON.stringify(this.StudyForm)
           this.$axios({
             method: 'get',
-            url: '/apis/ProposedServlet',
+            url: this.geturl,
             params: {
               // StudyForm: studyJsonForm
-              username: this.StudyForm.username,
+              username: this.username,
               degree: this.StudyForm.degree,
               subject: this.StudyForm.subject,
               ym_f: this.StudyForm.ym_f,
               ym_l: this.StudyForm.ym_l,
-              details: this.StudyForm.details,
-              type: this.StudyForm.type
+              details: this.StudyForm.details
             }
           }).then((response) => {
+            this.isSave = true
             console.log(response)
             console.log(response.data)
           }).catch((error) => {

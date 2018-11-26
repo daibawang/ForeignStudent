@@ -19,7 +19,7 @@
             <el-cascader>
         </el-form-item>
         <el-form-item label="考试成绩/Test Scores" prop="level_c_Scores" class="el_left">
-          <el-input v-model="LanguageForm.level_c_Scores" clearable style="width:200px;" class="el-in-left el_left"></el-input>
+          <el-input v-model.number="LanguageForm.level_c_Scores" clearable style="width:200px;" class="el-in-left el_left"></el-input>
         </el-form-item>
 
         <p class="score-split"></p>
@@ -41,23 +41,27 @@
           </el-select>
         </el-form-item>
         <el-form-item label="考试成绩/Test Scores" prop="level_e_score" class="el_left">
-          <el-input v-model="LanguageForm.level_e_score" clearable style="width:200px;" class="el-in-left el_left"></el-input>
+          <el-input v-model.number="LanguageForm.level_e_score" clearable style="width:200px;" class="el-in-left el_left"></el-input>
         </el-form-item>
 
         <div class="bottom_button">
           <el-button @click="resetForm('LanguageForm')">重置 Reset</el-button>
           <el-button type="primary" @click="submitForm('LanguageForm')" style="margin-left:50px;">保存 Save</el-button>
-          <el-button type="primary" @click="submitForm('LanguageForm')" style="margin-left:50px;">保存并继续 Save &Continue</el-button>
+          <el-button type="primary" @click="PersonalFormNavicat('LanguageForm')" style="margin-left:50px;">保存并继续 Save &Continue</el-button>
         </div>
       </el-form>
     </div>
   </div>
 </template>
 <script>
+import {setCookie, getCookie} from '../../../assets/js/cookie.js'
 export default{
   name: 'Information_4_Language',
   data () {
     return {
+      username: '',
+      isSave: false,
+      geturl: '',
       options: [
         {
           value: 'HSK',
@@ -87,13 +91,12 @@ export default{
         }
       ],
       LanguageForm: {
-        username: '',
         proficiency_c: '', // 汉语能力
         level_c: [], // 汉语考试
-        level_c_Scores: '', // 汉语考试成绩
+        level_c_Scores: null, // 汉语考试成绩
         proficiency_e: '', // 英语能力
         level_e: '', // 英语考试
-        level_e_score: '',
+        level_e_score: null,
         type: 1
       },
       rules: {
@@ -107,32 +110,86 @@ export default{
           { required: true, message: '必填项 This field is required.', trigger: 'blur' }
         ],
         level_e_score: [
-          { required: true, message: '必填项 This field is required.', trigger: 'blur' }
+          { required: true, message: '必填项 This field is required.', trigger: 'blur' },
+          { type: 'number', message: '只能输入数字 Only Number', trigger: 'blur'}
+        ],
+        level_c_Scores: [
+          { required: false, trigger: 'blur' },
+          { type: 'number', message: '只能输入数字 Only Number', trigger: 'blur'}
         ]
       }
     }
+  },
+  created: function () {
+    let uname = getCookie('username')
+    if (uname == '') {
+      this.$router.push('/')
+    }
+    this.username = uname,
+    console.log(this.username)
+    this.$axios({
+      method: 'get',
+      url: '/apis/GetProficiencyByNameServlet',
+      params: {
+        username: this.username
+      }
+    }).then((response) => {
+      if (response.data[0].username == '') {
+        console.log('zzzzzzzz')
+      } else {
+        this.isSave = true
+        let level_c_return = response.data[0].level_c.split('级').toString()
+        level_c_return = level_c_return.split('分').toString()
+        level_c_return = level_c_return.split(',')
+        this.LanguageForm.proficiency_c = response.data[0].proficiency_c
+        this.LanguageForm.level_c = level_c_return[0].split(' ')
+        if (this.LanguageForm.level_c[0] == 'none') {
+          this.LanguageForm.level_c_Scores = ''
+        } else {
+          this.LanguageForm.level_c_Scores = parseInt(level_c_return[1])
+        }
+        this.LanguageForm.proficiency_e = response.data[0].proficiency_e
+        this.LanguageForm.level_e = response.data[0].level_e.substr(0, 5)
+        this.LanguageForm.level_e_score = parseInt(response.data[0].level_e.substr(5, 3))
+      }
+    }).catch((error) => {
+      console.log(error)
+    })
   },
   methods: {
     handleChange (value) {
       console.log(this.LanguageForm.Type)
     },
+    PersonalFormNavicat (formName) {
+      if (this.isClickSave == true) {
+        this.$router.push('/asidetab/Information_5_Plan')
+      } else {
+        this.submitForm(formName)
+        this.$router.push('/asidetab/Information_5_Plan')
+      }
+    },
     submitForm (formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          console.log(this.LanguageForm)
+          if (this.isSave == false) {
+            this.geturl = '/apis/AddProficiencyServlet'
+          } else {
+            this.geturl = '/apis/ChangeProficiencyServlet'
+          }
           this.$axios({
             method: 'get',
-            url: '/apis/ProficiencyServlet',
+            url: this.geturl,
             params: {
               // LanguageForm: studyJsonForm
-              username: this.LanguageForm.username,
+              username: this.username,
               proficiency_c: this.LanguageForm.proficiency_c,
-              level_c: this.LanguageForm.level_c + '级' + this.LanguageForm.level_c_Scores + '分',
+              level_c: this.LanguageForm.level_c[0] + ' ' + this.LanguageForm.level_c[1] + '级' + this.LanguageForm.level_c_Scores + '分',
               proficiency_e: this.LanguageForm.proficiency_e,
               level_e: this.LanguageForm.level_e + this.LanguageForm.level_e_score,
-              type: this.LanguageForm.type
+              type: 1
             }
           }).then((response) => {
+            this.isSave = true
             console.log(response)
             console.log(response.data)
           }).catch((error) => {

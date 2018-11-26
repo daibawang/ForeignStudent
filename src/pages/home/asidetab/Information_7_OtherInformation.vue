@@ -119,19 +119,23 @@
         <div class="bottom_button">
           <el-button @click="resetForm('OtherInformation')">重置 Reset</el-button>
           <el-button type="primary" @click="submitForm('OtherInformation','Family')" style="margin-left:50px;">保存 Save</el-button>
-          <el-button type="primary" @click="submitForm('OtherInformation','Family')" style="margin-left:50px;">保存并继续 Save &Continue</el-button>
+          <el-button type="primary" @click="PersonalFormNavicat('OtherInformation','Family')" style="margin-left:50px;">保存并继续 Save &Continue</el-button>
         </div>
       </el-form>
     </div>
   </div>
 </template>
 <script>
+import {setCookie, getCookie} from '../../../assets/js/cookie.js'
 export default{
   name: 'Information_7_OtherInformation',
   data () {
     return {
+      username: '',
+      isSave: false,
+      geturl1: '',
+      geturl2: '',
       OtherInformation: {
-        username: 'zmj',
         name: '',
         tel: '',
         fax: '',
@@ -142,7 +146,7 @@ export default{
         }, {
           'MotherName': '', 'MotherNumber': '', 'MotherEmployment': '', 'Mothermail': ''
         }, {
-          'SpouseName': '', 'SpouseNumber': 'xx', 'SpouseEmployment': 'xx', 'Spousemail': ''
+          'SpouseName': '', 'SpouseNumber': '', 'SpouseEmployment': '', 'Spousemail': ''
         }, {
           'DaughterName': '', 'DaughterNumber': '', 'DaughterEmployment': '', 'Daughtermail': ''
         }]
@@ -166,20 +170,62 @@ export default{
       }
     }
   },
+  created: function () {
+    let uname = getCookie('username')
+    if (uname == '') {
+      this.$router.push('/')
+    }
+    this.username = uname,
+    console.log(this.username)
+    this.$axios({
+      method: 'get',
+      url: '/apis/GetContactByNameServlet',
+      params: {
+        username: this.username
+      }
+    }).then((response) => {
+      // 判断有没有值
+      if (response.data[0].username == '') {
+        console.log('zzzzzzzz')
+      } else {
+        this.isSave = true
+        this.OtherInformation.name = response.data[0].name
+        this.OtherInformation.tel = parseInt(response.data[0].tel)
+        this.OtherInformation.fax = response.data[0].fax
+        this.OtherInformation.address = response.data[0].address
+      }
+    }).catch((error) => {
+      console.log(error)
+    })
+  },
   methods: {
+    PersonalFormNavicat (formName) {
+      if (this.isClickSave == true) {
+        this.$router.push('/asidetab/Information_8_Upload')
+      } else {
+        this.submitForm(formName)
+        this.$router.push('/asidetab/Information_8_Upload')
+      }
+    },
     submitForm (formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
+          if (this.isSave == false) {
+            this.geturl1 = '/apis/AddXsServlet'
+            this.geturl2 = '/apis/AddFamilyServlet'
+          } else {
+            this.geturl1 = '/apis/ChangeXsServlet'
+            this.geturl2 = '/apis/ChangeFamilyServlet'
+          }
           this.$axios({
             method: 'get',
-            url: '/apis/ContactServlet',
+            url: '/apis/AddContactServlet',
             params: {
-              username: this.OtherInformation.username,
+              username: this.username,
               name: this.OtherInformation.name,
               tel: this.OtherInformation.tel,
               fax: this.OtherInformation.fax,
-              address: this.OtherInformation.address,
-              type: this.OtherInformation.type
+              address: this.OtherInformation.address
             }
           }).then((response) => {
             console.log(response)
@@ -189,14 +235,13 @@ export default{
           })
           this.$axios({
             method: 'get',
-            url: '/apis/FamilyServlet',
+            url: '/apis/AddFamilyServlet',
             params: {
-              username: this.OtherInformation.username,
+              username: this.username,
               Father: this.OtherInformation.Family[0],
               Mother: this.OtherInformation.Family[1],
-              Daughter: this.OtherInformation.Family[2],
-              Spouse: this.OtherInformation.Family[3],
-              type: this.OtherInformation.type
+              Spouse: this.OtherInformation.Family[2],
+              Daughter: this.OtherInformation.Family[3]
             }
           }).then((response) => {
             console.log(response)

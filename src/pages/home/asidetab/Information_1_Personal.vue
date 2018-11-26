@@ -52,7 +52,7 @@
           </el-radio-group>
         </el-form-item>
         <el-form-item label="宗教信仰/Religion" prop="religion">
-          <el-autocomplete :fetch-suggestions="querySearch" v-model="PersonalForm.religion" placeholder="请选择或填写宗教信仰/Please Choose or Input your religion" class="el-in-nomal">
+            <el-autocomplete :fetch-suggestions="querySearch" v-model="PersonalForm.religion" placeholder="请选择或填写宗教信仰/Please Choose or Input your religion" class="el-in-nomal">
           </el-autocomplete>
         </el-form-item>
         <p class="score-split"></p>
@@ -86,19 +86,23 @@
         <div class="bottom_button">
           <el-button @click="resetForm('PersonalForm')">重置 Reset</el-button>
           <el-button type="primary" @click="submitForm('PersonalForm')" style="margin-left:50px;">保存 Save</el-button>
-          <el-button type="primary" @click="submitForm('PersonalForm')" style="margin-left:50px;">保存并继续 Save &Continue</el-button>
+          <el-button type="primary" @click="PersonalFormNavicat('PersonalFormNavicat')" style="margin-left:50px;">保存并继续 Save &Continue</el-button>
         </div>
       </el-form>
     </div>
   </div>
 </template>
 <script>
+import {setCookie, getCookie} from '../../../assets/js/cookie.js'
 export default{
   name: 'Information_1_Personal',
   data () {
     return {
+      username: '',
+      isSave: false,
+      geturl: '',
+      isClickSave: false,
       PersonalForm: {
-        username: 'zzz',
         pic: '',
         passport_name: '',
         family_name: '', // 姓
@@ -169,7 +173,7 @@ export default{
         ],
         cmail: [
           { required: true, message: '必填项 This field is required.', trigger: 'blur' },
-          { type: 'ecmail', message: '请输入正确的邮箱地址', trigger: ['blur', 'change'] }
+          { type: 'email', message: '请输入正确的邮箱地址', trigger: ['blur', 'change'] }
         ],
         htel: [
           { required: true, message: '必填项 This field is required.', trigger: 'blur' },
@@ -180,10 +184,54 @@ export default{
         ],
         hmail: [
           { required: true, message: '必填项 This field is required.', trigger: 'blur' },
-          { type: 'ecmail', message: '请输入正确的邮箱地址', trigger: ['blur', 'change'] }
+          { type: 'email', message: '请输入正确的邮箱地址', trigger: ['blur', 'change'] }
         ]
       }
     }
+  },
+  created: function () {
+    let uname = getCookie('username')
+    if (uname == '') {
+      this.$router.push('/')
+    }
+    this.username = uname,
+    this.$axios({
+      method: 'get',
+      url: '/apis/GetPinfByNameServlet',
+      params: {
+        username: this.username
+      }
+    }).then((response) => {
+      if (response.data[0].username == '') {
+        console.log('zzzzzzzz')
+      } else {
+        this.isSave = true
+        this.PersonalForm.pic = response.data[0].pic
+        this.PersonalForm.passport_name = response.data[0].passportName
+        this.PersonalForm.family_name = response.data[0].familyName
+        this.PersonalForm.given_name = response.data[0].givenName
+        this.PersonalForm.nationality = response.data[0].nationality
+        this.PersonalForm.date_birth = response.data[0].dateBirth
+        this.PersonalForm.passport_no = response.data[0].passportNo
+        let place = response.data[0].placeBirth.split('/')
+        this.PersonalForm.Country = place[0]
+        this.PersonalForm.City = place[1]
+        this.PersonalForm.sex = response.data[0].sex
+        this.PersonalForm.marri = response.data[0].marri
+        this.PersonalForm.religion = response.data[0].religion
+        this.PersonalForm.address_c = response.data[0].addressC
+        this.PersonalForm.ctel = parseInt(response.data[0].ctel)
+        this.PersonalForm.cfax = response.data[0].cfax
+        this.PersonalForm.cmail = response.data[0].cmail
+        this.PersonalForm.address_h = response.data[0].addressH
+        this.PersonalForm.htel = parseInt(response.data[0].htel)
+        this.PersonalForm.hfax = response.data[0].hfax
+        this.PersonalForm.hmail = response.data[0].hmail
+      }
+      console.log(response.data)
+    }).catch((error) => {
+      console.log(error)
+    })
   },
   methods: {
     // 默认选中方法
@@ -248,17 +296,30 @@ export default{
         {'value': '马其顿 Macedonia' }
       ]
     },
+    PersonalFormNavicat (formName) {
+      if (this.isClickSave == true) {
+        this.$router.push('/asidetab/Information_2_Education')
+      } else {
+        this.submitForm(formName)
+        this.$router.push('/asidetab/Information_2_Education')
+      }
+    },
     submitForm (formName) {
+      this.isClickSave = true
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          let PersonalJson = JSON.stringify(this.PersonalForm)
-          alert('submit!' + PersonalJson)
+          if (this.isSave == false) {
+            this.geturl = '/apis/AddPinfServlet'
+          } else {
+            this.geturl = '/apis/GetPinfByNameServlet'
+          }
+          // let PersonalJson = JSON.stringify(this.PersonalForm)
+          // alert('submit!' + PersonalJson)
           this.$axios({
             method: 'get',
-            url: '/apis/PinfServlet',
+            url: '/apis/AddPinfServlet',
             params: {
-              PersonalJson: PersonalJson,
-              username: this.PersonalForm.username,
+              username: this.username,
               pic: this.PersonalForm.pic,
               passport_name: this.PersonalForm.passport_name,
               family_name: this.PersonalForm.family_name,
@@ -277,10 +338,10 @@ export default{
               address_h: this.PersonalForm.address_h,
               htel: this.PersonalForm.htel,
               hfax: this.PersonalForm.hfax,
-              hmail: this.PersonalForm.hmail,
-              type: 1
+              hmail: this.PersonalForm.hmail
             }
           }).then((response) => {
+            this.isSave == true
             console.log(response)
             console.log(response.PersonalForm)
           }).catch((error) => {

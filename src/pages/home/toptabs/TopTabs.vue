@@ -25,6 +25,7 @@ export default{
   // },
   data () {
     return {
+      ischecked: 3,
       actived: 0,
       hover: 0,
       toptabList: [{
@@ -54,8 +55,10 @@ export default{
       ]
     }
   },
-  methods: {
+  computed () {
     // this.$set(this.toptabList[{{this.ischecked}}], 'ischecked', true);
+  },
+  methods: {
     toggle (index) {
       this.actived = index
     },

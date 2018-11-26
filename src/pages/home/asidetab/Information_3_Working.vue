@@ -43,7 +43,7 @@
           <el-button @click="resetForm('WorkForm')">重置</el-button>
           <div class="EducationForm_submit">
             <el-button type="primary" @click="submitForm('WorkForm')">保存 Save</el-button>
-            <el-button type="primary" @click="submitForm('WorkForm')">保存并继续 Save &Continue Save</el-button>
+            <el-button type="primary" @click="PersonalFormNavicat('WorkForm')">保存并继续 Save &Continue Save</el-button>
           </div>
         </el-form-item>
       </el-form>
@@ -51,10 +51,14 @@
   </div>
 </template>
 <script>
+import {setCookie, getCookie} from '../../../assets/js/cookie.js'
 export default{
   name: 'Information_3_Working',
   data () {
     return {
+      username: '',
+      isSave: false,
+      geturl: '',
       WorkForm: {
         domains: [{
           unit: '',
@@ -66,19 +70,66 @@ export default{
       }
     }
   },
+  created: function () {
+    let uname = getCookie('username')
+    if (uname == '') {
+      this.$router.push('/')
+    }
+    this.username = uname,
+    console.log(this.username)
+    this.$axios({
+      method: 'get',
+      url: '/apis/GetWorkByNameServlet',
+      params: {
+        username: this.username
+      }
+    }).then((response) => {
+      // 判断有没有值
+      if (response.data == '') {
+        console.log('zzzzzzzz')
+      } else {
+        this.isSave = true
+        this.WorkForm.domains = response.data
+        for (let i = 0; i < this.WorkForm.domains.length; i++) {
+          this.WorkForm.domains[i].btime = this.WorkForm.domains[i].btime
+          this.WorkForm.domains[i].ltime = this.WorkForm.domains[i].ltime
+          this.WorkForm.domains[i].unit = this.WorkForm.domains[i].unit
+          this.WorkForm.domains[i].obj = this.WorkForm.domains[i].obj
+        }
+      }
+      console.log(this.WorkForm.domains)
+    }).catch((error) => {
+      console.log(error)
+    })
+  },
   methods: {
+    PersonalFormNavicat (formName) {
+      if (this.isClickSave == true) {
+        this.$router.push('/asidetab/Information_4_Language')
+      } else {
+        this.submitForm(formName)
+        this.$router.push('/asidetab/Information_4_Language')
+      }
+    },
     submitForm (formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
+          if (this.isSave == false) {
+            this.geturl = '/apis/AddWorkServlet'
+          } else {
+            this.geturl = '/apis/ChangeWorkServlet'
+          }
           var domainsworkJson = encodeURI(JSON.stringify(this.WorkForm.domains))
           console.log(this.WorkForm.domains[0].btime)
           this.$axios({
             method: 'get',
-            url: '/apis/WorkServlet',
+            url: '/apis/AddWorkServlet',
             params: {
+              username: this.username,
               domains: domainsworkJson
             }
           }).then((response) => {
+            this.isSave = true
             console.log(response)
             console.log(response.data)
           }).catch((error) => {
