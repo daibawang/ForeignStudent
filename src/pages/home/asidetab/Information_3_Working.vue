@@ -54,6 +54,7 @@
 import {setCookie, getCookie} from '../../../assets/js/cookie.js'
 export default{
   name: 'Information_3_Working',
+  props: ['actived'],
   data () {
     return {
       username: '',
@@ -71,9 +72,16 @@ export default{
     }
   },
   created: function () {
+    console.log('我接受了来自父组件的' + this.actived)
+    this.$emit('thispath', 3)
     let uname = getCookie('username')
     if (uname == '') {
       this.$router.push('/')
+    }
+    let isShow = getCookie('InputInfo')
+    if (isShow < 3) {
+      // console.log('cokkkie<3')
+      // this.$router.push('/asidetab/Information_2_Education')
     }
     this.username = uname,
     console.log(this.username)

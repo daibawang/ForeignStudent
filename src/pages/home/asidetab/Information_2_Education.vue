@@ -28,7 +28,7 @@
         :rules="{
           required: true, message: 'This field is required', trigger: 'blur'
         }">
-          <el-input v-model="item.Previous" clearable style="width:330px;" class="el-in-left"></el-input>
+          <el-input v-model="item.Previous" clearable style="width:325px;" class="el-in-left"></el-input>
         </el-form-item>
         <el-form-item label="主修专业/Fields of Study" :prop="'domains.'+index+'.Fields'" class="el_left"
         :rules="{
@@ -53,7 +53,11 @@
 <script>
 import {setCookie, getCookie} from '../../../assets/js/cookie.js'
 export default{
+  // beforeRouteEnter(to,from,next){
+  //
+  // },
   name: 'Information_2_Education',
+  props: ['actived'],
   data () {
     return {
       username: '',
@@ -89,6 +93,7 @@ export default{
         console.log('zzzzzzzz')
       } else {
         this.isSave = true
+        setCookie('InputInfo', 2, 1000 * 60)
         this.EducationForm.domains = response.data
         for (let i = 0; i < this.EducationForm.domains.length; i++) {
           this.EducationForm.domains[i].fromdate = this.EducationForm.domains[i].btime
@@ -166,7 +171,7 @@ export default{
 <style lang="stylus">
 .Info_1_border{
   padding-top:20px;
-  padding-left:50px;
+  padding-left:40px;
   display: flex;
   flex-direction: column;
   color:#606266;

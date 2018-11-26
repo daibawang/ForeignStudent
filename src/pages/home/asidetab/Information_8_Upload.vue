@@ -444,7 +444,7 @@ export default{
 <style lang="stylus" scoped>
 .Info_1_border{
   padding-top:20px;
-  padding-left:50px;
+  padding-left:40px;
   display: flex;
   flex-direction: column;
   color:#606266;

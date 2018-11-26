@@ -21,6 +21,7 @@ import Information_10_Submission from '@/pages/home/asidetab/Information_10_Subm
 Vue.use(Router)
 
 export default new Router({
+  mode: 'history',
   routes: [
     {
       path: '/',

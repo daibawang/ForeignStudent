@@ -206,6 +206,7 @@ export default{
         console.log('zzzzzzzz')
       } else {
         this.isSave = true
+        setCookie('InputInfo', 1, 1000 * 60)
         this.PersonalForm.pic = response.data[0].pic
         this.PersonalForm.passport_name = response.data[0].passportName
         this.PersonalForm.family_name = response.data[0].familyName
@@ -371,7 +372,7 @@ export default{
 <style lang="stylus" scoped>
 .Info_1_border{
   padding-top:20px;
-  padding-left:50px;
+  padding-left:40px;
   display: flex;
   flex-direction: column;
   color:#606266;

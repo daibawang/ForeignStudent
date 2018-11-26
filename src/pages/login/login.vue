@@ -225,6 +225,7 @@ export default{
             })
           } else {
             setCookie('username', this.username, 1000 * 60)
+            setCookie('InputInfo', 0, 1000 * 60)
             setTimeout(function () {
               this.$router.push('/main')
             }.bind(this), 1000)
