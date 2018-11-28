@@ -55,10 +55,43 @@ export default{
       ]
     }
   },
+  created: function () {
+    let routename = this.$route.name
+    if (routename == 'ApplicationMain') {
+      this.actived = 0
+    } else if (routename == 'Psychological') {
+      this.actived = 1
+    } else if (routename == 'Status') {
+      this.actived = 2
+    } else if (routename == 'Payment') {
+      this.actived = 3
+    } else {
+      this.actived = 0
+    }
+    this.hover = this.actived
+  },
+  watch: {
+    '$route': 'changeactivity'
+  },
   computed () {
     // this.$set(this.toptabList[{{this.ischecked}}], 'ischecked', true);
   },
   methods: {
+    changeactivity () {
+      let routename = this.$route.name
+      if (routename == 'ApplicationMain') {
+        this.actived = 0
+      } else if (routename == 'Psychological') {
+        this.actived = 1
+      } else if (routename == 'Status') {
+        this.actived = 2
+      } else if (routename == 'Payment') {
+        this.actived = 3
+      } else {
+        this.actived = 0
+      }
+      this.hover = this.actived
+    },
     toggle (index) {
       this.actived = index
     },

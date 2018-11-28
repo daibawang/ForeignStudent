@@ -2,8 +2,8 @@
   <div class="container">
     <div class="ALM_Bread">
       <el-breadcrumb separator-class="el-icon-arrow-right">
-        <el-breadcrumb-item :to="{ path: '/' }">主页 Homepage </el-breadcrumb-item>
-        <el-breadcrumb-item :to="{ path: '/' }">申请信息 My Application </el-breadcrumb-item>
+        <el-breadcrumb-item :to="{ path: '/main' }">主页 Homepage </el-breadcrumb-item>
+        <el-breadcrumb-item :to="{ path: '/asidetab/Information_1_Personal' }">申请信息 My Application </el-breadcrumb-item>
         <el-breadcrumb-item >{{asideTabList[this.actived].text}} {{asideTabList[this.actived].text_english}}</el-breadcrumb-item>
       </el-breadcrumb>
     </div>

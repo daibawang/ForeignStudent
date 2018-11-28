@@ -5,7 +5,7 @@
         <div class="header_title">
           <span class="iconfont exit" @click="quit">&#xe635;</span>
           <span>北京城市学院留学生申请系统 {{this.city}} </span>
-          <span class="english_text">Application For International Student Admission</span>
+          <span class="english_text">Application System For International Student</span>
         </div>
       </el-header>
   </div>

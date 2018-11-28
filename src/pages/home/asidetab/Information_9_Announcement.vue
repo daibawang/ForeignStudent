@@ -48,15 +48,35 @@ export default{
     this.username = uname
     console.log(this.username)
     let isShow = getCookie('InputInfo')
-    if (isShow < 8) {
-      this.$alert(this.NeedInput[isShow], {
-        confirmButtonText: 'sure'
+    if (isShow == '') {
+      this.$axios({
+        method: 'get',
+        url: '/apis/SeletWckServlet',
+        params: {
+          username: this.username
+        }
+      }).then((response) => {
+        isShow = parseInt(response.data[0].typ)
+        if (isShow < 8) {
+          this.$alert(this.NeedInput[isShow], {
+            confirmButtonText: 'sure'
+          })
+          this.$router.push('/asidetab/' + this.NeedUrl[isShow])
+        }
+        setCookie('InputInfo', isShow, 1000 * 60)
       })
-      this.$router.push('/asidetab/' + this.NeedUrl[isShow])
+    } else {
+      if (isShow < 8) {
+        this.$alert(this.NeedInput[isShow], {
+          confirmButtonText: 'sure'
+        })
+        this.$router.push('/asidetab/' + this.NeedUrl[isShow])
+      }
     }
   },
   methods: {
     Announcement () {
+      // 更新Cookie
       this.$axios({
         method: 'get',
         url: '/apis/UpWckServlet',

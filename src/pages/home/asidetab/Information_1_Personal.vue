@@ -361,7 +361,7 @@ export default{
 
 }
 </style>
-<style lang="stylus" scoped>
+<style lang="stylus">
 .Info_1_border{
   padding-top:20px;
   padding-left:40px;

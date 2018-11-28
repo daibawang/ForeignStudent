@@ -4,7 +4,7 @@
           <img style="height:70px;  align-self: flex-start;" src="~images/shool_logo_blue1.png">
           <div id="te">
               <div id="text">北京城市学院留学生申请系统 </div>
-              <div id="text1">Application For International Student Admission</div>
+              <div id="text1">Application System For International Student</div>
           </div>
       </div>
       <div id="div2" v-show="showLogin">

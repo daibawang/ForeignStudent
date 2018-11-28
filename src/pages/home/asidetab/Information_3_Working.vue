@@ -24,17 +24,17 @@
           </el-col>
         </el-form-item>
         <el-form-item label="单位/Previous and Current Education & Employer"
-        :prop="'domains.'+index+'.unit'" class="el_left"
+        :prop="'domains.'+index+'.unit'" class=""
         :rules="{
           required: false, message: 'This field is required', trigger: 'blur'
         }">
-          <el-input v-model="item.unit" clearable style="width:330px;" class="el-in-left"></el-input>
+          <el-input v-model="item.unit" clearable style="width:320px;" class=""></el-input>
         </el-form-item>
-        <el-form-item label="职位/Position/Duty" :prop="'domains.'+index+'.obj'" class="el_left"
+       <el-form-item label="职位/Position/Duty" :prop="'domains.'+index+'.obj'" style="margin-left:5px"
         :rules="{
           required: false, message: 'This field is required', trigger: 'blur'
         }">
-          <el-input v-model="item.obj" clearable style="width:160px;" class="el-in-left"></el-input>
+          <el-input v-model="item.obj" clearable style="width:160px;" class=""></el-input>
         </el-form-item>
         <el-button style="margin-top:50px" type="danger" icon="el-icon-delete" circle @click="deleteRules(item, index)" :disabled="isReadonly"></el-button>
       </div>
@@ -97,11 +97,30 @@ export default{
       // 判断有没有值
       if (response.data == '') {
         let isShow = getCookie('InputInfo')
-        if (isShow < 2) {
-          this.$alert(this.NeedInput[isShow], {
-            confirmButtonText: 'sure'
+        if (isShow == '') {
+          this.$axios({
+            method: 'get',
+            url: '/apis/SeletWckServlet',
+            params: {
+              username: this.username
+            }
+          }).then((response) => {
+            isShow = parseInt(response.data[0].typ)
+            if (isShow < 2) {
+              this.$alert(this.NeedInput[isShow], {
+                confirmButtonText: 'sure'
+              })
+              this.$router.push('/asidetab/' + this.NeedUrl[isShow])
+            }
+            setCookie('InputInfo', isShow, 1000 * 60)
           })
-          this.$router.push('/asidetab/' + this.NeedUrl[isShow])
+        } else {
+          if (isShow < 2) {
+            this.$alert(this.NeedInput[isShow], {
+              confirmButtonText: 'sure'
+            })
+            this.$router.push('/asidetab/' + this.NeedUrl[isShow])
+          }
         }
       } else {
         this.isSave = true

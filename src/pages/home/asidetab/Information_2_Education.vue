@@ -5,7 +5,7 @@
       <el-form label-position="top" :inline="true" :model="EducationForm" ref="EducationForm" label-width="100px" class="demo-dynamic">
 
       <div class="EducationForm_border" v-for='(item, index) in EducationForm.domains' :key="item.key">
-        <el-form-item label="学习时间/Education Years Attended" required>
+        <el-form-item label="学习时间/Education Years Attended" required style="margin-right:0px">
           <el-col :span="11">
             <el-form-item :prop="'domains.'+index+'.fromdate'"
             :rules="{
@@ -24,17 +24,17 @@
           </el-col>
         </el-form-item>
         <el-form-item label="单位/Previous and Current Education & Employer"
-        :prop="'domains.'+index+'.Previous'" class="el_left"
+        :prop="'domains.'+index+'.Previous'" class=""
         :rules="{
           required: true, message: 'This field is required', trigger: 'blur'
         }">
-          <el-input v-model="item.Previous" clearable style="width:325px;" class="el-in-left"></el-input>
+          <el-input v-model="item.Previous" clearable style="width:325px;" class="el-in-left-more"></el-input>
         </el-form-item>
-        <el-form-item label="主修专业/Fields of Study" :prop="'domains.'+index+'.Fields'" class="el_left"
+        <el-form-item label="主修专业/Fields of Study" :prop="'domains.'+index+'.Fields'" style="margin-left:8px"
         :rules="{
           required: true, message: 'This field is required', trigger: 'blur'
         }">
-          <el-input v-model="item.Fields" clearable style="width:160px;" class="el-in-left"></el-input>
+          <el-input v-model="item.Fields" clearable style="width:160px;" class="el-in-left-more"></el-input>
         </el-form-item>
         <el-button style="margin-top:50px" type="danger" icon="el-icon-delete" circle @click="deleteRules(item, index)" :disabled="isReadonly"></el-button>
       </div>
@@ -100,12 +100,30 @@ export default{
       if (response.data == '') {
         console.log('没取到值')
         let isShow = getCookie('InputInfo')
-        console.log(isShow + 'cookie')
-        if (isShow < 1) {
-          this.$alert(this.NeedInput[isShow], {
-            confirmButtonText: 'sure'
+        if (isShow == '') {
+          this.$axios({
+            method: 'get',
+            url: '/apis/SeletWckServlet',
+            params: {
+              username: this.username
+            }
+          }).then((response) => {
+            isShow = parseInt(response.data[0].typ)
+            if (isShow < 1) {
+              this.$alert(this.NeedInput[isShow], {
+                confirmButtonText: 'sure'
+              })
+              this.$router.push('/asidetab/' + this.NeedUrl[isShow])
+            }
+            setCookie('InputInfo', isShow, 1000 * 60)
           })
-          this.$router.push('/asidetab/' + this.NeedUrl[isShow])
+        } else {
+          if (isShow < 1) {
+            this.$alert(this.NeedInput[isShow], {
+              confirmButtonText: 'sure'
+            })
+            this.$router.push('/asidetab/' + this.NeedUrl[isShow])
+          }
         }
       } else {
         this.isSave = true
@@ -197,6 +215,9 @@ export default{
     }
     .EducationForm_border{
       margin-bottom:30px;
+    }
+    .el-in-left-more{
+      margin-left:0px;
     }
   }
 }

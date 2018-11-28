@@ -6,14 +6,14 @@
 
       <div class="Achievements_border" v-for='(item, index) in Achievements.domains' :key="item.key">
         <el-form-item label="论文题目/Topic"
-        :prop="'domains.'+index+'.papers'" class="el_left"
+        :prop="'domains.'+index+'.papers'" class=""
         :rules="{
           required: false, message: 'This field is required', trigger: 'blur'
         }">
           <el-input v-model="item.papers" clearable style="width:320px;" class="el-in-left"></el-input>
         </el-form-item>
 
-        <el-form-item label="发表时间/Published Date" >
+        <el-form-item label="发表时间/Published Date" style="margin-left:10px">
             <el-form-item :prop="'domains.'+index+'.time'">
                 <el-date-picker value-format="yyyyMM"  type="month" placeholder="from" v-model="item.time" style="width: 275px;"></el-date-picker>
             </el-form-item>
@@ -76,11 +76,30 @@ export default{
       // 判断有没有值
       if (response.data == '') {
         let isShow = getCookie('InputInfo')
-        if (isShow < 5) {
-          this.$alert(this.NeedInput[isShow], {
-            confirmButtonText: 'sure'
+        if (isShow == '') {
+          this.$axios({
+            method: 'get',
+            url: '/apis/SeletWckServlet',
+            params: {
+              username: this.username
+            }
+          }).then((response) => {
+            isShow = parseInt(response.data[0].typ)
+            if (isShow < 5) {
+              this.$alert(this.NeedInput[isShow], {
+                confirmButtonText: 'sure'
+              })
+              this.$router.push('/asidetab/' + this.NeedUrl[isShow])
+            }
+            setCookie('InputInfo', isShow, 1000 * 60)
           })
-          this.$router.push('/asidetab/' + this.NeedUrl[isShow])
+        } else {
+          if (isShow < 5) {
+            this.$alert(this.NeedInput[isShow], {
+              confirmButtonText: 'sure'
+            })
+            this.$router.push('/asidetab/' + this.NeedUrl[isShow])
+          }
         }
       } else {
         this.isSave = true

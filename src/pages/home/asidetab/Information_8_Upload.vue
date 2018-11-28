@@ -153,7 +153,7 @@
         </el-col>
       </div>
       <span class="iconfont" style="color:#EE761C; margin-left:20px"><i class="el-icon-download"></i></span>
-      <a class="recruitment-more" target="_blank" href="http://www.bcu.edu.cn/bjxy/PROGRAMMES_FOR_INTERNATIOAL_STUDENT_.htm">Letter Download</a>
+      <a class="recruitment-more" href='http://39.106.208.110:8080/FStudent/BCU_Reference_Letter_Format-CN-EN.doc' download="">Letter Download</a>
       <p class="score-split-upload"></p>
       <!-- 推荐信2 13 -->
       <div class="Upload_layout">
@@ -180,7 +180,7 @@
         </el-col>
       </div>
       <span class="iconfont" style="color:#EE761C; margin-left:20px"><i class="el-icon-download"></i></span>
-      <a class="recruitment-more" target="_blank" href="http://www.bcu.edu.cn/bjxy/PROGRAMMES_FOR_INTERNATIOAL_STUDENT_.htm">Letter Download</a>
+      <a class="recruitment-more" href='http://39.106.208.110:8080/FStudent/BCU_Reference_Letter_Format-CN-EN.doc' download="">Letter Download</a>
       <p class="score-split-upload"></p>
       <!-- 雅思或托福成绩证书复印件 7-->
       <div class="Upload_layout">
@@ -330,59 +330,10 @@
         </el-col>
       </div>
       <p class="score-split-upload"></p>
-      <!-- 心理测评完成页截图14-->
-      <!-- <div class="Upload_layout">
-        <el-col :span="13" >
-            <p class="select_star">心理测评完成页截图/ The screenshot of psychological assessment completion page.</p>
-        </el-col>
-        <el-col :span="9" >
-          <el-upload
-            accept=".pdf,.png,.jpg"
-            :before-upload="onBeforeUpload"
-            class="upload-demo"
-            :action="params.action"
-            :on-preview="handlePreview"
-            :on-remove="handleRemove"
-            multiple
-            :data="params.data13"
-            :limit="1"
-            :on-exceed="handleExceed"
-            :file-list="fileList10">
-            <el-button size="mini" type="primary">Upload<i class="el-icon-upload el-icon--right"></i></el-button>
-            <span style="font-size:11px;">只能上传pdf/png/jpg文件，且不超过2M </span>
-          </el-upload>
-        </el-col>
-      </div>
-      <p class="score-split-upload"></p> -->
-      <!-- 申请费用转账凭证15-->
-      <!-- <div class="Upload_layout">
-        <el-col :span="13" >
-            <p class="select_star">申请费用转账凭证</p>
-        </el-col>
-        <el-col :span="9" >
-          <el-upload
-            accept=".pdf,.png,.jpg"
-            :before-upload="onBeforeUpload"
-            class="upload-demo"
-            :action="params.action"
-            :on-preview="handlePreview"
-            :on-remove="handleRemove"
-            multiple
-            :data="params.data14"
-            :limit="1"
-            :on-exceed="handleExceed"
-            :file-list="fileList10">
-            <el-button size="mini" type="primary">Upload<i class="el-icon-upload el-icon--right"></i></el-button>
-            <span style="font-size:11px;">只能上传pdf/png/jpg文件，且不超过2M </span>
-          </el-upload>
-        </el-col>
-      </div> -->
-
       <div class="upload_button">
         <!-- <el-button @click="resetForm('OtherInformation')">重置 Reset</el-button> -->
         <el-button type="primary" @click="submitForm()" style="margin-left:50px;">继续 Continue</el-button>
       </div>
-      <!-- <p class="score-split-upload"></p> -->
     </div>
   </div>
 </template>
@@ -393,6 +344,7 @@ export default{
   data () {
     return {
       username: '',
+      peopleName: '',
       NeedInput: ['请先填写个人信息 Please complete  Personal Information', '请先填写个人信息 Please complete  Personal Information',
         '请先填写学习经历 Please complete  Education History',
         '请先填写工作经历 Please complete  Working Experience ',
@@ -404,19 +356,19 @@ export default{
         '请先填写保证 Please complete Announcement '],
       params: {
         action: '/apis/UploadHandleServlet',
-        data1: {'username': '', 'kind': '1', 'filename': '证件照.jpg'},
-        data2: {'username': '', 'kind': '2', 'filename': '护照信息页.pdf'},
-        data3: {'username': '', 'kind': '3', 'filename': '担保人有效证件.pdf'},
-        data4: {'username': '', 'kind': '4', 'filename': '学历成绩单.pdf'},
-        data5: {'username': '', 'kind': '5', 'filename': '学历证书.pdf'},
-        data6: {'username': '', 'kind': '6', 'filename': '推荐信1.pdf'},
-        data7: {'username': '', 'kind': '7', 'filename': '3'},
-        data8: {'username': '', 'kind': '8', 'filename': '4'},
-        data9: {'username': '', 'kind': '9', 'filename': '5'},
-        data10: {'username': '', 'kind': '10', 'filename': '6'},
-        data11: {'username': '', 'kind': '11', 'filename': '7'},
-        data12: {'username': '', 'kind': '12', 'filename': '8'},
-        data13: {'username': '', 'kind': '13', 'filename': '9'}
+        data1: {'username': '', 'kind': '1', 'filename': '', 'packname': ''},
+        data2: {'username': '', 'kind': '2', 'filename': '', 'packname': ''},
+        data3: {'username': '', 'kind': '3', 'filename': '', 'packname': ''},
+        data4: {'username': '', 'kind': '4', 'filename': '', 'packname': ''},
+        data5: {'username': '', 'kind': '5', 'filename': '', 'packname': ''},
+        data6: {'username': '', 'kind': '6', 'filename': '', 'packname': ''},
+        data7: {'username': '', 'kind': '7', 'filename': '', 'packname': ''},
+        data8: {'username': '', 'kind': '8', 'filename': '', 'packname': ''},
+        data9: {'username': '', 'kind': '9', 'filename': '', 'packname': ''},
+        data10: {'username': '', 'kind': '10', 'filename': '', 'packname': ''},
+        data11: {'username': '', 'kind': '11', 'filename': '', 'packname': ''},
+        data12: {'username': '', 'kind': '12', 'filename': '', 'packname': ''},
+        data13: {'username': '', 'kind': '13', 'filename': '', 'packname': ''}
       },
       fileList1: [],
       fileList3: [],
@@ -438,19 +390,87 @@ export default{
       this.$router.push('/')
     }
     this.username = uname
-    this.params.data1.username = uname
-    this.params.data2.username = uname
-    this.params.data3.username = uname
-    this.params.data4.username = uname
-    this.params.data5.username = uname
-    this.params.data6.username = uname
-    this.params.data7.username = uname
-    this.params.data8.username = uname
-    this.params.data9.username = uname
-    this.params.data10.username = uname
-    this.params.data11.username = uname
-    this.params.data12.username = uname
-    this.params.data13.username = uname
+    this.$axios({
+      method: 'get',
+      url: '/apis/GetPinfByNameServlet',
+      params: {
+        username: this.username
+      }
+    }).then((response) => {
+      if (response.data[0].username == '') {
+        let isShow = getCookie('InputInfo')
+        if (isShow == '') {
+          this.$axios({
+            method: 'get',
+            url: '/apis/SeletWckServlet',
+            params: {
+              username: this.username
+            }
+          }).then((response) => {
+            isShow = parseInt(response.data[0].typ)
+            if (isShow < 7) {
+              this.$alert(this.NeedInput[isShow], {
+                confirmButtonText: 'sure'
+              })
+              this.$router.push('/asidetab/' + this.NeedUrl[isShow])
+            }
+            setCookie('InputInfo', isShow, 1000 * 60)
+          })
+        } else {
+          if (isShow < 7) {
+            this.$alert(this.NeedInput[isShow], {
+              confirmButtonText: 'sure'
+            })
+            this.$router.push('/asidetab/' + this.NeedUrl[isShow])
+          }
+        }
+      } else {
+        this.peopleName = response.data[0].givenName + '.' + response.data[0].familyName
+        this.params.data1.username = uname
+        this.params.data2.username = uname
+        this.params.data3.username = uname
+        this.params.data4.username = uname
+        this.params.data5.username = uname
+        this.params.data6.username = uname
+        this.params.data7.username = uname
+        this.params.data8.username = uname
+        this.params.data9.username = uname
+        this.params.data10.username = uname
+        this.params.data11.username = uname
+        this.params.data12.username = uname
+        this.params.data13.username = uname
+
+        this.params.data1.packname = uname + '_' + this.peopleName
+        this.params.data2.packname = uname + '_' + this.peopleName
+        this.params.data3.packname = uname + '_' + this.peopleName
+        this.params.data4.packname = uname + '_' + this.peopleName
+        this.params.data5.packname = uname + '_' + this.peopleName
+        this.params.data6.packname = uname + '_' + this.peopleName
+        this.params.data7.packname = uname + '_' + this.peopleName
+        this.params.data8.packname = uname + '_' + this.peopleName
+        this.params.data9.packname = uname + '_' + this.peopleName
+        this.params.data10.packname = uname + '_' + this.peopleName
+        this.params.data11.packname = uname + '_' + this.peopleName
+        this.params.data12.packname = uname + '_' + this.peopleName
+        this.params.data13.packname = uname + '_' + this.peopleName
+
+        this.params.data1.filename = uname + '_' + this.peopleName + '_' + '证件照.jpg'
+        this.params.data2.filename = uname + '_' + this.peopleName + '_' + '护照信息页.pdf'
+        this.params.data3.filename = uname + '_' + this.peopleName + '_' + '担保人有效证件.pdf'
+        this.params.data4.filename = uname + '_' + this.peopleName + '_' + '学历成绩单.pdf'
+        this.params.data5.filename = uname + '_' + this.peopleName + '_' + '学历证书.pdf'
+        this.params.data6.filename = uname + '_' + this.peopleName + '_' + '推荐信1.pdf'
+        this.params.data7.filename = uname + '_' + this.peopleName + '_' + '雅思或托福成绩证书复印件.pdf'
+        this.params.data8.filename = uname + '_' + this.peopleName + '_' + 'HSK证书复印件.pdf'
+        this.params.data9.filename = uname + '_' + this.peopleName + '_' + '来华学习计划.pdf'
+        this.params.data10.filename = uname + '_' + this.peopleName + '_' + '发表文章或科研成果.pdf'
+        this.params.data11.filename = uname + '_' + this.peopleName + '_' + '无犯罪证明.pdf'
+        this.params.data12.filename = uname + '_' + this.peopleName + '_' + '近6个月内的体检报告.pdf'
+        this.params.data13.filename = uname + '_' + this.peopleName + '_' + '推荐信2.pdf'
+      }
+    }).catch((error) => {
+      console.log(error)
+    })
   },
   methods: {
     // 文件上传前钩子
@@ -475,7 +495,7 @@ export default{
       }).then((response) => {
         if (response.data == true) {
           setCookie('InputInfo', 8, 1000 * 60)
-          this.$router.push('/asidetab/Information_8_Upload')
+          this.$router.push('/asidetab/Information_9_Announcement')
         } else {
           this.$alert('未上传所有申请材料', 'Error', {
             confirmButtonText: 'sure'

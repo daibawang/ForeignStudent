@@ -195,11 +195,30 @@ export default{
       // 判断有没有值
       if (response.data[0].username == '') {
         let isShow = getCookie('InputInfo')
-        if (isShow < 6) {
-          this.$alert(this.NeedInput[isShow], {
-            confirmButtonText: 'sure'
+        if (isShow == '') {
+          this.$axios({
+            method: 'get',
+            url: '/apis/SeletWckServlet',
+            params: {
+              username: this.username
+            }
+          }).then((response) => {
+            isShow = parseInt(response.data[0].typ)
+            if (isShow < 6) {
+              this.$alert(this.NeedInput[isShow], {
+                confirmButtonText: 'sure'
+              })
+              this.$router.push('/asidetab/' + this.NeedUrl[isShow])
+            }
+            setCookie('InputInfo', isShow, 1000 * 60)
           })
-          this.$router.push('/asidetab/' + this.NeedUrl[isShow])
+        } else {
+          if (isShow < 6) {
+            this.$alert(this.NeedInput[isShow], {
+              confirmButtonText: 'sure'
+            })
+            this.$router.push('/asidetab/' + this.NeedUrl[isShow])
+          }
         }
       } else {
         this.isSave = true
