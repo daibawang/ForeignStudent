@@ -16,7 +16,6 @@
         <el-input v-model="newPassword" type="password" placeholder="密码 Password" style="width:23%;margin-top:30px"></el-input>
         <el-input v-model="newPasswordAgain" type="password" placeholder="确认密码 Confirm Password" style="width:23%;margin-top:30px"></el-input>
       </div>
-
       <div id="div4">
           <div id="div4_1" v-on:click="login" v-show="showLogin">登录 Sign in</div>
           <div id="div4_2" v-on:click="ToRegister" v-show="showLogin">注册 Sign up</div>
@@ -212,7 +211,7 @@ export default{
         })
       } else {
         this.$axios({
-          method: 'post',
+          method: 'get',
           url: '/apis/UserServlet',
           params: {
             username: this.username,
@@ -225,7 +224,6 @@ export default{
             })
           } else {
             setCookie('username', this.username, 1000 * 60)
-            setCookie('InputInfo', 0, 1000 * 60)
             setTimeout(function () {
               this.$router.push('/main')
             }.bind(this), 1000)

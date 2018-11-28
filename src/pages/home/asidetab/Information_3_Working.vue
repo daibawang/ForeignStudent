@@ -42,8 +42,7 @@
           <el-button type="primary" icon="el-icon-edit" circle @click="addDomain"></el-button>
           <el-button @click="resetForm('WorkForm')">重置</el-button>
           <div class="EducationForm_submit">
-            <el-button type="primary" @click="submitForm('WorkForm')">保存 Save</el-button>
-            <el-button type="primary" @click="PersonalFormNavicat('WorkForm')">保存并继续 Save &Continue Save</el-button>
+            <el-button type="primary" @click="submitForm('WorkForm')">保存并继续 Save &Continue Save</el-button>
           </div>
         </el-form-item>
       </el-form>
@@ -54,12 +53,21 @@
 import {setCookie, getCookie} from '../../../assets/js/cookie.js'
 export default{
   name: 'Information_3_Working',
-  props: ['actived'],
   data () {
     return {
       username: '',
       isSave: false,
       geturl: '',
+      NeedInput: ['请先填写个人信息 Please complete  Personal Information', '请先填写个人信息 Please complete  Personal Information',
+        '请先填写学习经历 Please complete  Education History',
+        '请先填写工作经历 Please complete  Working Experience ',
+        '请先填写语言能力 Please complete  Language Proficiency ',
+        '请先填写来华学习计划 Please complete Proposed Study in BCU',
+        '请先填写学习成就 Please complete Achievements',
+        '请先填写其他信息 Please complete  Other Information',
+        '请先上传申请材料 Please Upload Application Documents',
+        '请先填写保证 Please complete Announcement '],
+      NeedUrl: ['Information_1_Personal', 'Information_1_Personal', 'Information_2_Education', 'Information_3_Working', 'Information_4_Language', 'Information_5_Plan', 'Information_6_Achievements', 'Information_7_OtherInformation', 'Information_8_Upload', 'Information_9_Announcement', 'Information_10_Submission'],
       WorkForm: {
         domains: [{
           unit: '',
@@ -72,19 +80,13 @@ export default{
     }
   },
   created: function () {
-    console.log('我接受了来自父组件的' + this.actived)
-    this.$emit('thispath', 3)
+    // console.log('我接受了来自父组件的' + this.actived)
+    // this.$emit('thispath', 3)
     let uname = getCookie('username')
     if (uname == '') {
       this.$router.push('/')
     }
-    let isShow = getCookie('InputInfo')
-    if (isShow < 3) {
-      // console.log('cokkkie<3')
-      // this.$router.push('/asidetab/Information_2_Education')
-    }
-    this.username = uname,
-    console.log(this.username)
+    this.username = uname
     this.$axios({
       method: 'get',
       url: '/apis/GetWorkByNameServlet',
@@ -94,9 +96,16 @@ export default{
     }).then((response) => {
       // 判断有没有值
       if (response.data == '') {
-        console.log('zzzzzzzz')
+        let isShow = getCookie('InputInfo')
+        if (isShow < 2) {
+          this.$alert(this.NeedInput[isShow], {
+            confirmButtonText: 'sure'
+          })
+          this.$router.push('/asidetab/' + this.NeedUrl[isShow])
+        }
       } else {
         this.isSave = true
+        // setCookie('InputInfo', 3, 1000 * 60)
         this.WorkForm.domains = response.data
         for (let i = 0; i < this.WorkForm.domains.length; i++) {
           this.WorkForm.domains[i].btime = this.WorkForm.domains[i].btime
@@ -111,18 +120,11 @@ export default{
     })
   },
   methods: {
-    PersonalFormNavicat (formName) {
-      if (this.isClickSave == true) {
-        this.$router.push('/asidetab/Information_4_Language')
-      } else {
-        this.submitForm(formName)
-        this.$router.push('/asidetab/Information_4_Language')
-      }
-    },
     submitForm (formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           if (this.isSave == false) {
+            console.log('新增疾苦')
             this.geturl = '/apis/AddWorkServlet'
           } else {
             this.geturl = '/apis/ChangeWorkServlet'
@@ -131,13 +133,16 @@ export default{
           console.log(this.WorkForm.domains[0].btime)
           this.$axios({
             method: 'get',
-            url: '/apis/AddWorkServlet',
+            url: this.geturl,
             params: {
               username: this.username,
               domains: domainsworkJson
             }
           }).then((response) => {
-            this.isSave = true
+            if (this.isSave == false) {
+              setCookie('InputInfo', 3, 1000 * 60)
+            }
+            this.$router.push('/asidetab/Information_4_Language')
             console.log(response)
             console.log(response.data)
           }).catch((error) => {

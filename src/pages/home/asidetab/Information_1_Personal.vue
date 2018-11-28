@@ -85,8 +85,7 @@
         </el-form-item>
         <div class="bottom_button">
           <el-button @click="resetForm('PersonalForm')">重置 Reset</el-button>
-          <el-button type="primary" @click="submitForm('PersonalForm')" style="margin-left:50px;">保存 Save</el-button>
-          <el-button type="primary" @click="PersonalFormNavicat('PersonalFormNavicat')" style="margin-left:50px;">保存并继续 Save &Continue</el-button>
+          <el-button type="primary" @click="submitForm('PersonalForm')" style="margin-left:50px;">保存并继续 Save &Continue</el-button>
         </div>
       </el-form>
     </div>
@@ -206,7 +205,6 @@ export default{
         console.log('zzzzzzzz')
       } else {
         this.isSave = true
-        setCookie('InputInfo', 1, 1000 * 60)
         this.PersonalForm.pic = response.data[0].pic
         this.PersonalForm.passport_name = response.data[0].passportName
         this.PersonalForm.family_name = response.data[0].familyName
@@ -297,16 +295,7 @@ export default{
         {'value': '马其顿 Macedonia' }
       ]
     },
-    PersonalFormNavicat (formName) {
-      if (this.isClickSave == true) {
-        this.$router.push('/asidetab/Information_2_Education')
-      } else {
-        this.submitForm(formName)
-        this.$router.push('/asidetab/Information_2_Education')
-      }
-    },
     submitForm (formName) {
-      this.isClickSave = true
       this.$refs[formName].validate((valid) => {
         if (valid) {
           if (this.isSave == false) {
@@ -318,7 +307,7 @@ export default{
           // alert('submit!' + PersonalJson)
           this.$axios({
             method: 'get',
-            url: '/apis/AddPinfServlet',
+            url: this.geturl,
             params: {
               username: this.username,
               pic: this.PersonalForm.pic,
@@ -342,7 +331,10 @@ export default{
               hmail: this.PersonalForm.hmail
             }
           }).then((response) => {
-            this.isSave == true
+            if (this.isSave == false) {
+              setCookie('InputInfo', 1, 1000 * 60)
+            }
+            this.$router.push('/asidetab/Information_2_Education')
             console.log(response)
             console.log(response.PersonalForm)
           }).catch((error) => {
@@ -406,7 +398,7 @@ export default{
       margin-bottom:40px;
       margin-top:60px;
       display:flex;
-      justify-content:flex-start;
+      justify-content:center;
     }
   }
 }

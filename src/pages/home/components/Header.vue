@@ -40,6 +40,7 @@ export default{
       }).then(() => {
         /* 删除cookie */
         delCookie('username')
+        delCookie('InputInfo')
         setTimeout(function () {
           this.$router.push('/')
         }.bind(this), 1000)

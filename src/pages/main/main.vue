@@ -214,6 +214,31 @@ export default{
   },
   props: {
   },
+  created: function () {
+    let uname = getCookie('username')
+    if (uname == '') {
+      this.$router.push('/')
+    }
+    this.username = uname
+    this.$axios({
+      method: 'get',
+      url: '/apis/SeletWckServlet',
+      params: {
+        username: this.username
+      }
+    }).then((response) => {
+      let type = parseInt(response.data[0].typ)
+      setCookie('InputInfo', type, 1000 * 60)
+    }).catch((error) => {
+      console.log(error)
+    })
+    // if (isShow < 8) {
+    //   this.$alert(this.NeedInput[isShow], {
+    //     confirmButtonText: 'sure'
+    //   })
+    //   this.$router.push('/asidetab/' + this.NeedUrl[isShow])
+    // }
+  },
   mounted () {
     let uname = getCookie('username')
     this.username = uname
@@ -223,7 +248,6 @@ export default{
     // let reg = new RegExp('\n', 'g')
     // let str = result.data.replace(reg, '<br>')
     // this.news.title = str
-    console.log(uname)
   },
   methods: {
     Trim (str) { // str表示要转换的字符串

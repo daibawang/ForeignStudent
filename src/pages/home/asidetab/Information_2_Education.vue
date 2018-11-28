@@ -42,8 +42,7 @@
           <el-button type="primary" icon="el-icon-edit" circle @click="addDomain"></el-button>
           <el-button @click="resetForm('EducationForm')">重置</el-button>
           <div class="EducationForm_submit">
-            <el-button type="primary" @click="submitForm('EducationForm')">保存 Save</el-button>
-            <el-button type="primary" @click="PersonalFormNavicat('EducationForm')">保存并继续 Save &Continue Save</el-button>
+            <el-button type="primary" @click="submitForm('EducationForm')">保存并继续 Save &Continue Save</el-button>
           </div>
         </el-form-item>
       </el-form>
@@ -57,12 +56,21 @@ export default{
   //
   // },
   name: 'Information_2_Education',
-  props: ['actived'],
   data () {
     return {
       username: '',
       isSave: false,
       geturl: '',
+      NeedInput: ['请先填写个人信息 Please complete  Personal Information', '请先填写个人信息 Please complete  Personal Information',
+        '请先填写学习经历 Please complete  Education History',
+        '请先填写工作经历 Please complete  Working Experience ',
+        '请先填写语言能力 Please complete  Language Proficiency ',
+        '请先填写来华学习计划 Please complete Proposed Study in BCU',
+        '请先填写学习成就 Please complete Achievements',
+        '请先填写其他信息 Please complete  Other Information',
+        '请先上传申请材料 Please Upload Application Documents',
+        '请先填写保证 Please complete Announcement '],
+      NeedUrl: ['Information_1_Personal', 'Information_1_Personal', 'Information_2_Education', 'Information_3_Working', 'Information_4_Language', 'Information_5_Plan', 'Information_6_Achievements', 'Information_7_OtherInformation', 'Information_8_Upload', 'Information_9_Announcement', 'Information_10_Submission'],
       EducationForm: {
         domains: [{
           key: 0,
@@ -79,7 +87,7 @@ export default{
     if (uname == '') {
       this.$router.push('/')
     }
-    this.username = uname,
+    this.username = uname
     console.log(this.username)
     this.$axios({
       method: 'get',
@@ -90,10 +98,18 @@ export default{
     }).then((response) => {
       // 判断有没有值
       if (response.data == '') {
-        console.log('zzzzzzzz')
+        console.log('没取到值')
+        let isShow = getCookie('InputInfo')
+        console.log(isShow + 'cookie')
+        if (isShow < 1) {
+          this.$alert(this.NeedInput[isShow], {
+            confirmButtonText: 'sure'
+          })
+          this.$router.push('/asidetab/' + this.NeedUrl[isShow])
+        }
       } else {
         this.isSave = true
-        setCookie('InputInfo', 2, 1000 * 60)
+        // setCookie('InputInfo', 2, 1000 * 60)
         this.EducationForm.domains = response.data
         for (let i = 0; i < this.EducationForm.domains.length; i++) {
           this.EducationForm.domains[i].fromdate = this.EducationForm.domains[i].btime
@@ -108,15 +124,8 @@ export default{
     })
   },
   methods: {
-    PersonalFormNavicat (formName) {
-      if (this.isClickSave == true) {
-        this.$router.push('/asidetab/Information_3_Working')
-      } else {
-        this.submitForm(formName)
-        this.$router.push('/asidetab/Information_3_Working')
-      }
-    },
     submitForm (formName) {
+      this.isClickSave = true
       this.$refs[formName].validate((valid) => {
         if (valid) {
           if (this.isSave == false) {
@@ -134,7 +143,10 @@ export default{
               domains: domainsJson
             }
           }).then((response) => {
-            this.isSave = true
+            if (this.isSave == false) {
+              setCookie('InputInfo', 2, 1000 * 60)
+            }
+            this.$router.push('/asidetab/Information_3_Working')
             console.log(response)
             console.log(response.data)
           }).catch((error) => {
@@ -180,7 +192,8 @@ export default{
     padding-left:10px;
     margin-top: 30px;
     .EducationForm_submit{
-      margin-left:400px;
+      margin-top:30px;
+      margin-left:480px;
     }
     .EducationForm_border{
       margin-bottom:30px;

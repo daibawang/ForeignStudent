@@ -46,8 +46,7 @@
 
         <div class="bottom_button">
           <el-button @click="resetForm('LanguageForm')">重置 Reset</el-button>
-          <el-button type="primary" @click="submitForm('LanguageForm')" style="margin-left:50px;">保存 Save</el-button>
-          <el-button type="primary" @click="PersonalFormNavicat('LanguageForm')" style="margin-left:50px;">保存并继续 Save &Continue</el-button>
+          <el-button type="primary" @click="submitForm('LanguageForm')" style="margin-left:50px;">保存并继续 Save &Continue</el-button>
         </div>
       </el-form>
     </div>
@@ -62,6 +61,16 @@ export default{
       username: '',
       isSave: false,
       geturl: '',
+      NeedInput: ['请先填写个人信息 Please complete  Personal Information', '请先填写个人信息 Please complete  Personal Information',
+        '请先填写学习经历 Please complete  Education History',
+        '请先填写工作经历 Please complete  Working Experience ',
+        '请先填写语言能力 Please complete  Language Proficiency ',
+        '请先填写来华学习计划 Please complete Proposed Study in BCU',
+        '请先填写学习成就 Please complete Achievements',
+        '请先填写其他信息 Please complete  Other Information',
+        '请先上传申请材料 Please Upload Application Documents',
+        '请先填写保证 Please complete Announcement '],
+      NeedUrl: ['Information_1_Personal', 'Information_1_Personal', 'Information_2_Education', 'Information_3_Working', 'Information_4_Language', 'Information_5_Plan', 'Information_6_Achievements', 'Information_7_OtherInformation', 'Information_8_Upload', 'Information_9_Announcement', 'Information_10_Submission'],
       options: [
         {
           value: 'HSK',
@@ -125,8 +134,7 @@ export default{
     if (uname == '') {
       this.$router.push('/')
     }
-    this.username = uname,
-    console.log(this.username)
+    this.username = uname
     this.$axios({
       method: 'get',
       url: '/apis/GetProficiencyByNameServlet',
@@ -135,7 +143,13 @@ export default{
       }
     }).then((response) => {
       if (response.data[0].username == '') {
-        console.log('zzzzzzzz')
+        let isShow = getCookie('InputInfo')
+        if (isShow < 3) {
+          this.$alert(this.NeedInput[isShow], {
+            confirmButtonText: 'sure'
+          })
+          this.$router.push('/asidetab/' + this.NeedUrl[isShow])
+        }
       } else {
         this.isSave = true
         let level_c_return = response.data[0].level_c.split('级').toString()
@@ -160,14 +174,6 @@ export default{
     handleChange (value) {
       console.log(this.LanguageForm.Type)
     },
-    PersonalFormNavicat (formName) {
-      if (this.isClickSave == true) {
-        this.$router.push('/asidetab/Information_5_Plan')
-      } else {
-        this.submitForm(formName)
-        this.$router.push('/asidetab/Information_5_Plan')
-      }
-    },
     submitForm (formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
@@ -189,7 +195,10 @@ export default{
               type: 1
             }
           }).then((response) => {
-            this.isSave = true
+            if (this.isSave == false) {
+              setCookie('InputInfo', 4, 1000 * 60)
+            }
+            this.$router.push('/asidetab/Information_5_Plan')
             console.log(response)
             console.log(response.data)
           }).catch((error) => {

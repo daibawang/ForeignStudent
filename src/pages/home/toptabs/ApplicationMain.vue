@@ -10,7 +10,7 @@
     <div class="ALM_content">
       <div class="ALM_content_aside">
         <div v-for="(item,index) of asideTabList" :key="item.id">
-          <router-link :to="'/asidetab/'+item.toUrl" v-bind:path="actived" v-on:thispath="change($event)">
+          <router-link :to="'/asidetab/'+item.toUrl" >
             <div :class="['ALM_content_aside_item',actived == index||hover== index ?'aside_item_nocheck':'']"
             @click="toggle(index)"
             @mouseover="overShow(index)"
@@ -103,10 +103,18 @@ export default{
     this.hover = parseInt(thisactived[1]) - 1
     console.log(this.actived)
   },
+  watch: {
+    '$route': 'changeactivity'
+  },
   mounted () {
     // console.log(this.$route)
   },
   methods: {
+    changeactivity () {
+      let thisactived = this.$route.name.split('_')
+      this.actived = parseInt(thisactived[1]) - 1
+      this.hover = parseInt(thisactived[1]) - 1
+    },
     change: function (thispath) {
       console.log(thispath + '父组件接受得值')
       this.actived = parseInt(thispath) - 1
