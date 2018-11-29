@@ -8,7 +8,7 @@
             <p class="select_star">证件照/ The passport photo.</p>
         </el-col>
         <el-col :span="9" >
-          <el-upload
+          <el-upload :disabled="eqit"
             accept=".jpg"
             class="upload-demo"
             :action="params.action"
@@ -23,7 +23,7 @@
             :auto-upload="true"
             :on-exceed="handleExceed"
             :file-list="fileList1">
-            <el-button size="mini" type="primary">Upload<i class="el-icon-upload el-icon--right"></i></el-button>
+            <el-button :disabled="eqit" size="mini" type="primary">Upload<i class="el-icon-upload el-icon--right"></i></el-button>
             <span style="font-size:11px;">只能上传jpg文件 ,且不超过2MB</span>
           </el-upload>
         </el-col>
@@ -35,7 +35,7 @@
                   <p class="select_star">护照信息页/ The information page of the Applicant’s Passport</p>
               </el-col>
               <el-col :span="9" >
-                <el-upload
+                <el-upload :disabled="eqit"
                   accept=".pdf"
                   :before-upload="onBeforeUpload"
                   class="upload-demo"
@@ -48,7 +48,7 @@
                   :data="params.data2"
                   :on-exceed="handleExceed"
                   :file-list="fileList3">
-                  <el-button size="mini" type="primary">Upload<i class="el-icon-upload el-icon--right"></i></el-button>
+                  <el-button :disabled="eqit" size="mini" type="primary">Upload<i class="el-icon-upload el-icon--right"></i></el-button>
                   <span style="font-size:11px;">只能上传pdf文件，且不超过2m</span>
                 </el-upload>
               </el-col>
@@ -60,7 +60,7 @@
                 <p class="select_star">担保人有效证件的复印件/ A photocopy of an ID (can be a passport, license, or other official ID) of the applicant’s emergency contact. </p>
             </el-col>
             <el-col :span="9" >
-              <el-upload
+              <el-upload :disabled="eqit"
                 accept=".pdf"
                 :before-upload="onBeforeUpload"
                 class="upload-demo"
@@ -73,7 +73,7 @@
                 :data="params.data3"
                 :on-exceed="handleExceed"
                 :file-list="fileList6">
-                <el-button size="mini" type="primary">Upload<i class="el-icon-upload el-icon--right"></i></el-button>
+                <el-button :disabled="eqit" size="mini" type="primary">Upload<i class="el-icon-upload el-icon--right"></i></el-button>
                 <span style="font-size:11px;">只能上传pdf文件，且不超过2m</span>
               </el-upload>
             </el-col>
@@ -85,7 +85,7 @@
             <p class="select_star">本人最后学历成绩单复印件/ Transcripts of the Most Advanced Studies.</p>
         </el-col>
         <el-col :span="9" >
-          <el-upload
+          <el-upload :disabled="eqit"
             accept=".pdf"
             :before-upload="onBeforeUpload"
             class="upload-demo"
@@ -97,7 +97,7 @@
             :data="params.data4"
             :on-exceed="handleExceed"
             :file-list="fileList2">
-            <el-button size="mini" type="primary">Upload<i class="el-icon-upload el-icon--right"></i></el-button>
+            <el-button :disabled="eqit" size="mini" type="primary">Upload<i class="el-icon-upload el-icon--right"></i></el-button>
             <span style="font-size:11px;">只能上传pdf文件，且不超过2M</span>
           </el-upload>
         </el-col>
@@ -109,7 +109,7 @@
             <p class="select_star">本人最后学历证书复印件/ Diploma of the Most Advanced Studies.</p>
         </el-col>
         <el-col :span="9" >
-          <el-upload
+          <el-upload :disabled="eqit"
             accept=".pdf"
             :before-upload="onBeforeUpload"
             class="upload-demo"
@@ -122,7 +122,7 @@
             :data="params.data5"
             :on-exceed="handleExceed"
             :file-list="fileList3">
-            <el-button size="mini" type="primary">Upload<i class="el-icon-upload el-icon--right"></i></el-button>
+            <el-button :disabled="eqit" size="mini" type="primary">Upload<i class="el-icon-upload el-icon--right"></i></el-button>
             <span style="font-size:11px;">只能上传pdf文件，且不超过2M</span>
           </el-upload>
         </el-col>
@@ -134,7 +134,7 @@
             <p class="select_star">推荐信1/Two Letters of Recommendation.</p>
         </el-col>
         <el-col :span="9" >
-          <el-upload
+          <el-upload :disabled="eqit"
             accept=".pdf"
             :before-upload="onBeforeUpload"
             class="upload-demo"
@@ -147,13 +147,13 @@
             :data="params.data6"
             :on-exceed="handleExceed"
             :file-list="fileList3">
-            <el-button size="mini" type="primary">Upload<i class="el-icon-upload el-icon--right"></i></el-button>
+            <el-button :disabled="eqit" size="mini" type="primary">Upload<i class="el-icon-upload el-icon--right"></i></el-button>
             <span style="font-size:11px;">只能上传pdf文件，且不超过2M</span>
           </el-upload>
         </el-col>
       </div>
       <span class="iconfont" style="color:#EE761C; margin-left:20px"><i class="el-icon-download"></i></span>
-      <a class="recruitment-more" href='http://39.106.208.110:8080/FStudent/BCU_Reference_Letter_Format-CN-EN.doc' download="">Letter Download</a>
+      <a class="recruitment-more" href='http://www.istuadmission.com/FStudent/BCU_Reference_Letter_Format-CN-EN.doc' download="">Letter Download</a>
       <p class="score-split-upload"></p>
       <!-- 推荐信2 13 -->
       <div class="Upload_layout">
@@ -161,7 +161,7 @@
             <p class="select_star">推荐信2/Two Letters of Recommendation.</p>
         </el-col>
         <el-col :span="9" >
-          <el-upload
+          <el-upload :disabled="eqit"
             accept=".pdf"
             :before-upload="onBeforeUpload"
             class="upload-demo"
@@ -174,13 +174,13 @@
             :data="params.data13"
             :on-exceed="handleExceed"
             :file-list="fileList3">
-            <el-button size="mini" type="primary">Upload<i class="el-icon-upload el-icon--right"></i></el-button>
+            <el-button :disabled="eqit" size="mini" type="primary">Upload<i class="el-icon-upload el-icon--right"></i></el-button>
             <span style="font-size:11px;">只能上传pdf文件，且不超过2M</span>
           </el-upload>
         </el-col>
       </div>
       <span class="iconfont" style="color:#EE761C; margin-left:20px"><i class="el-icon-download"></i></span>
-      <a class="recruitment-more" href='http://39.106.208.110:8080/FStudent/BCU_Reference_Letter_Format-CN-EN.doc' download="">Letter Download</a>
+      <a class="recruitment-more" href='http://www.istuadmission.com/FStudent/BCU_Reference_Letter_Format-CN-EN.doc' download="">Letter Download</a>
       <p class="score-split-upload"></p>
       <!-- 雅思或托福成绩证书复印件 7-->
       <div class="Upload_layout">
@@ -188,7 +188,7 @@
                 <p class="select_star">雅思或托福成绩证书复印件/ A photocopy of ILETS OR TOEFL certificate.</p>
             </el-col>
             <el-col :span="9" >
-              <el-upload
+              <el-upload :disabled="eqit"
                 accept=".pdf"
                 :before-upload="onBeforeUpload"
                 class="upload-demo"
@@ -201,7 +201,7 @@
                 :limit="1"
                 :on-exceed="handleExceed"
                 :file-list="fileList8">
-                <el-button size="mini" type="primary">Upload<i class="el-icon-upload el-icon--right"></i></el-button>
+                <el-button :disabled="eqit" size="mini" type="primary">Upload<i class="el-icon-upload el-icon--right"></i></el-button>
                 <span style="font-size:11px;">只能上传pdf文件，且不超过2M </span>
               </el-upload>
             </el-col>
@@ -213,7 +213,7 @@
                 <p>HSK证书复印件/ A photocopy of HSK certificate.</p>
             </el-col>
             <el-col :span="9" >
-              <el-upload
+              <el-upload :disabled="eqit"
                 accept=".pdf"
                 :before-upload="onBeforeUpload"
                 class="upload-demo"
@@ -226,7 +226,7 @@
                 :limit="1"
                 :on-exceed="handleExceed"
                 :file-list="fileList7">
-                <el-button size="mini" type="primary">Upload<i class="el-icon-upload el-icon--right"></i></el-button>
+                <el-button :disabled="eqit" size="mini" type="primary">Upload<i class="el-icon-upload el-icon--right"></i></el-button>
                 <span style="font-size:11px;">只能上传pdf文件，且不超过2M </span>
               </el-upload>
             </el-col>
@@ -238,7 +238,7 @@
             <p>来华学习计划/ Study Plan in China</p>
         </el-col>
         <el-col :span="9" >
-          <el-upload
+          <el-upload :disabled="eqit"
             accept=".pdf"
             class="upload-demo"
             :action="params.action"
@@ -251,7 +251,7 @@
             :limit="1"
             :on-exceed="handleExceed"
             :file-list="fileList4">
-            <el-button size="mini" type="primary">Upload<i class="el-icon-upload el-icon--right"></i></el-button>
+            <el-button :disabled="eqit" size="mini" type="primary">Upload<i class="el-icon-upload el-icon--right"></i></el-button>
             <span style="font-size:11px;">只能上传pdf文件 ,且不超过2MB </span>
           </el-upload>
         </el-col>
@@ -263,7 +263,7 @@
             <p>发表文章或科研成果/ Published Article or Research Achievements </p>
         </el-col>
         <el-col :span="9" >
-          <el-upload
+          <el-upload :disabled="eqit"
             accept=".pdf"
             :before-upload="onBeforeUpload"
             class="upload-demo"
@@ -275,7 +275,7 @@
             :data="params.data10"
             :on-exceed="handleExceed"
             :file-list="fileList11">
-            <el-button size="mini" type="primary">Upload<i class="el-icon-upload el-icon--right"></i></el-button>
+            <el-button :disabled="eqit" size="mini" type="primary">Upload<i class="el-icon-upload el-icon--right"></i></el-button>
             <span style="font-size:11px;">只能上传pdf文件 ,且不超过2MB </span>
           </el-upload>
         </el-col>
@@ -287,7 +287,7 @@
             <p class="select_star">无犯罪证明/ No crime certificate</p>
         </el-col>
         <el-col :span="9" >
-          <el-upload
+          <el-upload :disabled="eqit"
             accept=".pdf"
             :before-upload="onBeforeUpload"
             class="upload-demo"
@@ -300,7 +300,7 @@
             :data="params.data11"
             :on-exceed="handleExceed"
             :file-list="fileList11">
-            <el-button size="mini" type="primary">Upload<i class="el-icon-upload el-icon--right"></i></el-button>
+            <el-button :disabled="eqit" size="mini" type="primary">Upload<i class="el-icon-upload el-icon--right"></i></el-button>
             <span style="font-size:11px;">只能上传pdf文件 ,且不超过2MB </span>
           </el-upload>
         </el-col>
@@ -312,7 +312,7 @@
             <p class="select_star">近6个月内的体检报告/ Physical Examination in the past 6 months.</p>
         </el-col>
         <el-col :span="9" >
-          <el-upload
+          <el-upload :disabled="eqit"
             accept=".pdf"
             :before-upload="onBeforeUpload"
             class="upload-demo"
@@ -324,15 +324,15 @@
             :limit="1"
             :on-exceed="handleExceed"
             :file-list="fileList10">
-            <el-button size="mini" type="primary">Upload<i class="el-icon-upload el-icon--right"></i></el-button>
+            <el-button :disabled="eqit" size="mini" type="primary">Upload<i class="el-icon-upload el-icon--right"></i></el-button>
             <span style="font-size:11px;">只能上传pdf文件，且不超过2M </span>
           </el-upload>
         </el-col>
       </div>
       <p class="score-split-upload"></p>
       <div class="upload_button">
-        <!-- <el-button @click="resetForm('OtherInformation')">重置 Reset</el-button> -->
-        <el-button type="primary" @click="submitForm()" style="margin-left:50px;">继续 Continue</el-button>
+        <!-- <el-button :disabled="eqit" @click="resetForm('OtherInformation')">重置 Reset</el-button> -->
+        <el-button :disabled="eqit" type="primary" @click="submitForm()" style="margin-left:50px;">继续 Continue</el-button>
       </div>
     </div>
   </div>
@@ -345,17 +345,11 @@ export default{
     return {
       username: '',
       peopleName: '',
-      NeedInput: ['请先填写个人信息 Please complete  Personal Information', '请先填写个人信息 Please complete  Personal Information',
-        '请先填写学习经历 Please complete  Education History',
-        '请先填写工作经历 Please complete  Working Experience ',
-        '请先填写语言能力 Please complete  Language Proficiency ',
-        '请先填写来华学习计划 Please complete Proposed Study in BCU',
-        '请先填写学习成就 Please complete Achievements',
-        '请先填写其他信息 Please complete  Other Information',
-        '请先上传申请材料 Please Upload Application Documents',
-        '请先填写保证 Please complete Announcement '],
+      eqit: false,
+      NeedInput: this.GLOBAL.NeedInput,
+      NeedUrl: this.GLOBAL.NeedUrl,
       params: {
-        action: '/apis/UploadHandleServlet',
+        action: this.$URL + '/UploadHandleServlet',
         data1: {'username': '', 'kind': '1', 'filename': '', 'packname': ''},
         data2: {'username': '', 'kind': '2', 'filename': '', 'packname': ''},
         data3: {'username': '', 'kind': '3', 'filename': '', 'packname': ''},
@@ -392,7 +386,7 @@ export default{
     this.username = uname
     this.$axios({
       method: 'get',
-      url: '/apis/GetPinfByNameServlet',
+      url: this.$URL + '/GetPinfByNameServlet',
       params: {
         username: this.username
       }
@@ -402,7 +396,7 @@ export default{
         if (isShow == '') {
           this.$axios({
             method: 'get',
-            url: '/apis/SeletWckServlet',
+            url: this.$URL + '/SeletWckServlet',
             params: {
               username: this.username
             }
@@ -425,6 +419,26 @@ export default{
           }
         }
       } else {
+        // 是否禁用
+        let isShow = getCookie('InputInfo')
+        if (isShow == '') {
+          this.$axios({
+            method: 'get',
+            url: this.$URL + '/SeletWckServlet',
+            params: {
+              username: this.username
+            }
+          }).then((response) => {
+            isShow = parseInt(response.data[0].typ)
+            if (isShow == 15) {
+              this.eqit = true
+            }
+          })
+        } else {
+          if (isShow == 15) {
+            this.eqit = true
+          }
+        }
         this.peopleName = response.data[0].givenName + '.' + response.data[0].familyName
         this.params.data1.username = uname
         this.params.data2.username = uname
@@ -488,7 +502,7 @@ export default{
     submitForm () {
       this.$axios({
         method: 'get',
-        url: '/apis/ChackUploadServlet',
+        url: this.$URL + '/ChackUploadServlet',
         params: {
           username: this.username
         }

@@ -13,10 +13,10 @@
               </div>
         </div>
         <div class="ALM_content_right Psychological_right" style="text-align: left;">
-        <p style="letter-spacing:1px;" class="Psychological_title">请前往下方网站完成心理测评/Please  </p>
-        <a class="Psychological_a" target="_blank" href="http://www.bcu.edu.cn/bjxy/PROGRAMMES_FOR_INTERNATIOAL_STUDENT_.htm">http://www.bcu.edu.cn/bjxy/PROGRAMMES_FOR_INTERNATIOAL_STUDENT_.htm</a>
+        <p class="Psychological_title">请前往下方网站完成心理测评/Please  </p>
+        <a class="Psychological_a" target="_blank" href="https://www.wjx.cn/jq/31581154.aspx ">https://www.wjx.cn/jq/31581154.aspx </a>
         <div class="Psychological_upload">
-          <p style="margin-top:10px" class="Psychological_title">上传完成截图</p>
+          <p style="margin-top:10px" class="Psychological_title">上传完成截图/Upload</p>
           <div class="Psychological_file">
             <el-upload
               accept=".pdf"
@@ -53,24 +53,11 @@ export default{
   data () {
     return {
       params: {
-        action: '/apis/UploadHandleServlet',
+        action: this.$URL + '/UploadHandleServlet',
         data1: {'username': '', 'kind': '14', 'filename': '', 'packname': ''}
       },
-      NeedInput: ['请先填写个人信息 Please complete  Personal Information', '请先填写个人信息 Please complete  Personal Information',
-        '请先填写学习经历 Please complete  Education History',
-        '请先填写工作经历 Please complete  Working Experience ',
-        '请先填写语言能力 Please complete  Language Proficiency ',
-        '请先填写来华学习计划 Please complete Proposed Study in BCU',
-        '请先填写学习成就 Please complete Achievements',
-        '请先填写其他信息 Please complete  Other Information',
-        '请先上传申请材料 Please Upload Application Documents',
-        '请先填写保证 Please complete Announcement ', '请先提交申请 Please Submit First'],
-      NeedUrl: ['Information_1_Personal', 'Information_1_Personal',
-        'Information_2_Education', 'Information_3_Working',
-        'Information_4_Language', 'Information_5_Plan',
-        'Information_6_Achievements', 'Information_7_OtherInformation',
-        'Information_8_Upload', 'Information_9_Announcement',
-        'Information_10_Submission', 'Psychological'],
+      NeedInput: this.GLOBAL.NeedInput,
+      NeedUrl: this.GLOBAL.NeedUrl,
 
       fileList1: []
     }
@@ -85,7 +72,7 @@ export default{
     if (isShow == '') {
       this.$axios({
         method: 'get',
-        url: '/apis/SeletWckServlet',
+        url: this.$URL + '/SeletWckServlet',
         params: {
           username: this.username
         }
@@ -109,7 +96,7 @@ export default{
     }
     this.$axios({
       method: 'get',
-      url: '/apis/GetPinfByNameServlet',
+      url: this.$URL + '/GetPinfByNameServlet',
       params: {
         username: this.username
       }
@@ -145,7 +132,7 @@ export default{
       console.log(file)
       this.$axios({
         method: 'get',
-        url: '/apis/UpWckServlet',
+        url: this.$URL + '/UpWckServlet',
         params: {
           username: this.username,
           typ: '11'
@@ -167,7 +154,7 @@ export default{
       let thistime = new Date().getTime()
       this.$axios({
         method: 'get',
-        url: '/apis/TjServlet',
+        url: this.$URL + '/TjServlet',
         params: {
           username: this.username,
           time: thistime,
@@ -211,7 +198,7 @@ export default{
   flex-direction: column;
   color:#606266;
   line-height: 20px;
-  letter-spacing: 3px;
+  letter-spacing: 2px;
 }
 .Psychological_a{
   padding-top:10px;

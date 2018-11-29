@@ -6,86 +6,86 @@
         <!-- 姓名 -->
         <p>护照用名/Passport Name:</p>
         <el-form-item label="姓/Family Name" prop="family_name" class="el_left">
-          <el-input v-model="PersonalForm.family_name" clearable class="el-in-left"></el-input>
+          <el-input :disabled="eqit" v-model="PersonalForm.family_name" clearable class="el-in-left"></el-input>
         </el-form-item>
         <el-form-item label="名/Given Name" prop="given_name" class="el_left">
-          <el-input v-model="PersonalForm.given_name" clearable  class="el-in-left"></el-input>
+          <el-input :disabled="eqit" v-model="PersonalForm.given_name" clearable  class="el-in-left"></el-input>
         </el-form-item>
         <p class="score-split"></p>
         <!-- 国家 -->
         <el-form-item label="国籍/Nationality" prop="nationality" >
-          <el-autocomplete :fetch-suggestions="countrySearch" v-model="PersonalForm.nationality" placeholder="请选择或填写国籍/Please Choose or Input your Nationality" clearable class="el-in-nomal">
+          <el-autocomplete :disabled="eqit" :fetch-suggestions="countrySearch" v-model="PersonalForm.nationality" placeholder="请选择或填写国籍/Please Choose or Input your Nationality" clearable class="el-in-nomal">
           </el-autocomplete>
         </el-form-item>
         <!-- 护照号码-->
         <el-form-item label="护照号码/Passport No" prop="passport_no" >
-          <el-input v-model="PersonalForm.passport_no" clearable class="el-in-nomal"></el-input>
+          <el-input :disabled="eqit" v-model="PersonalForm.passport_no" clearable class="el-in-nomal"></el-input>
         </el-form-item>
         <p class="score-split"></p>
         <!-- 出生日期 -->
         <el-form-item label="出生日期/Date of Birth" prop="date_birth">
-          <el-date-picker value-format="yyyyMMdd" type="date" placeholder="选择日期 Select Date" v-model="PersonalForm.date_birth" class="el-in-nomal"></el-date-picker>
+          <el-date-picker :disabled="eqit" value-format="yyyyMMdd" type="date" placeholder="选择日期 Select Date" v-model="PersonalForm.date_birth" class="el-in-nomal"></el-date-picker>
         </el-form-item>
         <!-- 出生地点 -->
         <p>出生地点/Place of Birth</p>
         <el-form-item label="国家/Country" prop="Country" class="el_left">
-          <el-autocomplete :fetch-suggestions="countrySearch" v-model="PersonalForm.Country" placeholder="请选择或填写国家/Please Choose or Input your Country" clearable class="el-in-left">
+          <el-autocomplete :disabled="eqit" :fetch-suggestions="countrySearch" v-model="PersonalForm.Country" placeholder="请选择或填写国家/Please Choose or Input your Country" clearable class="el-in-left">
           </el-autocomplete>
         </el-form-item>
         <el-form-item label="城市/City" prop="City" class="el_left">
-          <el-input v-model="PersonalForm.City" clearable class="el-in-left"></el-input>
+          <el-input :disabled="eqit" v-model="PersonalForm.City" clearable class="el-in-left"></el-input>
         </el-form-item>
         <p class="score-split"></p>
         <!-- 性别 -->
         <el-form-item label="性别/Gender " prop="sex">
-          <el-radio-group v-model="PersonalForm.sex">
+          <el-radio-group :disabled="eqit" v-model="PersonalForm.sex">
             <el-radio label="0" value='0'>男/Male</el-radio>
             <el-radio label="1" value='1'>女/Female</el-radio>
           </el-radio-group>
         </el-form-item>
         <!-- 婚姻状况Marital Status -->
         <el-form-item label="婚姻状况/Marital Status" prop="marri">
-          <el-radio-group v-model="PersonalForm.marri">
+          <el-radio-group :disabled="eqit" v-model="PersonalForm.marri">
             <el-radio label="0" value="0">已婚/Married</el-radio>
             <el-radio label="1" value="1">未婚/Single</el-radio>
             <el-radio label="2" value="2">其它/Other</el-radio>
           </el-radio-group>
         </el-form-item>
         <el-form-item label="宗教信仰/Religion" prop="religion">
-            <el-autocomplete :fetch-suggestions="querySearch" v-model="PersonalForm.religion" placeholder="请选择或填写宗教信仰/Please Choose or Input your religion" class="el-in-nomal">
+            <el-autocomplete :disabled="eqit" :fetch-suggestions="querySearch" v-model="PersonalForm.religion" placeholder="请选择或填写宗教信仰/Please Choose or Input your religion" class="el-in-nomal">
           </el-autocomplete>
         </el-form-item>
         <p class="score-split"></p>
         <p>录取通知书邮寄地址/Address for correspondence (Please inform  BCU for any change of this address)</p>
         <el-form-item label="地址/Address" prop="address_c" class="el_left" >
-          <el-input v-model="PersonalForm.address_c" clearable class="el-in-left"></el-input>
+          <el-input :disabled="eqit" v-model="PersonalForm.address_c" clearable class="el-in-left"></el-input>
         </el-form-item>
         <el-form-item label="电话/Tel" prop="ctel" class="el_left">
-          <el-input v-model.number="PersonalForm.ctel" clearable  class="el-in-left"></el-input>
+          <el-input :disabled="eqit" v-model.number="PersonalForm.ctel" clearable  class="el-in-left"></el-input>
         </el-form-item>
         <el-form-item label="传真/Fax" prop="cfax" class="el_left">
-          <el-input v-model="PersonalForm.cfax" clearable class="el-in-left"></el-input>
+          <el-input :disabled="eqit" v-model="PersonalForm.cfax" clearable class="el-in-left"></el-input>
         </el-form-item>
         <el-form-item label="E-mail" prop="cmail" class="el_left">
-          <el-input v-model="PersonalForm.cmail" clearable class="el-in-left"></el-input>
+          <el-input :disabled="eqit" v-model="PersonalForm.cmail" clearable class="el-in-left"></el-input>
         </el-form-item>
         <p class="score-split"></p>
         <p>家庭地址/Home Address</p>
         <el-form-item label="地址/Home Address" prop="address_h" class="el_left">
-          <el-input v-model="PersonalForm.address_h" clearable class="el-in-left"></el-input>
+          <el-input :disabled="eqit" v-model="PersonalForm.address_h" clearable class="el-in-left"></el-input>
         </el-form-item>
         <el-form-item label="电话/Tel" prop="htel" class="el_left">
-          <el-input v-model.number="PersonalForm.htel" clearable class="el-in-left"></el-input>
+          <el-input :disabled="eqit" v-model.number="PersonalForm.htel" clearable class="el-in-left"></el-input>
         </el-form-item>
         <el-form-item label="传真/Fax" prop="hfax" class="el_left">
-          <el-input v-model="PersonalForm.hfax" clearable  class="el-in-left"></el-input>
+          <el-input :disabled="eqit" v-model="PersonalForm.hfax" clearable  class="el-in-left"></el-input>
         </el-form-item>
         <el-form-item label="E-mail" prop="hmail" class="el_left">
-          <el-input v-model="PersonalForm.hmail" clearable class="el-in-left"></el-input>
+          <el-input :disabled="eqit" v-model="PersonalForm.hmail" clearable class="el-in-left"></el-input>
         </el-form-item>
         <div class="bottom_button">
-          <el-button @click="resetForm('PersonalForm')">重置 Reset</el-button>
-          <el-button type="primary" @click="submitForm('PersonalForm')" style="margin-left:50px;">保存并继续 Save &Continue</el-button>
+          <el-button :disabled="eqit" @click="resetForm('PersonalForm')">重置 Reset</el-button>
+          <el-button :disabled="eqit" type="primary" @click="submitForm('PersonalForm')" style="margin-left:50px;">保存并继续 Save &Continue</el-button>
         </div>
       </el-form>
     </div>
@@ -101,6 +101,7 @@ export default{
       isSave: false,
       geturl: '',
       isClickSave: false,
+      eqit: false,
       PersonalForm: {
         pic: '',
         passport_name: '',
@@ -189,6 +190,7 @@ export default{
     }
   },
   created: function () {
+    console.log(this.$URL + '这是domain')
     let uname = getCookie('username')
     if (uname == '') {
       this.$router.push('/')
@@ -196,14 +198,32 @@ export default{
     this.username = uname,
     this.$axios({
       method: 'get',
-      url: '/apis/GetPinfByNameServlet',
+      url: this.$URL + '/GetPinfByNameServlet',
       params: {
         username: this.username
       }
     }).then((response) => {
       if (response.data[0].username == '') {
-        console.log('zzzzzzzz')
       } else {
+        let isShow = getCookie('InputInfo')
+        if (isShow == '') {
+          this.$axios({
+            method: 'get',
+            url: this.$URL + '/SeletWckServlet',
+            params: {
+              username: this.username
+            }
+          }).then((response) => {
+            isShow = parseInt(response.data[0].typ)
+            if (isShow == 15) {
+              this.eqit = true
+            }
+          })
+        } else {
+          if (isShow == 15) {
+            this.eqit = true
+          }
+        }
         this.isSave = true
         this.PersonalForm.pic = response.data[0].pic
         this.PersonalForm.passport_name = response.data[0].passportName
@@ -299,9 +319,9 @@ export default{
       this.$refs[formName].validate((valid) => {
         if (valid) {
           if (this.isSave == false) {
-            this.geturl = '/apis/AddPinfServlet'
+            this.geturl = this.$URL + '/AddPinfServlet'
           } else {
-            this.geturl = '/apis/GetPinfByNameServlet'
+            this.geturl = this.$URL + '/ChangePinfServlet'
           }
           // let PersonalJson = JSON.stringify(this.PersonalForm)
           // alert('submit!' + PersonalJson)
@@ -328,7 +348,8 @@ export default{
               address_h: this.PersonalForm.address_h,
               htel: this.PersonalForm.htel,
               hfax: this.PersonalForm.hfax,
-              hmail: this.PersonalForm.hmail
+              hmail: this.PersonalForm.hmail,
+              typ: 1
             }
           }).then((response) => {
             if (this.isSave == false) {
@@ -373,7 +394,7 @@ export default{
     padding-left:10px;
     margin-top: 30px;
     .score-split{
-      width:500px;
+      width:680px;
       height:1px;
       background-color: #CACACB;
       margin-bottom:20px;

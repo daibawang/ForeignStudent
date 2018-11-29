@@ -39,12 +39,12 @@
               <p>Application Procedures</p>
               <div class="recruitment-content" v-html="this.news.five"></div>
               <span class="iconfont" style="color:#EE761C;"><i class="el-icon-download"></i></span>
-              <a class="recruitment-more" href='http://39.106.208.110:8080/FStudent/AttachmentII.docx' download="">Download</a>
+              <a class="recruitment-more" href='http://www.istuadmission.com/FStudent/AttachmentII.docx' download="">Download</a>
               <!-- 6 -->
               <p>Admission Requirements</p>
               <div class="recruitment-content" v-html="this.news.six"></div>
               <span class="iconfont" style="color:#EE761C;"><i class="el-icon-download"></i></span>
-              <a class="recruitment-more" href='http://39.106.208.110:8080/FStudent/BCU_Reference_Letter_Format-CN-EN.doc' download="">Letter Download</a>
+              <a class="recruitment-more" href='http://www.istuadmission.com/FStudent/BCU_Reference_Letter_Format-CN-EN.doc' download="">Letter Download</a>
 
               <!-- 7 -->
               <p> Application Fee</p>
@@ -222,7 +222,7 @@ export default{
     this.username = uname
     this.$axios({
       method: 'get',
-      url: '/apis/SeletWckServlet',
+      url: this.$URL + '/SeletWckServlet',
       params: {
         username: this.username
       }

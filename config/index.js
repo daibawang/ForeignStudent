@@ -14,11 +14,11 @@ module.exports = {
         target:'http://localhost:8080',
         changeOrigin:true,
         pathRewrite:{
-          '^/apis':'/'
+          '^/apis':''
         }
       },
       '/Fileupdate':{
-        target:'http://39.106.208.110:8080',
+        target:'http://39.106.208.110',
         changeOrigin:true,
         pathRewrite:{
           '^/Fileupdate':'/'
@@ -70,7 +70,7 @@ module.exports = {
      * Source Maps
      */
 
-    productionSourceMap: true,
+    productionSourceMap: false,
     // https://webpack.js.org/configuration/devtool/#production
     devtool: '#source-map',
 

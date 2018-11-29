@@ -8,7 +8,6 @@ import Moment from 'moment'
 import 'styles/reset.css'
 import 'styles/border.css'
 import 'styles/iconfont.css'
-
 import $ from 'jquery'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
@@ -19,14 +18,18 @@ Vue.prototype.moment = Moment;
 //
 // import domain from './domain.js';
 // global.domain = domain;
-
+import domain from './assets/js/domain.js';
+//配置生产环境和开发环境url
+Vue.prototype.$URL = process.env.API_ROOT;
 //axios 配置
 import axios from 'axios'
 Vue.prototype.$axios = axios;
 //全局注册，使用方法为:this.$axios
  Vue.config.productionTip=false;
 fastClick.attach(document.body)
-
+//引入全局变量Global,并全局引用
+import global_ from './components/tools/Global.vue'
+Vue.prototype.GLOBAL = global_
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

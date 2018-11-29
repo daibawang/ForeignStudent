@@ -211,14 +211,14 @@ export default{
         })
       } else {
         this.$axios({
-          method: 'get',
-          url: '/apis/UserServlet',
+          method: 'post',
+          url: this.$URL + '/UserServlet',
           params: {
             username: this.username,
             password: this.password
           }
         }).then((response) => {
-          if (response.data == 'false') {
+          if (response.data == false) {
             this.$alert(this.contentsNo, 'Error', {
               confirmButtonText: this.confirmTitle
             })
@@ -258,7 +258,7 @@ export default{
       } else {
         this.$axios({
           method: 'get',
-          url: '/apis/AddUserServlet',
+          url: this.$URL + '/AddUserServlet',
           params: {
             username: this.newUsername,
             password: this.newPassword,

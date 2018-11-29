@@ -442,7 +442,7 @@
     </div>
     <div class="announcement_button_submit">
       <!-- <el-button @click="resetForm('OtherInformation')">重置 Reset</el-button> -->
-      <el-button type="primary" @click="submitAll()" style="margin-left:50px;">提交 Submit</el-button>
+      <el-button type="primary" @click="submitAll()" style="margin-left:50px;" :disabled="submiteqit">提交 Submit</el-button>
     </div>
   </div>
 </template>
@@ -454,6 +454,7 @@ export default{
     return {
       // readonly: true,
       eqit: true,
+      submiteqit: true,
       username: '',
       // 个人经历
       PersonalForm: {
@@ -568,16 +569,8 @@ export default{
         }
       ],
       UploadfileList: [],
-      NeedInput: ['请先填写个人信息 Please complete  Personal Information', '请先填写个人信息 Please complete  Personal Information',
-        '请先填写学习经历 Please complete  Education History',
-        '请先填写工作经历 Please complete  Working Experience ',
-        '请先填写语言能力 Please complete  Language Proficiency ',
-        '请先填写来华学习计划 Please complete Proposed Study in BCU',
-        '请先填写学习成就 Please complete Achievements',
-        '请先填写其他信息 Please complete  Other Information',
-        '请先上传申请材料 Please Upload Application Documents',
-        '请先填写保证 Please complete Announcement '],
-      NeedUrl: ['Information_1_Personal', 'Information_1_Personal', 'Information_2_Education', 'Information_3_Working', 'Information_4_Language', 'Information_5_Plan', 'Information_6_Achievements', 'Information_7_OtherInformation', 'Information_8_Upload', 'Information_9_Announcement', 'Information_10_Submission']
+      NeedInput: this.GLOBAL.NeedInput,
+      NeedUrl: this.GLOBAL.NeedUrl
     }
   },
   created: function () {
@@ -592,7 +585,7 @@ export default{
     // 获取文件
     this.$axios({
       method: 'get',
-      url: '/apis/ChackUploadAllServlet',
+      url: this.$URL + '/ChackUploadAllServlet',
       params: {
         username: this.username
       }
@@ -610,7 +603,7 @@ export default{
     // 获取值并判断是否进入
     this.$axios({
       method: 'get',
-      url: '/apis/GetAllInfServlet',
+      url: this.$URL + '/GetAllInfServlet',
       params: {
         username: this.username,
         typ: '10'
@@ -621,7 +614,7 @@ export default{
         if (isShow == '') {
           this.$axios({
             method: 'get',
-            url: '/apis/SeletWckServlet',
+            url: this.$URL + '/SeletWckServlet',
             params: {
               username: this.username
             }
@@ -632,6 +625,8 @@ export default{
                 confirmButtonText: 'sure'
               })
               this.$router.push('/asidetab/' + this.NeedUrl[isShow])
+            } else if (isShow == 15) {
+              this.submiteqit = true
             }
             setCookie('InputInfo', isShow, 1000 * 60)
           })
@@ -641,6 +636,8 @@ export default{
               confirmButtonText: 'sure'
             })
             this.$router.push('/asidetab/' + this.NeedUrl[isShow])
+          } else if (isShow == 15) {
+            this.submiteqit = true
           }
         }
       } else {

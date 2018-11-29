@@ -17,13 +17,13 @@
           <div class="Status_from">
             <el-form :inline="true" label-position="top" :model="formInline" class="demo-form-inline">
               <el-form-item label="姓名/Name">
-                <el-input :disabled="true" v-model="formInline.uName"></el-input>
+                <el-input  readonly v-model="formInline.uName"></el-input>
               </el-form-item>
               <el-form-item label="申请时间/Psychological Time" style="margin-left:30px">
-                <el-input :disabled="true" v-model="formInline.recordtime"></el-input>
+                <el-input readonly v-model="formInline.recordtime"></el-input>
               </el-form-item>
               <el-form-item label="申请状态/Application Status" style="margin-left:30px">
-                <el-input :disabled="true" v-model="formInline.status"></el-input>
+                <el-input readonly v-model="formInline.status"></el-input>
               </el-form-item>
 
             </el-form>
@@ -42,30 +42,57 @@ export default{
   data () {
     return {
       username: '',
+      NeedInput: this.GLOBAL.NeedInput,
+      NeedUrl: this.GLOBAL.NeedUrl,
       formInline: {
         uName: '',
         recordtime: '',
-        status: ''
+        status: '',
+        readonly: true
       }
     }
   },
-  created () {
+  created: function () {
     let uname = getCookie('username')
     if (uname == '') {
       this.$router.push('/')
     }
     this.username = uname
+
     this.$axios({
       method: 'get',
-      url: '/apis/UserRecordServlet',
+      url: this.$URL + '/UserRecordServlet',
       params: {
         username: this.username
       }
     }).then((response) => {
-      this.formInline.uName = response.data[0].username
-      this.formInline.recordtime = formatDate(new Date(response.data[0].applytime * 1), 'yyyy-MM-dd hh:mm')
-      this.formInline.status = response.data[0].state
-      console.log(response.data)
+      if (this.formInline.recordtime == '') {
+        this.$axios({
+          method: 'get',
+          url: this.$URL + '/SeletWckServlet',
+          params: {
+            username: this.username
+          }
+        }).then((response) => {
+          let isShow = parseInt(response.data[0].typ)
+          if (isShow < 10) {
+            this.$alert(this.NeedInput[isShow], {
+              confirmButtonText: 'sure'
+            })
+            this.$router.push('/asidetab/' + this.NeedUrl[isShow])
+          } else if (isShow == 11) {
+            this.$alert(this.NeedInput[isShow], {
+              confirmButtonText: 'sure'
+            })
+            this.$router.push(this.NeedUrl[isShow])
+          }
+          setCookie('InputInfo', isShow, 1000 * 60)
+        })
+      } else {
+        this.formInline.uName = response.data[0].username
+        this.formInline.recordtime = formatDate(new Date(response.data[0].applytime * 1), 'yyyy-MM-dd hh:mm')
+        this.formInline.status = response.data[0].state
+      }
     }).catch((error) => {
       console.log(error)
     })
@@ -91,5 +118,8 @@ export default{
 .Status_from{
   margin-left:40px;
   margin-top:20px;
+}
+.Psychological_right{
+  height:600px
 }
 </style>

@@ -11,7 +11,7 @@
             :rules="{
               required: false, message: 'This field is required', trigger: 'blur'
             }">
-                <el-date-picker value-format="yyyyMM" type="month" placeholder="from" v-model="item.btime" style="width: 115px;"></el-date-picker>
+                <el-date-picker :disabled="eqit" value-format="yyyyMM" type="month" placeholder="from" v-model="item.btime" style="width: 115px;"></el-date-picker>
             </el-form-item>
           </el-col>
           <el-col :span="11" style="margin-left:5px;">
@@ -19,7 +19,7 @@
             :rules="{
               required: false, message: 'This field is required', trigger: 'blur'
             }">
-              <el-date-picker value-format="yyyyMM" type="month" placeholder="to" v-model="item.ltime" style="width: 115px;"></el-date-picker>
+              <el-date-picker :disabled="eqit" value-format="yyyyMM" type="month" placeholder="to" v-model="item.ltime" style="width: 115px;"></el-date-picker>
             </el-form-item>
           </el-col>
         </el-form-item>
@@ -28,21 +28,21 @@
         :rules="{
           required: false, message: 'This field is required', trigger: 'blur'
         }">
-          <el-input v-model="item.unit" clearable style="width:320px;" class=""></el-input>
+          <el-input :disabled="eqit" v-model="item.unit" clearable style="width:320px;" class=""></el-input>
         </el-form-item>
        <el-form-item label="职位/Position/Duty" :prop="'domains.'+index+'.obj'" style="margin-left:5px"
         :rules="{
           required: false, message: 'This field is required', trigger: 'blur'
         }">
-          <el-input v-model="item.obj" clearable style="width:160px;" class=""></el-input>
+          <el-input :disabled="eqit" v-model="item.obj" clearable style="width:160px;" class=""></el-input>
         </el-form-item>
-        <el-button style="margin-top:50px" type="danger" icon="el-icon-delete" circle @click="deleteRules(item, index)" :disabled="isReadonly"></el-button>
+        <el-button :disabled="eqit" style="margin-top:50px" type="danger" icon="el-icon-delete" circle @click="deleteRules(item, index)" ></el-button>
       </div>
         <el-form-item>
-          <el-button type="primary" icon="el-icon-edit" circle @click="addDomain"></el-button>
-          <el-button @click="resetForm('WorkForm')">重置</el-button>
+          <el-button :disabled="eqit" type="primary" icon="el-icon-edit" circle @click="addDomain"></el-button>
+          <el-button :disabled="eqit" @click="resetForm('WorkForm')">重置</el-button>
           <div class="EducationForm_submit">
-            <el-button type="primary" @click="submitForm('WorkForm')">保存并继续 Save &Continue Save</el-button>
+            <el-button :disabled="eqit" type="primary" @click="submitForm('WorkForm')">保存并继续 Save &Continue Save</el-button>
           </div>
         </el-form-item>
       </el-form>
@@ -58,16 +58,9 @@ export default{
       username: '',
       isSave: false,
       geturl: '',
-      NeedInput: ['请先填写个人信息 Please complete  Personal Information', '请先填写个人信息 Please complete  Personal Information',
-        '请先填写学习经历 Please complete  Education History',
-        '请先填写工作经历 Please complete  Working Experience ',
-        '请先填写语言能力 Please complete  Language Proficiency ',
-        '请先填写来华学习计划 Please complete Proposed Study in BCU',
-        '请先填写学习成就 Please complete Achievements',
-        '请先填写其他信息 Please complete  Other Information',
-        '请先上传申请材料 Please Upload Application Documents',
-        '请先填写保证 Please complete Announcement '],
-      NeedUrl: ['Information_1_Personal', 'Information_1_Personal', 'Information_2_Education', 'Information_3_Working', 'Information_4_Language', 'Information_5_Plan', 'Information_6_Achievements', 'Information_7_OtherInformation', 'Information_8_Upload', 'Information_9_Announcement', 'Information_10_Submission'],
+      eqit: false,
+      NeedInput: this.GLOBAL.NeedInput,
+      NeedUrl: this.GLOBAL.NeedUrl,
       WorkForm: {
         domains: [{
           unit: '',
@@ -89,7 +82,7 @@ export default{
     this.username = uname
     this.$axios({
       method: 'get',
-      url: '/apis/GetWorkByNameServlet',
+      url: this.$URL + '/GetWorkByNameServlet',
       params: {
         username: this.username
       }
@@ -100,7 +93,7 @@ export default{
         if (isShow == '') {
           this.$axios({
             method: 'get',
-            url: '/apis/SeletWckServlet',
+            url: this.$URL + '/SeletWckServlet',
             params: {
               username: this.username
             }
@@ -123,6 +116,26 @@ export default{
           }
         }
       } else {
+        // 是否禁用
+        let isShow = getCookie('InputInfo')
+        if (isShow == '') {
+          this.$axios({
+            method: 'get',
+            url: this.$URL + '/SeletWckServlet',
+            params: {
+              username: this.username
+            }
+          }).then((response) => {
+            isShow = parseInt(response.data[0].typ)
+            if (isShow == 15) {
+              this.eqit = true
+            }
+          })
+        } else {
+          if (isShow == 15) {
+            this.eqit = true
+          }
+        }
         this.isSave = true
         // setCookie('InputInfo', 3, 1000 * 60)
         this.WorkForm.domains = response.data
@@ -143,10 +156,9 @@ export default{
       this.$refs[formName].validate((valid) => {
         if (valid) {
           if (this.isSave == false) {
-            console.log('新增疾苦')
-            this.geturl = '/apis/AddWorkServlet'
+            this.geturl = this.$URL + '/AddWorkServlet'
           } else {
-            this.geturl = '/apis/ChangeWorkServlet'
+            this.geturl = this.$URL + '/ChangeWorkServlet'
           }
           var domainsworkJson = encodeURI(JSON.stringify(this.WorkForm.domains))
           console.log(this.WorkForm.domains[0].btime)
@@ -155,7 +167,8 @@ export default{
             url: this.geturl,
             params: {
               username: this.username,
-              domains: domainsworkJson
+              domains: domainsworkJson,
+              typ: 3
             }
           }).then((response) => {
             if (this.isSave == false) {

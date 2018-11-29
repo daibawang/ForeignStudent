@@ -5,7 +5,7 @@
       <el-form :model="LanguageForm" :rules="rules" ref="LanguageForm" label-width="200px" class="demo-LanguageForm" label-position="top">
         <!-- 姓名 -->
         <el-form-item label="汉语能力/Chinese Proficiency:" prop="proficiency_c">
-            <el-radio-group v-model="LanguageForm.proficiency_c">
+            <el-radio-group :disabled="eqit" v-model="LanguageForm.proficiency_c">
               <el-radio label="1" value='1'>很好/Excellent</el-radio>
               <el-radio label="2" value='2'>好/Good</el-radio>
               <el-radio label="3" value='3'>较好/Fair</el-radio>
@@ -15,17 +15,17 @@
         </el-form-item>
         <p> HSK 考试等级或其他类型汉语考试成绩/ Level of HSK test or other certificates that can testify your</p>
         <el-form-item label="考试类型/Type" prop="level_c" class="el_left">
-            <el-cascader separator='' expand-trigger="hover" :options="options" v-model="LanguageForm.level_c"@change="handleChange">
-            <el-cascader>
+            <el-cascader :disabled="eqit" separator='' expand-trigger="hover" :options="options" v-model="LanguageForm.level_c"@change="handleChange">
+            <el-cascader :disabled="eqit">
         </el-form-item>
         <el-form-item label="考试成绩/Test Scores" prop="level_c_Scores" class="el_left">
-          <el-input v-model.number="LanguageForm.level_c_Scores" clearable style="width:200px;" class="el-in-left el_left"></el-input>
+          <el-input :disabled="eqit" v-model.number="LanguageForm.level_c_Scores" clearable style="width:200px;" class="el-in-left el_left"></el-input>
         </el-form-item>
 
         <p class="score-split"></p>
 
         <el-form-item label="英语能力/English Proficiency:" prop="proficiency_e">
-            <el-radio-group v-model="LanguageForm.proficiency_e">
+            <el-radio-group :disabled="eqit" v-model="LanguageForm.proficiency_e">
             <el-radio label="1" value='1'>很好/Excellent</el-radio>
             <el-radio label="2" value='2'>好/Good</el-radio>
             <el-radio label="3" value='3'>较好/Fair</el-radio>
@@ -35,18 +35,18 @@
         </el-form-item>
         <p>TOEFL或ILETS 考试成绩/ TOEFL or ILETS test score</p>
         <el-form-item label="考试类型/Type" prop="level_e" class="el_left">
-          <el-select v-model="LanguageForm.level_e" style="width:200px">
+          <el-select :disabled="eqit" v-model="LanguageForm.level_e" style="width:200px">
             <el-option label="TOEFL" value="TOEFL"></el-option>
             <el-option label="ILETS" value="ILETS"></el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="考试成绩/Test Scores" prop="level_e_score" class="el_left">
-          <el-input v-model.number="LanguageForm.level_e_score" clearable style="width:200px;" class="el-in-left el_left"></el-input>
+          <el-input :disabled="eqit" v-model.number="LanguageForm.level_e_score" clearable style="width:200px;" class="el-in-left el_left"></el-input>
         </el-form-item>
 
         <div class="bottom_button">
-          <el-button @click="resetForm('LanguageForm')">重置 Reset</el-button>
-          <el-button type="primary" @click="submitForm('LanguageForm')" style="margin-left:50px;">保存并继续 Save &Continue</el-button>
+          <el-button :disabled="eqit" @click="resetForm('LanguageForm')">重置 Reset</el-button>
+          <el-button :disabled="eqit" type="primary" @click="submitForm('LanguageForm')" style="margin-left:50px;">保存并继续 Save &Continue</el-button>
         </div>
       </el-form>
     </div>
@@ -61,16 +61,9 @@ export default{
       username: '',
       isSave: false,
       geturl: '',
-      NeedInput: ['请先填写个人信息 Please complete  Personal Information', '请先填写个人信息 Please complete  Personal Information',
-        '请先填写学习经历 Please complete  Education History',
-        '请先填写工作经历 Please complete  Working Experience ',
-        '请先填写语言能力 Please complete  Language Proficiency ',
-        '请先填写来华学习计划 Please complete Proposed Study in BCU',
-        '请先填写学习成就 Please complete Achievements',
-        '请先填写其他信息 Please complete  Other Information',
-        '请先上传申请材料 Please Upload Application Documents',
-        '请先填写保证 Please complete Announcement '],
-      NeedUrl: ['Information_1_Personal', 'Information_1_Personal', 'Information_2_Education', 'Information_3_Working', 'Information_4_Language', 'Information_5_Plan', 'Information_6_Achievements', 'Information_7_OtherInformation', 'Information_8_Upload', 'Information_9_Announcement', 'Information_10_Submission'],
+      eqit: false,
+      NeedInput: this.GLOBAL.NeedInput,
+      NeedUrl: this.GLOBAL.NeedUrl,
       options: [
         {
           value: 'HSK',
@@ -137,7 +130,7 @@ export default{
     this.username = uname
     this.$axios({
       method: 'get',
-      url: '/apis/GetProficiencyByNameServlet',
+      url: this.$URL + '/GetProficiencyByNameServlet',
       params: {
         username: this.username
       }
@@ -147,7 +140,7 @@ export default{
         if (isShow == '') {
           this.$axios({
             method: 'get',
-            url: '/apis/SeletWckServlet',
+            url: this.$URL + '/SeletWckServlet',
             params: {
               username: this.username
             }
@@ -170,6 +163,26 @@ export default{
           }
         }
       } else {
+        // 是否禁用
+        let isShow = getCookie('InputInfo')
+        if (isShow == '') {
+          this.$axios({
+            method: 'get',
+            url: this.$URL + '/SeletWckServlet',
+            params: {
+              username: this.username
+            }
+          }).then((response) => {
+            isShow = parseInt(response.data[0].typ)
+            if (isShow == 15) {
+              this.eqit = true
+            }
+          })
+        } else {
+          if (isShow == 15) {
+            this.eqit = true
+          }
+        }
         this.isSave = true
         let level_c_return = response.data[0].level_c.split('级').toString()
         level_c_return = level_c_return.split('分').toString()
@@ -197,9 +210,9 @@ export default{
       this.$refs[formName].validate((valid) => {
         if (valid) {
           if (this.isSave == false) {
-            this.geturl = '/apis/AddProficiencyServlet'
+            this.geturl = this.$URL + '/AddProficiencyServlet'
           } else {
-            this.geturl = '/apis/ChangeProficiencyServlet'
+            this.geturl = this.$URL + '/ChangeProficiencyServlet'
           }
           this.$axios({
             method: 'get',
@@ -211,7 +224,7 @@ export default{
               level_c: this.LanguageForm.level_c[0] + ' ' + this.LanguageForm.level_c[1] + '级' + this.LanguageForm.level_c_Scores + '分',
               proficiency_e: this.LanguageForm.proficiency_e,
               level_e: this.LanguageForm.level_e + this.LanguageForm.level_e_score,
-              type: 1
+              type: 4
             }
           }).then((response) => {
             if (this.isSave == false) {
