@@ -230,7 +230,9 @@ export default{
           }
           console.log(response.data)
         }).catch((error) => {
-          console.log(error)
+          this.$alert('您的网络状态不好，请稍后再试/', 'Error', {
+            confirmButtonText: this.confirmTitle
+          })
         })
       }
     },

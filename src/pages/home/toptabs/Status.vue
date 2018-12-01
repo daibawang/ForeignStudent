@@ -61,12 +61,13 @@ export default{
 
     this.$axios({
       method: 'get',
-      url: this.$URL + '/UserRecordServlet',
+      url: this.$URL + '/GetStateByNameServlet',
       params: {
         username: this.username
       }
     }).then((response) => {
-      if (this.formInline.recordtime == '') {
+      console.log(response.data[0] + 'zzzz')
+      if (response.data[0].applytime == '') {
         this.$axios({
           method: 'get',
           url: this.$URL + '/SeletWckServlet',
@@ -75,16 +76,15 @@ export default{
           }
         }).then((response) => {
           let isShow = parseInt(response.data[0].typ)
-          if (isShow < 10) {
+          if (isShow < 12) {
             this.$alert(this.NeedInput[isShow], {
               confirmButtonText: 'sure'
             })
-            this.$router.push('/asidetab/' + this.NeedUrl[isShow])
-          } else if (isShow == 11) {
-            this.$alert(this.NeedInput[isShow], {
-              confirmButtonText: 'sure'
-            })
-            this.$router.push(this.NeedUrl[isShow])
+            if (isShow == 10 || isShow == 11) {
+              this.$router.push(this.NeedUrl[isShow])
+            } else {
+              this.$router.push('/asidetab/' + this.NeedUrl[isShow])
+            }
           }
           setCookie('InputInfo', isShow, 1000 * 60)
         })

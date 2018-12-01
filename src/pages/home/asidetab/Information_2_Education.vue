@@ -67,7 +67,8 @@ export default{
           fromdate: '',
           todate: '',
           Previous: '',
-          Fields: ''
+          Fields: '',
+          befortime: ''
         }]
       }
     }
@@ -136,10 +137,10 @@ export default{
             this.eqit = true
           }
         }
-
         this.isSave = true
         // setCookie('InputInfo', 2, 1000 * 60)
         this.EducationForm.domains = response.data
+        console.log(this.EducationForm.domains.length + '长度')
         for (let i = 0; i < this.EducationForm.domains.length; i++) {
           this.EducationForm.domains[i].fromdate = this.EducationForm.domains[i].btime
           this.EducationForm.domains[i].todate = this.EducationForm.domains[i].ltime
@@ -162,6 +163,7 @@ export default{
           } else {
             this.geturl = this.$URL + '/ChangeStudyServlet'
           }
+          console.log('上船前的domains' + this.EducationForm.domains)
           var domainsJson = encodeURI(JSON.stringify(this.EducationForm.domains))
           console.log(domainsJson)
           this.$axios({

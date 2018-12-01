@@ -34,7 +34,7 @@
         <p>拟在华学习或研究的详细内容（可另附纸）/ Please Describe the details of your Study or Research Plan in China  (can be attached if this space is not enough)</p>
         <el-form-item label="详细内容/Study details" prop="details" class="el_left">
           <el-input :disabled="eqit" style="width:650px"
-          maxlength=2000
+          maxlength=8000
           type="textarea" :autosize="{ minRows: 8}"placeholder="请输入内容/Please fill details"
           v-model="StudyForm.details">
           </el-input>

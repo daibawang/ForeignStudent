@@ -11,7 +11,7 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       '/apis':{
-        target:'http://localhost:8080',
+        target:'http://www.istuadmission.com/overseas',
         changeOrigin:true,
         pathRewrite:{
           '^/apis':''

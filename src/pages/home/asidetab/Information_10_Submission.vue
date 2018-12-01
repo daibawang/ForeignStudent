@@ -454,7 +454,7 @@ export default{
     return {
       // readonly: true,
       eqit: true,
-      submiteqit: true,
+      submiteqit: false,
       username: '',
       // 个人经历
       PersonalForm: {
@@ -602,7 +602,7 @@ export default{
     })
     // 获取值并判断是否进入
     this.$axios({
-      method: 'get',
+      method: 'post',
       url: this.$URL + '/GetAllInfServlet',
       params: {
         username: this.username,
@@ -610,8 +610,10 @@ export default{
       }
     }).then((response) => {
       if (response.data.Contact[0].username == '') {
+      } else {
         let isShow = getCookie('InputInfo')
         if (isShow == '') {
+          console.log(isshow + '空')
           this.$axios({
             method: 'get',
             url: this.$URL + '/SeletWckServlet',
@@ -638,9 +640,10 @@ export default{
             this.$router.push('/asidetab/' + this.NeedUrl[isShow])
           } else if (isShow == 15) {
             this.submiteqit = true
+          } else {
+
           }
         }
-      } else {
         let Personalget = response.data.Pinf[0]
         this.PersonalForm.pic = Personalget.pic
         this.PersonalForm.passport_name = Personalget.passportName
@@ -672,6 +675,7 @@ export default{
           this.EducationForm.domains[i].Fields = this.EducationForm.domains[i].obj
         }
         // 3
+
         this.WorkForm.domains = response.data.work
         for (let i = 0; i < this.WorkForm.domains.length; i++) {
           this.WorkForm.domains[i].btime = this.WorkForm.domains[i].btime
@@ -732,10 +736,10 @@ export default{
   methods: {
     submitAll () {
       // setCookie('InputInfo', 10, 1000 * 60)
-
       this.$alert('提交成功，请前往心理测评/Submit success ', {
         confirmButtonText: 'sure'
       }).then(() => {
+        setCookie('InputInfo', 10, 1000 * 60)
         this.$router.push('/Psychological')
       }).catch(() => {
       })

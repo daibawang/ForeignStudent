@@ -30,6 +30,18 @@ fastClick.attach(document.body)
 //引入全局变量Global,并全局引用
 import global_ from './components/tools/Global.vue'
 Vue.prototype.GLOBAL = global_
+
+//跳转回到顶部
+router.afterEach((to,from,next) => {
+       window.scrollTo(0,0);
+})
+//跳转前加载title
+router.beforeEach((to, from, next) => {
+  if (to.meta.title) {//判断是否有标题
+    document.title = to.meta.title
+  }
+  next()//执行进入路由，如果不写就不会进入目标页
+})
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

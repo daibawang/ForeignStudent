@@ -24,7 +24,7 @@
         <p class="score-split"></p>
         <!-- 出生日期 -->
         <el-form-item label="出生日期/Date of Birth" prop="date_birth">
-          <el-date-picker :disabled="eqit" value-format="yyyyMMdd" type="date" placeholder="选择日期 Select Date" v-model="PersonalForm.date_birth" class="el-in-nomal"></el-date-picker>
+          <el-date-picker :picker-options="pickerOptions0" :disabled="eqit" value-format="yyyyMMdd" type="date" placeholder="选择日期 Select Date" v-model="PersonalForm.date_birth" class="el-in-nomal"></el-date-picker>
         </el-form-item>
         <!-- 出生地点 -->
         <p>出生地点/Place of Birth</p>
@@ -102,6 +102,11 @@ export default{
       geturl: '',
       isClickSave: false,
       eqit: false,
+      pickerOptions0: {
+        disabledDate (time) {
+          return time.getTime() > Date.now()
+        }
+      },
       PersonalForm: {
         pic: '',
         passport_name: '',
@@ -315,6 +320,7 @@ export default{
         {'value': '马其顿 Macedonia' }
       ]
     },
+
     submitForm (formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {

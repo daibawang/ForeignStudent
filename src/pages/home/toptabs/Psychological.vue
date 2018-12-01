@@ -18,7 +18,7 @@
         <div class="Psychological_upload">
           <p style="margin-top:10px" class="Psychological_title">上传完成截图/Upload</p>
           <div class="Psychological_file">
-            <el-upload
+            <el-upload :disabled="eqit"
               accept=".pdf"
               class="upload-demo"
               :action="params.action"
@@ -28,7 +28,7 @@
               :before-remove="beforeRemove"
               :on-success="(res,file)=>{return onSuccess(res,file,1)}"
               multiple
-              :limit="2"
+              :limit="1"
               :data="params.data1"
               :auto-upload="true"
               :on-exceed="handleExceed"
@@ -39,7 +39,7 @@
           </div>
         </div>
         <div class="Psychological_submit">
-          <el-button type="primary" @click="submitPsychological()" style="margin-left:50px;">提交 Submit</el-button>
+          <el-button :disabled="eqit" type="primary" @click="submitPsychological()" style="margin-left:50px;">提交 Submit</el-button>
         </div>
         </div>
         </div>
@@ -58,8 +58,9 @@ export default{
       },
       NeedInput: this.GLOBAL.NeedInput,
       NeedUrl: this.GLOBAL.NeedUrl,
-
-      fileList1: []
+      peopleName: '',
+      fileList1: [],
+      eqit: false
     }
   },
   created: function () {
@@ -83,6 +84,8 @@ export default{
             confirmButtonText: 'sure'
           })
           this.$router.push('/asidetab/' + this.NeedUrl[isShow])
+        } else if (isShow == 15) {
+          this.eqit = true
         }
         setCookie('InputInfo', isShow, 1000 * 60)
       })
@@ -92,6 +95,8 @@ export default{
           confirmButtonText: 'sure'
         })
         this.$router.push('/asidetab/' + this.NeedUrl[isShow])
+      } else if (isShow == 15) {
+        this.eqit = true
       }
     }
     this.$axios({
@@ -165,6 +170,8 @@ export default{
           setCookie('InputInfo', 12, 1000 * 60)
           this.$alert('提交成功，等待管理员审核材料', {
             confirmButtonText: 'sure'
+          }).then(() => {
+            this.$router.push('/Stat')
           })
         } else {
           this.$alert('心里截图未上传', {
@@ -210,7 +217,7 @@ export default{
 .Psychological_upload{
   margin-top:10px;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   .Psychological_file{
     margin-top:20px;
     margin-left:30px;

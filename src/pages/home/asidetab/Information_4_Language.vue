@@ -224,7 +224,7 @@ export default{
               level_c: this.LanguageForm.level_c[0] + ' ' + this.LanguageForm.level_c[1] + '级' + this.LanguageForm.level_c_Scores + '分',
               proficiency_e: this.LanguageForm.proficiency_e,
               level_e: this.LanguageForm.level_e + this.LanguageForm.level_e_score,
-              type: 4
+              typ: 4
             }
           }).then((response) => {
             if (this.isSave == false) {
@@ -236,7 +236,6 @@ export default{
           }).catch((error) => {
             console.log(error)
           })
-          alert('submit!')
         } else {
           console.log('error submit!!')
           return false

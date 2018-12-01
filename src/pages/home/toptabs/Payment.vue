@@ -25,8 +25,33 @@
             <div class="payment_dowload">
               <span class="iconfont" style="color:#EE761C; margin-left:20px"><i class="el-icon-download"></i></span>
               <a class="recruitment-more" download="" href='http://www.istuadmission.com/FStudent/Attachment_Overseas_Remittance_ofForeign_Exchange.zip'>Download Attachment</a>
+              <p style="margin-top:30px" class="payment_title">上传完成截图/Upload</p>
+              <div class="payment_file">
+                <el-upload :disabled="eqit"
+                  accept=".pdf"
+                  class="upload-demo"
+                  :action="params.action"
+                  :before-upload="onBeforeUpload"
+                  :on-preview="handlePreview"
+                  :on-remove="handleRemove"
+                  :before-remove="beforeRemove"
+                  :on-success="(res,file)=>{return onSuccess(res,file,1)}"
+                  multiple
+                  :limit="1"
+                  :data="params.data1"
+                  :auto-upload="true"
+                  :on-exceed="handleExceed"
+                  :file-list="fileList1">
+                  <el-button size="mini" type="primary">Upload<i class="el-icon-upload el-icon--right"></i></el-button>
+                  <span style="font-size:11px;">只能上传pdf文件 ,且不超过2MB</span>
+                </el-upload>
+              </div>
+            </div>
+            <div class="payment_submit">
+              <el-button :disabled="eqit" type="primary" @click="submitPaytime()" style="margin-left:50px;">提交 Submit</el-button>
             </div>
         </div>
+
         </div>
     </div>
   </div>
@@ -37,12 +62,80 @@ export default{
   name: 'Payment',
   data () {
     return {
+      username: '',
+      params: {
+        action: this.$URL + '/UploadHandleServlet',
+        data1: {'username': '', 'kind': '15', 'filename': '', 'packname': ''}
+      },
       NeedInput: this.GLOBAL.NeedInput,
-      NeedUrl: this.GLOBAL.NeedUrl
+      NeedUrl: this.GLOBAL.NeedUrl,
+      peopleName: '',
+      fileList1: []
     }
   },
   mounted () {
     console.log(this.username)
+  },
+  methods: {
+    submitPaytime () {
+      let thistime = new Date().getTime()
+      this.$axios({
+        method: 'get',
+        url: this.$URL + '/JfStateServlet',
+        params: {
+          username: this.username,
+          time: thistime,
+          eqit: false
+        }
+      }).then((response) => {
+        if (response.data == true) {
+          this.$alert('提交成功', {
+            confirmButtonText: 'sure'
+          }).then(() => {
+            this.$router.push('/Status')
+          })
+        } else {
+          this.$alert('缴费票据未上传', {
+            confirmButtonText: 'sure'
+          })
+        }
+      }).catch((error) => {
+        console.log(error)
+      })
+    },
+    onBeforeUpload (file) {
+      const isLt1M = file.size / 1024 / 1024 < 2
+      // if (!isIMAGE) {
+      //   this.$message.error('上传文件只能是图片格式!')
+      // }
+      if (!isLt1M) {
+        this.$message.error('上传文件大小不能超过 2MB!')
+      }
+      return isLt1M
+    },
+    onSuccess (response, file, index) {
+      console.log(URL.createObjectURL(file.raw))
+      console.log(file)
+      this.$axios({
+        method: 'get',
+        url: this.$URL + '/UpWckServlet',
+        params: {
+          username: this.username,
+          typ: '16'
+        }
+      }).then((response) => {
+        console.log(response.data)
+      }).catch((error) => {
+        console.log(error)
+      })
+      // setCookie('InputInfo', 11, 1000 * 60)
+    },
+    handleExceed (files, fileList) {
+      this.$message.warning(`当前限制选择 1 个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件`)
+    },
+    beforeRemove (file, fileList) {
+      return this.$confirm(`确定移除/Make sure remove ${file.name}？`)
+    }
   },
   created () {
     let uname = getCookie('username')
@@ -65,10 +158,19 @@ export default{
           this.$alert(this.NeedInput[isShow], {
             confirmButtonText: 'sure'
           })
-          if (isShow == 11) {
+          if (isShow == 10 || isShow == 11) {
             this.$router.push(this.NeedUrl[isShow])
+          } else if (isShow == 17) {
+            this.eqit = true
           } else {
             this.$router.push('/asidetab/' + this.NeedUrl[isShow])
+          }
+        } else {
+          if (isShow == 12) {
+            this.$alert('通过审核后才可通过缴费', {
+              confirmButtonText: 'sure'
+            })
+            this.$router.push('/Status/')
           }
         }
         setCookie('InputInfo', isShow, 1000 * 60)
@@ -78,17 +180,44 @@ export default{
         this.$alert(this.NeedInput[isShow], {
           confirmButtonText: 'sure'
         })
-        if (isShow == 11) {
+        if (isShow == 10 || isShow == 11) {
           this.$router.push(this.NeedUrl[isShow])
+        } else if (isShow == 17) {
+          this.eqit = true
         } else {
           this.$router.push('/asidetab/' + this.NeedUrl[isShow])
         }
+      } else {
+        if (isShow == 12) {
+          this.$alert('通过审核后才可通过缴费', {
+            confirmButtonText: 'sure'
+          })
+          this.$router.push('/Status/')
+        }
       }
     }
+    this.$axios({
+      method: 'get',
+      url: this.$URL + '/GetPinfByNameServlet',
+      params: {
+        username: this.username
+      }
+    }).then((response) => {
+      if (response.data[0].username == '') {
+        console.log('zzzzzzzz')
+      } else {
+        this.peopleName = response.data[0].givenName + '.' + response.data[0].familyName
+        this.params.data1.username = uname
+        this.params.data1.packname = uname + '_' + this.peopleName
+        this.params.data1.filename = uname + '_' + this.peopleName + '_' + '缴费凭据.jpg'
+      }
+    }).catch((error) => {
+      console.log(error)
+    })
   }
 }
 </script>
-<style lang="stylus" >
+<style lang="stylus">
 .Status_title{
   padding-top:10px;
   padding-left:30px;
@@ -117,5 +246,20 @@ export default{
 .payment_dowload{
   padding-top:5px;
   padding-left:26px;
+  .payment_title{
+    font-size:15px;
+    color:#606266;
+    line-height: 25px;
+    letter-spacing: 2px;
+  }
+  .payment_file{
+    margin-top:10px;
+    width:30%;
+  }
+}
+.payment_submit{
+  margin-top:60px;
+  width:100%;
+  text-align:center;
 }
 </style>
