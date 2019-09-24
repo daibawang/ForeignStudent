@@ -220,12 +220,12 @@ export default{
             }
           }).then((response) => {
             isShow = parseInt(response.data[0].typ)
-            if (isShow == 15) {
+            if (isShow >= 15 || isShow == 12) {
               this.eqit = true
             }
           })
         } else {
-          if (isShow == 15) {
+          if (isShow >= 15 || isShow == 12) {
             this.eqit = true
           }
         }

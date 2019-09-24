@@ -6,83 +6,83 @@
         <el-form :model="PersonalForm" :rules="rules" ref="PersonalForm" label-width="170px" class="demo-PersonalForm" label-position="left">
           <!-- 姓名 -->
           <p>护照用名/Passport Name:</p>
-          <el-form-item label="姓/Family Name" prop="family_name" class="el_left">
-            <el-input :disabled="eqit" v-model="PersonalForm.family_name" clearable class="el-in-left"></el-input >
+          <el-form-item :disabled="eqit" label="姓/Family Name" prop="family_name" class="el_left">
+            <el-input  v-model="PersonalForm.family_name" clearable class="el-in-left"></el-input >
           </el-form-item>
-          <el-form-item label="名/Given Name" prop="given_name" class="el_left">
-            <el-input :disabled="eqit" v-model="PersonalForm.given_name" clearable  class="el-in-left"></el-input >
+          <el-form-item :disabled="eqit" label="名/Given Name" prop="given_name" class="el_left">
+            <el-input v-model="PersonalForm.given_name" clearable  class="el-in-left"></el-input >
           </el-form-item>
           <p class="score-split"></p>
           <!-- 国家 -->
-          <el-form-item label="国籍/Nationality" prop="nationality" >
-            <el-autocomplete :disabled="eqit" :disabled="eqit" :fetch-suggestions="countrySearch" v-model="PersonalForm.nationality" placeholder="请选择或填写国籍/Please Choose or Input your Nationality" clearable class="el-in-nomal">
+          <el-form-item label="国籍/Nationality" :disabled="eqit" prop="nationality" >
+            <el-autocomplete  :fetch-suggestions="countrySearch" v-model="PersonalForm.nationality" placeholder="请选择或填写国籍/Please Choose or Input your Nationality" clearable class="el-in-nomal">
             </el-autocomplete>
           </el-form-item>
           <!-- 护照号码-->
-          <el-form-item label="护照号码/Passport No" prop="passport_no" >
-            <el-input :disabled="eqit" v-model="PersonalForm.passport_no" clearable class="el-in-nomal"></el-input >
+          <el-form-item :disabled="eqit" label="护照号码/Passport No" prop="passport_no" >
+            <el-input  v-model="PersonalForm.passport_no" clearable class="el-in-nomal"></el-input >
           </el-form-item>
           <p class="score-split"></p>
           <!-- 出生日期 -->
-          <el-form-item label="出生日期/Date of Birth" prop="date_birth">
-            <el-date-picker :disabled="eqit" value-format="yyyyMMdd" type="date" placeholder="选择日期 Select Date" v-model="PersonalForm.date_birth" class="el-in-nomal"></el-date-picker>
+          <el-form-item :disabled="eqit" label="出生日期/Date of Birth" prop="date_birth">
+            <el-date-picker value-format="yyyyMMdd" type="date" placeholder="选择日期 Select Date" v-model="PersonalForm.date_birth" class="el-in-nomal"></el-date-picker>
           </el-form-item>
           <!-- 出生地点 -->
           <p>出生地点/Place of Birth</p>
-          <el-form-item label="国家/Country" prop="Country" class="el_left">
-            <el-autocomplete :disabled="eqit" :fetch-suggestions="countrySearch" v-model="PersonalForm.Country" placeholder="请选择或填写国家/Please Choose or Input your Country" clearable class="el-in-left">
+          <el-form-item :disabled="eqit" label="国家/Country" prop="Country" class="el_left">
+            <el-autocomplete :fetch-suggestions="countrySearch" v-model="PersonalForm.Country" placeholder="请选择或填写国家/Please Choose or Input your Country" clearable class="el-in-left">
             </el-autocomplete>
           </el-form-item>
-          <el-form-item label="城市/City" prop="City" class="el_left">
-            <el-input :disabled="eqit" v-model="PersonalForm.City" clearable class="el-in-left"></el-input >
+          <el-form-item :disabled="eqit" label="城市/City" prop="City" class="el_left">
+            <el-input  v-model="PersonalForm.City" clearable class="el-in-left"></el-input >
           </el-form-item>
           <p class="score-split"></p>
           <!-- 性别 -->
-          <el-form-item label="性别/Gender " prop="sex">
-            <el-radio-group :disabled="eqit" v-model="PersonalForm.sex">
+          <el-form-item :disabled="eqit" label="性别/Gender " prop="sex">
+            <el-radio-group  v-model="PersonalForm.sex">
               <el-radio label="0" value='0'>男/Male</el-radio>
               <el-radio label="1" value='1'>女/Female</el-radio>
             </el-radio-group>
           </el-form-item>
           <!-- 婚姻状况Marital Status -->
-          <el-form-item label="婚姻状况/Marital Status" prop="marri">
-            <el-radio-group :disabled="eqit" v-model="PersonalForm.marri">
+          <el-form-item :disabled="eqit" label="婚姻状况/Marital Status" prop="marri">
+            <el-radio-group v-model="PersonalForm.marri">
               <el-radio label="0" value="0">已婚/Married</el-radio>
               <el-radio label="1" value="1">未婚/Single</el-radio>
               <el-radio label="2" value="2">其它/Other</el-radio>
             </el-radio-group>
           </el-form-item>
-          <el-form-item label="宗教信仰/Religion" prop="religion">
-              <el-autocomplete :disabled="eqit" :fetch-suggestions="querySearch" v-model="PersonalForm.religion" placeholder="请选择或填写宗教信仰/Please Choose or Input your religion" class="el-in-nomal">
+          <el-form-item :disabled="eqit"  label="宗教信仰/Religion" prop="religion">
+              <el-autocomplete :fetch-suggestions="querySearch" v-model="PersonalForm.religion" placeholder="请选择或填写宗教信仰/Please Choose or Input your religion" class="el-in-nomal">
             </el-autocomplete>
           </el-form-item>
           <p class="score-split"></p>
           <p>录取通知书邮寄地址/Address for correspondence (Please inform  BCU for any change of this address)</p>
-          <el-form-item label="地址/Address" prop="address_c" class="el_left" >
-            <el-input :disabled="eqit" v-model="PersonalForm.address_c" clearable class="el-in-left"></el-input >
+          <el-form-item :disabled="eqit" label="地址/Address" prop="address_c" class="el_left" >
+            <el-input v-model="PersonalForm.address_c" clearable class="el-in-left"></el-input >
           </el-form-item>
-          <el-form-item label="电话/Tel" prop="ctel" class="el_left">
-            <el-input :disabled="eqit" v-model.number="PersonalForm.ctel" clearable  class="el-in-left"></el-input >
+          <el-form-item :disabled="eqit" label="电话/Tel" prop="ctel" class="el_left">
+            <el-input  v-model.number="PersonalForm.ctel" clearable  class="el-in-left"></el-input >
           </el-form-item>
-          <el-form-item label="传真/Fax" prop="cfax" class="el_left">
-            <el-input :disabled="eqit" v-model="PersonalForm.cfax" clearable class="el-in-left"></el-input >
+          <el-form-item :disabled="eqit" label="传真/Fax" prop="cfax" class="el_left">
+            <el-input  v-model="PersonalForm.cfax" clearable class="el-in-left"></el-input >
           </el-form-item>
-          <el-form-item label="E-mail" prop="cmail" class="el_left">
-            <el-input :disabled="eqit" v-model="PersonalForm.cmail" clearable class="el-in-left"></el-input >
+          <el-form-item :disabled="eqit" label="E-mail" prop="cmail" class="el_left">
+            <el-input  v-model="PersonalForm.cmail" clearable class="el-in-left"></el-input >
           </el-form-item>
           <p class="score-split"></p>
           <p>家庭地址/Home Address</p>
-          <el-form-item label="地址/Home Address" prop="address_h" class="el_left">
-            <el-input :disabled="eqit" v-model="PersonalForm.address_h" clearable class="el-in-left"></el-input >
+          <el-form-item :disabled="eqit" label="地址/Home Address" prop="address_h" class="el_left">
+            <el-input  v-model="PersonalForm.address_h" clearable class="el-in-left"></el-input >
           </el-form-item>
-          <el-form-item label="电话/Tel" prop="htel" class="el_left">
-            <el-input :disabled="eqit" v-model.number="PersonalForm.htel" clearable class="el-in-left"></el-input >
+          <el-form-item :disabled="eqit" label="电话/Tel" prop="htel" class="el_left">
+            <el-input  v-model.number="PersonalForm.htel" clearable class="el-in-left"></el-input >
           </el-form-item>
-          <el-form-item label="传真/Fax" prop="hfax" class="el_left">
-            <el-input :disabled="eqit" v-model="PersonalForm.hfax" clearable  class="el-in-left"></el-input >
+          <el-form-item :disabled="eqit" label="传真/Fax" prop="hfax" class="el_left">
+            <el-input  v-model="PersonalForm.hfax" clearable  class="el-in-left"></el-input >
           </el-form-item>
-          <el-form-item label="E-mail" prop="hmail" class="el_left">
-            <el-input :disabled="eqit" v-model="PersonalForm.hmail" clearable class="el-in-left"></el-input >
+          <el-form-item :disabled="eqit" label="E-mail" prop="hmail" class="el_left">
+            <el-input  v-model="PersonalForm.hmail" clearable class="el-in-left"></el-input >
           </el-form-item>
         </el-form>
       </div>
@@ -92,22 +92,22 @@
         <div class="EducationForm_border_this" v-for='(item, index) in EducationForm.domains' :key="item.key">
           <el-form-item label="学习时间/Education Years Attended" >
             <el-col :span="11">
-              <el-form-item :prop="'domains.'+index+'.fromdate'">
-                  <el-date-picker :disabled="eqit" value-format="yyyyMM" type="month" placeholder="from" v-model="item.fromdate" style="width: 115px;"></el-date-picker>
+              <el-form-item :disabled="eqit" :prop="'domains.'+index+'.fromdate'">
+                  <el-date-picker  value-format="yyyyMM" type="month" placeholder="from" v-model="item.fromdate" style="width: 115px;"></el-date-picker>
               </el-form-item>
             </el-col>
             <el-col :span="11" style="margin-left:5px;">
-              <el-form-item :prop="'domains.'+index+'.todate'">
-                <el-date-picker :disabled="eqit" value-format="yyyyMM" type="month" placeholder="to" v-model="item.todate" style="width: 115px;"></el-date-picker>
+              <el-form-item :disabled="eqit" :prop="'domains.'+index+'.todate'">
+                <el-date-picker  value-format="yyyyMM" type="month" placeholder="to" v-model="item.todate" style="width: 115px;"></el-date-picker>
               </el-form-item>
             </el-col>
           </el-form-item>
-          <el-form-item label="单位/Previous and Current Education & Employer"
+          <el-form-item :disabled="eqit" label="单位/Previous and Current Education & Employer"
           :prop="'domains.'+index+'.Previous'" class="">
-            <el-input :disabled="eqit" v-model="item.Previous" clearable style="width:320px;" class=""></el-input >
+            <el-input  v-model="item.Previous" clearable style="width:320px;" class=""></el-input >
           </el-form-item>
-          <el-form-item label="主修专业/Fields of Study" :prop="'domains.'+index+'.Fields'" style="margin-left:5px">
-            <el-input :disabled="eqit" v-model="item.Fields" clearable style="width:160px;" class=""></el-input >
+          <el-form-item :disabled="eqit" label="主修专业/Fields of Study" :prop="'domains.'+index+'.Fields'" style="margin-left:5px">
+            <el-input  v-model="item.Fields" clearable style="width:160px;" class=""></el-input >
           </el-form-item>
         </div>
         </el-form>
@@ -118,22 +118,22 @@
         <div class="WorkForm_border" v-for='(item, index) in WorkForm.domains' :key="item.key">
           <el-form-item label="工作时间/Working Years Attended" >
             <el-col :span="11">
-              <el-form-item :prop="'domains.'+index+'.btime'">
-                  <el-date-picker :disabled="eqit" value-format="yyyyMM" type="month" placeholder="from" v-model="item.btime" style="width: 115px;"></el-date-picker>
+              <el-form-item :disabled="eqit"  :prop="'domains.'+index+'.btime'">
+                  <el-date-picker  value-format="yyyyMM" type="month" placeholder="from" v-model="item.btime" style="width: 115px;"></el-date-picker>
               </el-form-item>
             </el-col>
             <el-col :span="11" style="margin-left:5px;">
-              <el-form-item :prop="'domains.'+index+'.ltime'">
-                <el-date-picker :disabled="eqit" value-format="yyyyMM" type="month" placeholder="to" v-model="item.ltime" style="width: 115px;"></el-date-picker>
+              <el-form-item :disabled="eqit" :prop="'domains.'+index+'.ltime'">
+                <el-date-picker  value-format="yyyyMM" type="month" placeholder="to" v-model="item.ltime" style="width: 115px;"></el-date-picker>
               </el-form-item>
             </el-col>
           </el-form-item>
-          <el-form-item label="单位/Previous and Current Education & Employer"
+          <el-form-item :disabled="eqit"  label="单位/Previous and Current Education & Employer"
           :prop="'domains.'+index+'.unit'" class="">
-            <el-input :disabled="eqit" v-model="item.unit" clearable style="width:320px;" class=""></el-input >
+            <el-input  v-model="item.unit" clearable style="width:320px;" class=""></el-input >
           </el-form-item>
-         <el-form-item label="职位/Position/Duty" :prop="'domains.'+index+'.obj'" style="margin-left:5px">
-            <el-input :disabled="eqit" v-model="item.obj" clearable style="width:160px;" class="el-in-left-more"></el-input >
+         <el-form-item :disabled="eqit"label="职位/Position/Duty" :prop="'domains.'+index+'.obj'" style="margin-left:5px">
+            <el-input  v-model="item.obj" clearable style="width:160px;" class="el-in-left-more"></el-input >
           </el-form-item>
         </div>
         </el-form>
@@ -142,32 +142,32 @@
       <div class="Info_1_form">
         <el-form :model="LanguageForm" :rules="rules" ref="LanguageForm" label-width="200px" class="demo-LanguageForm" label-position="left">
           <!-- 姓名 -->
-          <el-form-item label="汉语能力/Chinese Proficiency:" prop="proficiency_c">
-              <el-radio-group :disabled="eqit" v-model="LanguageForm.proficiency_c">
+          <el-form-item :disabled="eqit" label="汉语能力/Chinese Proficiency:" prop="proficiency_c">
+              <el-radio-group  v-model="LanguageForm.proficiency_c">
                 <el-radio label="1" value='1'>很好/Excellent</el-radio>
                 <el-radio label="2" value='2'>好/Good</el-radio>
                 <el-radio label="3" value='3'>较好/Fair</el-radio>
-                <el-radio label="4" value-'4'>差/Poor</el-radio>
+                <el-radio label="4" value='4'>差/Poor</el-radio>
                 <el-radio label="5" value='5'>不会/None</el-radio>
               </el-radio-group>
           </el-form-item>
           <p> HSK 考试等级或其他类型汉语考试成绩/ Level of HSK test or other certificates that can testify your</p>
-          <el-form-item label="考试成绩/Test Scores" prop="level_c" class="el_left">
-            <el-input :disabled="eqit" v-model.number="LanguageForm.level_c" clearable style="width:250px;" class="el-in-left el_left"></el-input >
+          <el-form-item :disabled="eqit" label="考试成绩/Test Scores" prop="level_c" class="el_left">
+            <el-input  v-model.number="LanguageForm.level_c" clearable style="width:250px;" class="el-in-left el_left"></el-input >
           </el-form-item>
           <p class="score-split"></p>
-          <el-form-item label="英语能力/English Proficiency:" prop="proficiency_e">
-              <el-radio-group :disabled="eqit" v-model="LanguageForm.proficiency_e">
+          <el-form-item  :disabled="eqit" label="英语能力/English Proficiency:" prop="proficiency_e">
+              <el-radio-group v-model="LanguageForm.proficiency_e">
               <el-radio label="1" value='1'>很好/Excellent</el-radio>
               <el-radio label="2" value='2'>好/Good</el-radio>
               <el-radio label="3" value='3'>较好/Fair</el-radio>
-              <el-radio label="4" value-'4'>差/Poor</el-radio>
+              <el-radio label="4" value='4'>差/Poor</el-radio>
               <el-radio label="5" value='5'>不会/None</el-radio>
               </el-radio-group>
           </el-form-item>
           <p>TOEFL或ILETS 考试成绩/ TOEFL or ILETS test score</p>
-          <el-form-item label="考试成绩/Test Scores" prop="level_e" class="el_left">
-            <el-input :disabled="eqit" v-model.number="LanguageForm.level_e" clearable style="width:250px;" class="el-in-left el_left"></el-input >
+          <el-form-item :disabled="eqit" label="考试成绩/Test Scores" prop="level_e" class="el_left">
+            <el-input  v-model.number="LanguageForm.level_e" clearable style="width:250px;" class="el-in-left el_left"></el-input >
           </el-form-item>
         </el-form>
       </div>
@@ -176,8 +176,8 @@
         <el-form :model="StudyForm" :rules="rules" ref="StudyForm" label-width="200px" class="demo-StudyForm" label-position="top">
         <p>来华学习计划/Proposed Study in BCU:</p>
           <!-- 姓名 -->
-          <el-form-item label="学位/Study in BCU:" prop="degree" class="el_left">
-              <el-radio-group :disabled="eqit" v-model="StudyForm.degree" style="line-height:35px;">
+          <el-form-item :disabled="eqit" label="学位/Study in BCU:" prop="degree" class="el_left">
+              <el-radio-group  v-model="StudyForm.degree" style="line-height:35px;">
                 <el-radio label="1" value="1" >本科生/Bachelor’s Degree degree</el-radio>
                 <el-radio label="2" value="2" >硕士研究生/Master’s Degree degree</el-radio>
                 <el-radio label="3" value="3">博士研究生/Doctor’s Degree degree</el-radio>
@@ -185,8 +185,8 @@
                 <el-radio label="5" value="5">高级进修生/Senior Scholar</el-radio>
               </el-radio-group>
           </el-form-item>
-          <el-form-item label="申请来华学习专业或研究专题/subject Subject or Field of Study in China" prop="subject" class="el_left">
-            <el-select :disabled="eqit" v-model="StudyForm.subject" style="width:300px;" class="el-in-left el_left">
+          <el-form-item :disabled="eqit" label="申请来华学习专业或研究专题/subject Subject or Field of Study in China" prop="subject" class="el_left">
+            <el-select  v-model="StudyForm.subject" style="width:300px;" class="el-in-left el_left">
               <el-option  label="中医药专业Traditional Chinese Medicine" value="medicine">中医药专业 Traditional Chinese Medicine</el-option>
             </el-select>
           </el-form-item>
@@ -203,10 +203,10 @@
             </el-col>
           </el-form-item>
           <p>拟在华学习或研究的详细内容（可另附纸）/ Please Describe the details of your Study or Research Plan in China  (can be attached if this space is not enough)</p>
-          <el-form-item label="详细内容/Study details" prop="details" class="el_left">
-            <el-input :disabled="eqit" style="width:650px"
+          <el-form-item :disabled="eqit" label="详细内容/Study details" prop="details" class="el_left">
+            <el-input  style="width:650px"
             maxlength=2000
-            type="textarea" :autosize="{ minRows: 8}"placeholder="请输入内容/Please fill details"
+            type="textarea" :autosize="{ minRows: 8}" placeholder="请输入内容/Please fill details"
             v-model="StudyForm.details">
             </el-input >
           </el-form-item>
@@ -216,13 +216,13 @@
       <div class="Info_1_form">
         <el-form label-position="top" :inline="true" :model="Achievements" ref="Achievements" label-width="100px" class="demo-dynamic">
         <div class="Achievements_border" v-for='(item, index) in Achievements.domains' :key="item.key">
-          <el-form-item label="论文题目/Topic"
+          <el-form-item  :disabled="eqit" label="论文题目/Topic"
           :prop="'domains.'+index+'.papers'" class="">
-            <el-input :disabled="eqit" v-model="item.papers" clearable style="width:320px;" class="el-in-left"></el-input >
+            <el-input v-model="item.papers" clearable style="width:320px;" class="el-in-left"></el-input >
           </el-form-item>
           <el-form-item label="发表时间/Published Date" style="margin-left:10px">
-              <el-form-item :prop="'domains.'+index+'.time'">
-                  <el-date-picker :disabled="eqit" value-format="yyyyMM"  type="month" placeholder="from" v-model="item.time" style="width: 275px;"></el-date-picker>
+              <el-form-item :disabled="eqit" :prop="'domains.'+index+'.time'">
+                  <el-date-picker  value-format="yyyyMM"  type="month" placeholder="from" v-model="item.time" style="width: 275px;"></el-date-picker>
               </el-form-item>
           </el-form-item>
         </div>
@@ -233,113 +233,113 @@
         <el-form :show-message="false" :model="OtherInformation" :rules="rules" ref="OtherInformation" label-width="170px" class="demo-OtherInformation" label-position="top">
           <p>申请人在华事务担保人或机构/The Emergency Contact (Chinese or Foreigner) During Your Study in China:</p>
           <!-- <p class="score-split"></p> -->
-           <el-form-item label="名称/Name" prop="name" class="el_left" required>
-            <el-input :disabled="eqit" v-model="OtherInformation.name" clearable style="width:400px" class="el_left"></el-input >
+           <el-form-item :disabled="eqit"  label="名称/Name" prop="name" class="el_left" required>
+            <el-input  v-model="OtherInformation.name" clearable style="width:400px" class="el_left"></el-input >
           </el-form-item>
-          <el-form-item label="电话/Tel" prop="tel" class="el_left">
-            <el-input :disabled="eqit" v-model.number="OtherInformation.tel" clearable style="width:400px" class="el_left"></el-input >
+          <el-form-item :disabled="eqit" label="电话/Tel" prop="tel" class="el_left">
+            <el-input  v-model.number="OtherInformation.tel" clearable style="width:400px" class="el_left"></el-input >
           </el-form-item>
-          <el-form-item label="邮箱/E-mail" prop="fax" class="el_left">
-            <el-input :disabled="eqit" v-model="OtherInformation.fax" clearable style="width:400px" class="el_left"></el-input >
+          <el-form-item :disabled="eqit" label="邮箱/E-mail" prop="fax" class="el_left">
+            <el-input  v-model="OtherInformation.fax" clearable style="width:400px" class="el_left"></el-input >
           </el-form-item>
-          <el-form-item label="地址/Address" prop="address" class="el_left" >
-            <el-input :disabled="eqit" v-model="OtherInformation.address" clearable style="width:400px" class="el_left"></el-input >
+          <el-form-item :disabled="eqit" label="地址/Address" prop="address" class="el_left" >
+            <el-input  v-model="OtherInformation.address" clearable style="width:400px" class="el_left"></el-input >
           </el-form-item>
           <p class="score-split"></p>
           <p>申请人亲属情况/Family Members of the Applicants:</p>
           <!-- <p>父亲/Father</p> -->
           <el-form-item label="父亲/Father:" class="el_left"  required>
             <el-col :span="4">
-              <el-form-item label="姓名/Name" prop="Family[0].FatherName" class="el_left" required>
-                <el-input :disabled="eqit" v-model="OtherInformation.Family[0].FatherName" clearable  class="el-in-left"></el-input >
+              <el-form-item :disabled="eqit" label="姓名/Name" prop="Family[0].FatherName" class="el_left" required>
+                <el-input  v-model="OtherInformation.Family[0].FatherName" clearable  class="el-in-left"></el-input >
               </el-form-item>
             </el-col>
             <el-col :span="5" >
-              <el-form-item label="职业/Employment" prop="Family[0].FatherEmployment" class="el_left" required>
-                <el-input :disabled="eqit" v-model="OtherInformation.Family[0].FatherEmployment" clearable  class="el-in-left"></el-input >
+              <el-form-item :disabled="eqit" label="职业/Employment" prop="Family[0].FatherEmployment" class="el_left" required>
+                <el-input  v-model="OtherInformation.Family[0].FatherEmployment" clearable  class="el-in-left"></el-input >
               </el-form-item>
             </el-col>
             <el-col :span="6" >
-              <el-form-item label="电话/Telephone Number" prop="Family[0].FatherNumber" class="el_left" required>
-                <el-input :disabled="eqit" v-model="OtherInformation.Family[0].FatherNumber" clearable  class="el-in-left"></el-input >
+              <el-form-item :disabled="eqit" label="电话/Telephone Number" prop="Family[0].FatherNumber" class="el_left" required>
+                <el-input  v-model="OtherInformation.Family[0].FatherNumber" clearable  class="el-in-left"></el-input >
               </el-form-item>
             </el-col>
             <el-col :span="6.5" >
-              <el-form-item label="邮箱/E-mail" prop="Family[0].Fathermail" class="el_left" required
+              <el-form-item :disabled="eqit" label="邮箱/E-mail" prop="Family[0].Fathermail" class="el_left" required
               :rules="{ type: 'email', message: '请输入正确的邮箱地址', trigger: ['blur', 'change'] }">
-                <el-input :disabled="eqit" v-model="OtherInformation.Family[0].Fathermail" clearable class="el-in-left"></el-input >
+                <el-input  v-model="OtherInformation.Family[0].Fathermail" clearable class="el-in-left"></el-input >
               </el-form-item>
             </el-col>
           </el-form-item>
           <!-- <p>母亲/Mother</p> -->
           <el-form-item label="母亲/Mother:" class="el_left"  required>
             <el-col :span="4">
-              <el-form-item label="姓名/Name" prop="Family[1].MotherName" class="el_left" required>
-                <el-input :disabled="eqit" v-model="OtherInformation.Family[1].MotherName" clearable  class="el-in-left"></el-input >
+              <el-form-item  :disabled="eqit" label="姓名/Name" prop="Family[1].MotherName" class="el_left" required>
+                <el-input  v-model="OtherInformation.Family[1].MotherName" clearable  class="el-in-left"></el-input >
               </el-form-item>
             </el-col>
             <el-col :span="5" >
-              <el-form-item label="职业/Employment" prop="Family[1].MotherEmployment" class="el_left" required>
-                <el-input :disabled="eqit" v-model="OtherInformation.Family[1].MotherEmployment" clearable  class="el-in-left"></el-input >
+              <el-form-item  :disabled="eqit" label="职业/Employment" prop="Family[1].MotherEmployment" class="el_left" required>
+                <el-input  v-model="OtherInformation.Family[1].MotherEmployment" clearable  class="el-in-left"></el-input >
               </el-form-item>
             </el-col>
             <el-col :span="6" >
-              <el-form-item label="电话/Telephone Number" prop="Family[1].MotherNumber" class="el_left" required>
-                <el-input :disabled="eqit" v-model="OtherInformation.Family[1].MotherNumber" clearable  class="el-in-left"></el-input >
+              <el-form-item  :disabled="eqit" label="电话/Telephone Number" prop="Family[1].MotherNumber" class="el_left" required>
+                <el-input  v-model="OtherInformation.Family[1].MotherNumber" clearable  class="el-in-left"></el-input >
               </el-form-item>
             </el-col>
             <el-col :span="6.5" >
-              <el-form-item label="邮箱/E-mail" prop="Family[1].Mothermail"
+              <el-form-item :disabled="eqit" label="邮箱/E-mail" prop="Family[1].Mothermail"
               class="el_left" required
               :rules="{ type: 'email', message: '请输入正确的邮箱地址', trigger: ['blur', 'change'] }">
-                <el-input :disabled="eqit" v-model="OtherInformation.Family[1].Mothermail" clearable class="el-in-left"></el-input >
+                <el-input  v-model="OtherInformation.Family[1].Mothermail" clearable class="el-in-left"></el-input >
               </el-form-item>
             </el-col>
           </el-form-item>
           <el-form-item label="配偶/Spouse:" class="el_left"  required>
             <el-col :span="4">
-              <el-form-item label="姓名/Name" prop="Family[2].SpouseName" class="el_left" required>
-                <el-input :disabled="eqit" v-model="OtherInformation.Family[2].SpouseName" clearable  class="el-in-left"></el-input >
+              <el-form-item  :disabled="eqit" label="姓名/Name" prop="Family[2].SpouseName" class="el_left" required>
+                <el-input  v-model="OtherInformation.Family[2].SpouseName" clearable  class="el-in-left"></el-input >
               </el-form-item>
             </el-col>
             <el-col :span="5" >
-              <el-form-item label="职业/Employment" prop="Family[2].SpouseEmployment" class="el_left" required>
-                <el-input :disabled="eqit" v-model="OtherInformation.Family[2].SpouseEmployment" clearable  class="el-in-left"></el-input >
+              <el-form-item  :disabled="eqit" label="职业/Employment" prop="Family[2].SpouseEmployment" class="el_left" required>
+                <el-input  v-model="OtherInformation.Family[2].SpouseEmployment" clearable  class="el-in-left"></el-input >
               </el-form-item>
             </el-col>
             <el-col :span="6" >
-              <el-form-item label="电话/Telephone Number" prop="Family[2].SpouseNumber" class="el_left" required>
-                <el-input :disabled="eqit" v-model="OtherInformation.Family[2].SpouseNumber" clearable  class="el-in-left"></el-input >
+              <el-form-item  :disabled="eqit" label="电话/Telephone Number" prop="Family[2].SpouseNumber" class="el_left" required>
+                <el-input  v-model="OtherInformation.Family[2].SpouseNumber" clearable  class="el-in-left"></el-input >
               </el-form-item>
             </el-col>
             <el-col :span="6.5" >
-              <el-form-item label="邮箱/E-mail" prop="Family[2].Spousemail"
+              <el-form-item :disabled="eqit" label="邮箱/E-mail" prop="Family[2].Spousemail"
               class="el_left" required>
-                <el-input :disabled="eqit" v-model="OtherInformation.Family[2].Spousemail" clearable class="el-in-left"></el-input >
+                <el-input  v-model="OtherInformation.Family[2].Spousemail" clearable class="el-in-left"></el-input >
               </el-form-item>
             </el-col>
           </el-form-item>
           <!-- <p>子女/Daughter</p> -->
           <el-form-item label="子女/Daughter:" class="el_left"  required>
             <el-col :span="4">
-              <el-form-item label="姓名/Name" prop="Family[3].DaughterName" class="el_left" required>
-                <el-input :disabled="eqit" v-model="OtherInformation.Family[3].DaughterName" clearable  class="el-in-left"></el-input >
+              <el-form-item :disabled="eqit" label="姓名/Name" prop="Family[3].DaughterName" class="el_left" required>
+                <el-input  v-model="OtherInformation.Family[3].DaughterName" clearable  class="el-in-left"></el-input >
               </el-form-item>
             </el-col>
             <el-col :span="5" >
-              <el-form-item label="职业/Employment" prop="Family[3].DaughterEmployment" class="el_left" required>
-                <el-input :disabled="eqit" v-model="OtherInformation.Family[3].DaughterEmployment" clearable  class="el-in-left"></el-input >
+              <el-form-item :disabled="eqit" label="职业/Employment" prop="Family[3].DaughterEmployment" class="el_left" required>
+                <el-input  v-model="OtherInformation.Family[3].DaughterEmployment" clearable  class="el-in-left"></el-input >
               </el-form-item>
             </el-col>
             <el-col :span="6" >
-              <el-form-item label="电话/Telephone Number" prop="Family[3].DaughterNumber" class="el_left" required>
-                <el-input :disabled="eqit" v-model="OtherInformation.Family[3].DaughterNumber" clearable  class="el-in-left"></el-input >
+              <el-form-item :disabled="eqit" label="电话/Telephone Number" prop="Family[3].DaughterNumber" class="el_left" required>
+                <el-input  v-model="OtherInformation.Family[3].DaughterNumber" clearable  class="el-in-left"></el-input >
               </el-form-item>
             </el-col>
             <el-col :span="6.5" >
-              <el-form-item label="邮箱/E-mail" prop="Family[3].Daughtermail"
+              <el-form-item :disabled="eqit"label="邮箱/E-mail" prop="Family[3].Daughtermail"
               class="el_left" required>
-                <el-input :disabled="eqit" v-model="OtherInformation.Family[3].Daughtermail" clearable class="el-in-left"></el-input >
+                <el-input  v-model="OtherInformation.Family[3].Daughtermail" clearable class="el-in-left"></el-input >
               </el-form-item>
             </el-col>
           </el-form-item>
@@ -598,7 +598,6 @@ export default{
         }
         console.log(this.UploadfileList)
       }
-      console.log(response.data)
     })
     // 获取值并判断是否进入
     this.$axios({
@@ -610,7 +609,6 @@ export default{
       }
     }).then((response) => {
       if (response.data.Contact[0].username == '') {
-      } else {
         let isShow = getCookie('InputInfo')
         if (isShow == '') {
           console.log(isshow + '空')
@@ -627,8 +625,6 @@ export default{
                 confirmButtonText: 'sure'
               })
               this.$router.push('/asidetab/' + this.NeedUrl[isShow])
-            } else if (isShow == 15) {
-              this.submiteqit = true
             }
             setCookie('InputInfo', isShow, 1000 * 60)
           })
@@ -638,10 +634,26 @@ export default{
               confirmButtonText: 'sure'
             })
             this.$router.push('/asidetab/' + this.NeedUrl[isShow])
-          } else if (isShow == 15) {
+          }
+        }
+      } else {
+        let isShow = getCookie('InputInfo')
+        if (isShow == '') {
+          this.$axios({
+            method: 'get',
+            url: this.$URL + '/SeletWckServlet',
+            params: {
+              username: this.username
+            }
+          }).then((response) => {
+            isShow = parseInt(response.data[0].typ)
+            if (isShow >= 15 || isShow == 12) {
+              this.submiteqit = true
+            }
+          })
+        } else {
+          if (isShow >= 15 || isShow == 12) {
             this.submiteqit = true
-          } else {
-
           }
         }
         let Personalget = response.data.Pinf[0]
@@ -747,12 +759,6 @@ export default{
   }
 }
 </script>
-<style>
-.ss{
-  /* font-size: 24;
-  font-weight: 400; */
-}
-</style>
 <style lang="stylus" scoped>
 .EducationForm_border_this{
   margin-bottom:0px;

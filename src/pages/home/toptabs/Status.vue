@@ -66,7 +66,6 @@ export default{
         username: this.username
       }
     }).then((response) => {
-      console.log(response.data[0] + 'zzzz')
       if (response.data[0].applytime == '') {
         this.$axios({
           method: 'get',
@@ -89,6 +88,16 @@ export default{
           setCookie('InputInfo', isShow, 1000 * 60)
         })
       } else {
+        this.$axios({
+          method: 'get',
+          url: this.$URL + '/SeletWckServlet',
+          params: {
+            username: this.username
+          }
+        }).then((response) => {
+          let isShow = parseInt(response.data[0].typ)
+          setCookie('InputInfo', isShow, 1000 * 60)
+        })
         this.formInline.uName = response.data[0].username
         this.formInline.recordtime = formatDate(new Date(response.data[0].applytime * 1), 'yyyy-MM-dd hh:mm')
         this.formInline.status = response.data[0].state

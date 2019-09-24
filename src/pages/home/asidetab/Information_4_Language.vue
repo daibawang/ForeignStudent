@@ -15,8 +15,8 @@
         </el-form-item>
         <p> HSK 考试等级或其他类型汉语考试成绩/ Level of HSK test or other certificates that can testify your</p>
         <el-form-item label="考试类型/Type" prop="level_c" class="el_left">
-            <el-cascader :disabled="eqit" separator='' expand-trigger="hover" :options="options" v-model="LanguageForm.level_c"@change="handleChange">
-            <el-cascader :disabled="eqit">
+            <el-cascader :disabled="eqit" separator='' expand-trigger="hover" :options="options" v-model="LanguageForm.level_c" @change="handleChange">
+            </el-cascader>
         </el-form-item>
         <el-form-item label="考试成绩/Test Scores" prop="level_c_Scores" class="el_left">
           <el-input :disabled="eqit" v-model.number="LanguageForm.level_c_Scores" clearable style="width:200px;" class="el-in-left el_left"></el-input>
@@ -174,12 +174,12 @@ export default{
             }
           }).then((response) => {
             isShow = parseInt(response.data[0].typ)
-            if (isShow == 15) {
+            if (isShow >= 15 || isShow == 12) {
               this.eqit = true
             }
           })
         } else {
-          if (isShow == 15) {
+          if (isShow >= 15 || isShow == 12) {
             this.eqit = true
           }
         }
@@ -248,11 +248,6 @@ export default{
   }
 }
 </script>
-<style>
-.Info_1_border{
-
-}
-</style>
 <style lang="stylus" scoped>
 .Info_1_border{
   padding-top:20px;

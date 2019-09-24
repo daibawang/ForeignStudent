@@ -15,7 +15,7 @@
 
         <el-form-item label="发表时间/Published Date" style="margin-left:10px">
             <el-form-item :prop="'domains.'+index+'.time'">
-                <el-date-picker :disabled="eqit" value-format="yyyyMM"  type="month" placeholder="from" v-model="item.time" style="width: 275px;"></el-date-picker>
+                <el-date-picker :picker-options="pickerOptions0" :disabled="eqit" value-format="yyyyMM"  type="month" placeholder="from" v-model="item.time" style="width: 275px;"></el-date-picker>
             </el-form-item>
         </el-form-item>
         <el-button :disabled="eqit" style="margin-top:50px" type="danger" icon="el-icon-delete" circle @click="deleteRules(item, index)" ></el-button>
@@ -43,6 +43,11 @@ export default{
       eqit: false,
       NeedInput: this.GLOBAL.NeedInput,
       NeedUrl: this.GLOBAL.NeedUrl,
+      pickerOptions0: {
+        disabledDate (time) {
+          return time.getTime() > Date.now().getFullYear
+        }
+      },
       Achievements: {
         domains: [{
           key: 0,
@@ -106,12 +111,12 @@ export default{
             }
           }).then((response) => {
             isShow = parseInt(response.data[0].typ)
-            if (isShow == 15) {
+            if (isShow >= 15 || isShow == 12) {
               this.eqit = true
             }
           })
         } else {
-          if (isShow == 15) {
+          if (isShow >= 15 || isShow == 12) {
             this.eqit = true
           }
         }

@@ -84,7 +84,7 @@ export default{
             confirmButtonText: 'sure'
           })
           this.$router.push('/asidetab/' + this.NeedUrl[isShow])
-        } else if (isShow == 15) {
+        } else if (isShow >= 15 || isShow == 12) {
           this.eqit = true
         }
         setCookie('InputInfo', isShow, 1000 * 60)
@@ -95,7 +95,7 @@ export default{
           confirmButtonText: 'sure'
         })
         this.$router.push('/asidetab/' + this.NeedUrl[isShow])
-      } else if (isShow == 15) {
+      } else if (isShow >= 15 || isShow == 12) {
         this.eqit = true
       }
     }
@@ -156,31 +156,38 @@ export default{
       return this.$confirm(`确定移除/Make sure remove ${file.name}？`)
     },
     submitPsychological () {
-      let thistime = new Date().getTime()
-      this.$axios({
-        method: 'get',
-        url: this.$URL + '/TjServlet',
-        params: {
-          username: this.username,
-          time: thistime,
-          type: '12'
-        }
-      }).then((response) => {
-        if (response.data == true) {
-          setCookie('InputInfo', 12, 1000 * 60)
-          this.$alert('提交成功，等待管理员审核材料', {
-            confirmButtonText: 'sure'
-          }).then(() => {
-            this.$router.push('/Stat')
-          })
-        } else {
-          this.$alert('心里截图未上传', {
-            confirmButtonText: 'sure'
-          })
-        }
-      }).catch((error) => {
-        console.log(error)
-      })
+      let isShow = getCookie('InputInfo')
+      if (isShow == 12) {
+        this.$alert('请勿重复提交', {
+          confirmButtonText: 'sure'
+        })
+      } else {
+        let thistime = new Date().getTime()
+        this.$axios({
+          method: 'get',
+          url: this.$URL + '/TjServlet',
+          params: {
+            username: this.username,
+            time: thistime,
+            type: '12'
+          }
+        }).then((response) => {
+          if (response.data == true) {
+            setCookie('InputInfo', 12, 1000 * 60)
+            this.$alert('提交成功，等待管理员审核材料', {
+              confirmButtonText: 'sure'
+            }).then(() => {
+              this.$router.push('/Status')
+            })
+          } else {
+            this.$alert('心里截图未上传', {
+              confirmButtonText: 'sure'
+            })
+          }
+        }).catch((error) => {
+          console.log(error)
+        })
+      }
     }
   }
 }

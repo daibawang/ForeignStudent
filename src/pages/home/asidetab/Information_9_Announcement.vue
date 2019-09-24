@@ -15,7 +15,7 @@
   <br/>Applicants should complete the psychological assessment according to the application page prompt and upload a screenshot of the completion page. If not, the application is invalid
       </div>
       <div class="announcement_button">
-        <el-button :disabled="eqit" :disabled="eqit" type="primary" @click="Announcement()" style="margin-left:50px;">保证 Announcement</el-button>
+        <el-button :disabled="eqit" type="primary" @click="Announcement()" style="margin-left:50px;">保证 Announcement</el-button>
       </div>
     </div>
   </div>
@@ -54,7 +54,7 @@ export default{
             confirmButtonText: 'sure'
           })
           this.$router.push('/asidetab/' + this.NeedUrl[isShow])
-        } else if (isShow == 15) {
+        } else if (isShow >= 15 || isShow == 12) {
           this.eqit = true
         }
         setCookie('InputInfo', isShow, 1000 * 60)
@@ -65,7 +65,7 @@ export default{
           confirmButtonText: 'sure'
         })
         this.$router.push('/asidetab/' + this.NeedUrl[isShow])
-      } else if (isShow == 15) {
+      } else if (isShow >= 15 || isShow == 12) {
         this.eqit = true
       }
     }

@@ -11,7 +11,7 @@
             :rules="{
               required: true, message: 'This field is required', trigger: 'change'
             }">
-                <el-date-picker :disabled="eqit" value-format="yyyyMM" type="month" placeholder="from" v-model="item.fromdate" style="width: 115px;"></el-date-picker>
+                <el-date-picker :picker-options="pickerOptions0" :disabled="eqit" value-format="yyyyMM" type="month" placeholder="from" v-model="item.fromdate" style="width: 115px;"></el-date-picker>
             </el-form-item>
           </el-col>
           <el-col :span="11" style="margin-left:5px;">
@@ -19,7 +19,7 @@
             :rules="{
               required: true, message: 'This field is required', trigger: 'change'
             }">
-              <el-date-picker :disabled="eqit" value-format="yyyyMM" type="month" placeholder="to" v-model="item.todate" style="width: 115px;"></el-date-picker>
+              <el-date-picker :picker-options="pickerOptions0" :disabled="eqit" value-format="yyyyMM" type="month" placeholder="to" v-model="item.todate" style="width: 115px;"></el-date-picker>
             </el-form-item>
           </el-col>
         </el-form-item>
@@ -61,6 +61,11 @@ export default{
       eqit: false,
       NeedInput: this.GLOBAL.NeedInput,
       NeedUrl: this.GLOBAL.NeedUrl,
+      pickerOptions0: {
+        disabledDate (time) {
+          return time.getTime() > Date.now()
+        }
+      },
       EducationForm: {
         domains: [{
           key: 0,
@@ -128,12 +133,12 @@ export default{
             }
           }).then((response) => {
             isShow = parseInt(response.data[0].typ)
-            if (isShow == 15) {
+            if (isShow >= 15 || isShow == 12) {
               this.eqit = true
             }
           })
         } else {
-          if (isShow == 15) {
+          if (isShow >= 15 || isShow == 12) {
             this.eqit = true
           }
         }

@@ -27,18 +27,14 @@ export default new Router({
       path: '/',
       name: 'Login',
       component: Login,
-      meta:{
-        title:'登录/Login',
-      }
+      meta:{title:'登录/Login',}
     },
     {
       path: '/main',
       props:true,
       name: 'Main',
       component: Main,
-      meta:{
-        title:'招生简章/Recruitment Informationfor',
-      }
+      meta:{title:'招生简章/Recruitment Informationfor',}
     },
     {
       path: '/home',

@@ -22,12 +22,12 @@
         <el-form-item label="申请专业学习时间/Duration of the subject Study:" class="el_left" required >
           <el-col :span="5">
             <el-select :disabled="eqit" v-model="StudyForm.ym_f" style="width:150px;" class="el-in-left el_left">
-              <el-option label="2018-09" value="201809">2018-07</el-option>
+              <el-option v-for='item in options' :key="item.label" :label='item.label' :value='item.value'>{{nowdate}}</el-option>
             </el-select>
           </el-col>
           <el-col :span="5" >
             <el-select :disabled="eqit" v-model="StudyForm.ym_l" style="width:150px; margin-left:10px" class="el-in-left el_left">
-              <el-option label="2019-07" value="201907">2019-07</el-option>
+              <el-option v-for='item in options2' :key="item.label" :label='item.label' :value='item.value'>{{lastdate}}</el-option>
             </el-select>
           </el-col>
         </el-form-item>
@@ -60,6 +60,16 @@ export default{
       eqit: false,
       NeedInput: this.GLOBAL.NeedInput,
       NeedUrl: this.GLOBAL.NeedUrl,
+      nowdate: '',
+      lastdate: '',
+      options: [{
+        value: '',
+        label: ''
+      }],
+      options2: [{
+        value: '',
+        label: ''
+      }],
       StudyForm: {
         degree: '',
         subject: '',
@@ -98,7 +108,14 @@ export default{
       this.$router.push('/')
     }
     this.username = uname
-
+    var now = new Date()
+    var nowYear = now.getFullYear()
+    this.nowdate = nowYear + '-' + '09'
+    this.options[0].label = nowYear + '-' + '09'
+    this.options[0].value = nowYear + '09'
+    this.options2[0].label = (nowYear + 1) + '-' + '07'
+    this.options2[0].value = (nowYear + 1) + '07'
+    this.lastdate = (nowYear + 1) + '-' + '07'
     this.$axios({
       method: 'get',
       url: this.$URL + '/GetProposedByNameServlet',
@@ -145,12 +162,12 @@ export default{
             }
           }).then((response) => {
             isShow = parseInt(response.data[0].typ)
-            if (isShow == 15) {
+            if (isShow >= 15 || isShow == 12) {
               this.eqit = true
             }
           })
         } else {
-          if (isShow == 15) {
+          if (isShow >= 15 || isShow == 12) {
             this.eqit = true
           }
         }

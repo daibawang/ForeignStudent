@@ -10,7 +10,9 @@ const NeedInput = [
   '请先上传申请材料 Please Upload Application Documents',
   '请先填写保证 Please complete Announcement ',
   '请先提交申请 Please Submit First',
-  '请先完成心理测评 Please Upload Psychological Test']
+  '请先完成心理测评 Please Upload Psychological Test',
+  '请先完成心理测评 Please Upload Psychological Test',
+  '审核后才可通过缴费', '未通过审核，请审核成功后再缴费', '']
 const NeedUrl = [
   'Information_1_Personal',
   'Information_2_Education',
